@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -10,10 +10,26 @@ import ForgetPW from './pages/ForgetPW'
 
 function App() {
 
+  const [theme , setTheme ]= useState('light')
+  
+  useEffect(()=>{
+  if(theme==='dark'){
+    document.documentElement.classList.add('dark');
+  }else{
+    document.documentElement.classList.remove('dark')
+  }
+  },[theme])
+ 
+const handleDarkside =()=>{
+  setTheme(theme==='dark'?'light':'dark')
+}
 
   return (
     <>
       <div className='text-lime-500'>
+        <button onClick={handleDarkside}>
+          dark
+        </button>
       <Router >     
       <Routes>
        <Route path='' element={<Home />} />
