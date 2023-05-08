@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp'
 import PassWordReset from './pages/PassWordReset'
 import History from './pages/History'
 import ForgetPW from './pages/ForgetPW'
+import Demo from './pages/Demo'
 
 function App() {
 
@@ -39,6 +40,7 @@ const handleDarkside =()=>{
        <Route path='/resetpassword' element={<PassWordReset />} />
        <Route path='/history' element={<History />} />
        <Route path='/forgetPW' element={<ForgetPW />} />
+       <Route path='/demo' element={<Demo />} />
      </Routes>
      </Router>
       </div>
