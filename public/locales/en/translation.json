@@ -1,3 +1,19 @@
 {
-    "welcome":"hello"
+    "login":"Sign in",
+    "english": "English",
+    "japanese":"Japanese",
+    "home": "Home",
+    "email": "Your email",
+    "password":"Your password",
+    "remember": "Remember me",
+    "forgot_password":"Forgot password?",
+    "sign_up_link": "Sign up",
+    "sign_up_description": "Don't have an account yet?",
+    "register": "Sign up",
+    "name":"Name",
+    "name_pla": "NGUYEN VAN A",
+    "confirm_password":"Confirm password",
+    "create_an_account": "Create an account",
+    "sign_in_link": "Sign in",
+    "sign_in_description": "Already have an account"
 }
