@@ -7,9 +7,3 @@ export default configureStore({
   }
 })
 
-// import { combineReducers } from "@reduxjs/toolkit";
-// import actions from './actions';
-
-// export default combineReducers({
-//   actions
-// });

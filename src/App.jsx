@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Aos from "aos";
+import 'aos/dist/aos.css';
 
 import Navbar from './components/Navbar'
 import Language from './components/Language'
@@ -17,6 +19,9 @@ import ReduxLearning from './pages/ReduxLearning';
 
 function App() {
   const {t} = useTranslation();
+  useEffect(function () {
+    Aos.init({ duration: 3000 });
+  }, []);
 
   return (
     <>
