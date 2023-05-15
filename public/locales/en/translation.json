@@ -15,5 +15,16 @@
     "confirm_password":"Confirm password",
     "create_an_account": "Create an account",
     "sign_in_link": "Sign in",
-    "sign_in_description": "Already have an account"
+    "sign_in_description": "Already have an account",
+    "invalidErrorMessage_len": "should be 3-26 characters",
+    "back":"Back",
+    "send":"Send",
+    "ResetPassword": "Reset password",
+    "ConfirmEmaiMessage": "Confirm your email and we'll send the instructions.",
+    "er_email_undi": "Your email must be VTI email",
+    "er_username_undi": "The name contains no special characters and capitalizes all of the letters.",
+    "er_input_emty": "This field is required and must have a value.",
+    "er_input_len_password":"Your password must be have at least 8 characters.",
+    "er_input_rule_password":"Your password must be have long 1 uppercase & 1 lowercase character 1 number.",
+    "er_input_confirm_password": "Confirm password did not match."
 }

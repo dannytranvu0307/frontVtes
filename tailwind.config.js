@@ -11,7 +11,7 @@ module.exports = {
         btn: {"light":"#7463E1", "hover":"#5d48e2"},
       },
       fontFamily: {
-        'body': [
+      'body': [
       'Inter', 
       'ui-sans-serif', 
       'system-ui', 

@@ -61,7 +61,6 @@ function App() {
             setEvidences((prev) => 
             [ ...prev,base64IMG ]
             );
-            
             setItem(null);
             setPreviewItemImg(null)
         }

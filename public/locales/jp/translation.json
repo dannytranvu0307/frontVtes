@@ -15,6 +15,16 @@
     "confirm_password":"確認パスワード",
     "create_an_account": "新規登録",
     "sign_in_link": "こちら",
-    "sign_in_description": "既にアカウントを持っている方"
+    "sign_in_description": "既にアカウントを持っている方は",
+    "back":"戻る",
+    "send":"送信",
+    "ResetPassword": "パスワード再設定",
+    "ConfirmEmaiMessage": "送信されたメールから メールアドレスを確認してください。",
+    "er_email_undi": "VTIメールアドレスを入力してください。",
+    "er_username_undi": "氏名には特殊文字は含まれず、すべての文字が大文字を入力してください。",
+    "er_input_emty": "このフィールドは必須フィールドで、値が必要です。",
+    "er_input_len_password":"パスワードには少なくとも8文字を入力してください。",
+    "er_input_rule_password":"パスワードには少なくとも1つの大文字、1つの小文字、1つの数字を含める必要があります。",
+    "er_input_confirm_password": "Confirm password did not match"
     
 }
