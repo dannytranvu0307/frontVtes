@@ -7,29 +7,17 @@
     display: flex;
 }
 
-/* #input-field:has(input[focused="true"]:valid)span {
-    display: none;
-}
-
-input:invalid span {
-    display: block;
-} */
 
 div.language-options select{
     cursor: pointer;
 }
 
-.language-options label:after {
+.language-options label {
     position: absolute;
-    content: "";
     right: 12px;
-    width: 0;
-    height: 0;
-    top: 50%;
-    transform: translateY(-25%);
-    border: 9px solid transparent;
-    border-radius: 3px;
-    border-color: blueviolet transparent transparent transparent;
+    display: flex;
+    bottom: 50%;
+    transform: translateY(50%);
     pointer-events: none;
 }
 
