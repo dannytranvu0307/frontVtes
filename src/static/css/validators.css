@@ -1,0 +1,37 @@
+
+#input-field:has(input[focused="false"]) span {
+    display: none;
+}
+#input-field:has(input[focused="true"]) span {
+    color: red;
+    display: flex;
+}
+
+
+div.language-options select{
+    cursor: pointer;
+}
+
+.language-options label {
+    position: absolute;
+    right: 12px;
+    display: flex;
+    bottom: 50%;
+    transform: translateY(50%);
+    pointer-events: none;
+}
+
+.language-options:hover label:after {
+    position: absolute;
+    content: "";
+    right: 12px;
+    width: 0;
+    height: 0;
+    border-color: gray transparent transparent transparent;
+    /* color: red!important; */
+}
+
+.language-options select option {
+    margin: 2px 10px;
+}
+

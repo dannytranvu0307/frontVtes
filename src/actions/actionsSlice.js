@@ -17,8 +17,6 @@ export const actionsSlice = createSlice({
             console.log(action)
             state.todo.splice(action.payload, 1)
         },
-
-
     }
 })
 
