@@ -1,7 +1,7 @@
 function History(){
     return (
         <div  className="text-red-200">
-            History
+            History asd asd 
         </div>
     )
 }

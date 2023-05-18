@@ -35,7 +35,7 @@ function Login(){
     return (
         <section 
         data-aos="fade-right"
-        data-aos-offset="300"
+        data-aos-offset="3"
         data-aos-easing="ease-in-sine"
         className="bg-gray-50 dark:bg-gray-900"
         >
@@ -54,9 +54,11 @@ function Login(){
                                 type="email" 
                                 name="email" 
                                 id="email" 
+                                placeholder="メールアドレスを入力してください。"
                                 value={email}
                                 onChange={e=>onChange(e)}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required=""/>
+                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                                required/>
                         </div>
                         <div>
                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t("password")}</label>
@@ -64,7 +66,7 @@ function Login(){
                             type="password" 
                             onChange={e=>onChange(e)} 
                             value={password} 
-                            name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required=""/>
+                            name="password" id="password" placeholder="パスワードを入力してください。" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required=""/>
                         </div>
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
@@ -81,14 +83,17 @@ function Login(){
                         </div>
                         <button 
                         type="submit" 
-                        className="w-full text-white 
-                        bg-btn-light 
-                        hover:bg-btn-hover 
+                        className="
+                        w-full 
+                        text-white 
+                        bg-primary-600
+                        hover:bg-primary-500
                         focus:ring-4 focus:outline-none 
-                        focus:ring-primary-300 font-medium rounded-lg 
+                        focus:ring-primary-500 font-medium rounded-lg 
                         text-sm px-5 py-2.5 text-center ">{t("login")}</button>
                         <p className="text-sm font-light text-gray-500">
-                        {t("sign_up_description")} <Link to="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_up_link")}</Link>
+                        {t("sign_up_description")}
+                        <Link to="/register" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_up_link")}</Link>
                         </p>
                     </form>
                 </div>
