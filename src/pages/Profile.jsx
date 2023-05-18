@@ -2,9 +2,8 @@ import {useState, useCallback, useMemo, memo} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import Validators from "../functional/Validators";
 
-const SignUp = () => {
+const Profile = () => {
     const { t } = useTranslation();
     // change language
 
@@ -19,14 +18,7 @@ const inputs = useMemo(()=>{
             name:"name",
             htmlFor: "name",
             type: "text",
-            placeholder: "name_pla",
-            required: true
-        },
-        {
-            id:"department",
-            label:"department",
-            name:"department",
-            htmlFor: "department",
+            placeholder: "TAROU YAMA",
             required: true
         },
         {
@@ -35,7 +27,7 @@ const inputs = useMemo(()=>{
             name:"email",
             type: "email",
             htmlFor: "email",
-            placeholder: "email_pla",
+            placeholder: "email@email.com",
             required: true,
         },
         {
@@ -44,7 +36,7 @@ const inputs = useMemo(()=>{
             name:"password",
             type: "password",
             htmlFor: "password",
-            placeholder: "password_pla",
+            placeholder: "●●●●●●●●●●●●",
             required: true,
         },
         {
@@ -53,7 +45,7 @@ const inputs = useMemo(()=>{
             name:"confirm_password",
             type: "password",
             htmlFor: "confirm_password",
-            placeholder: "confirm_password_pla",
+            placeholder: "●●●●●●●●●●●●",
             required: true,
         }
     ]
@@ -79,10 +71,10 @@ return (
                     )
                     }
                     <button 
-                    type="submit" title="ádddddddddddd ádddddddddddd áddddddddddddáddddddddddddáddddddddddddáddddddddddddádddddddddddd asd asd asd asd asdas ads ads asdas ds dsas"
+                    type="submit" 
                     className="w-full text-white 
-                    bg-primary-600
-                    hover:bg-primary-500 
+                    bg-btn-light 
+                    hover:bg-btn-hover 
                     focus:ring-4 focus:outline-none 
                     focus:ring-primary-300 font-medium rounded-lg 
                     text-sm px-5 py-2.5 text-center ">{t("register")}</button>
@@ -99,4 +91,4 @@ return (
 )
 
 }
- export default memo(SignUp);
+export default memo(Profile);

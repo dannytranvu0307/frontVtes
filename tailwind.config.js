@@ -45,6 +45,28 @@ module.exports = {
       'Segoe UI Symbol', 
       'Noto Color Emoji'
     ]
+      },
+      spacing: {
+        '18': '72px',
+      },
+      transitionProperty: {
+        multiple: "width , height , backgroundColor , border-radius"
+      },
+      animation: {
+        fadeLeft: 'fadeLeft .3s ease-in-out',
+        fadeRight: 'fadeLeft .3s ease-in-out',
+      
+      },
+      keyframes: {
+        fadeLeft: {
+          '0%': { width: '64px' },
+          '100%': { width: '100%' },
+        },
+        fadeRight: {
+          '0%': { width: '100%' },
+          '100%': { width: '64px' },
+        },
+      
       }
     }
   },

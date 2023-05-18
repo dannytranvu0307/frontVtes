@@ -14,9 +14,11 @@ const PasswordReset = () => {
         invalidErrorMessage: "lỗi ở đây asd dasdas dsad ad asd",
         required: true,
     }
+
     const onChange = e => {
         setEmail()
     }
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -32,8 +34,8 @@ const PasswordReset = () => {
                             <button 
                                 type="submit" 
                                 className="w-auto text-white
-                                bg-btn-light 
-                                hover:bg-btn-hover 
+                                bg-primary-600
+                                hover:bg-primary-500
                                 focus:ring-4 focus:outline-none 
                                 focus:ring-primary-300 font-medium rounded-lg 
                                 text-sm px-5 py-2.5 text-center ">
@@ -42,8 +44,8 @@ const PasswordReset = () => {
                                 type="submit" 
                                 className="w-auto text-white
                                 
-                                bg-btn-light 
-                                hover:bg-btn-hover 
+                                bg-primary-600
+                                hover:bg-primary-500
                                 focus:ring-4 focus:outline-none 
                                 focus:ring-primary-300 font-medium rounded-lg 
                                 text-sm px-5 py-2.5 text-center ">

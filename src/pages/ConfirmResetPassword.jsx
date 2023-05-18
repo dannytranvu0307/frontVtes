@@ -2,57 +2,25 @@ import {useState} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
-import Validators from "../functional/Validators";
+
 const ConfirmResetPassword = () => {
 // change language
 const { t } = useTranslation();
 
 // init form obj
-const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    input_empty: "",
-});
-
-// input change
-const onChange = e => {
-    setForm({...form, [e.target.name] :  e.target.value });
-}
-
-const onSubmit = e => {
-    e.preventDefault();
-    console.log(form)
-}
+// const onSubmit = e => {
+//     e.preventDefault();
+//     console.log(form)
+// }
 
 const inputs = [
     {
-        id:"name",
-        label:t("name"),
-        name:"name",
-        htmlFor: "name",
-        type: "text",
-        placeholder: t("name_pla"),
-        pattern:"^[A-Za-z0-9]{3,16}$",
-        required: true
-    },
-    {
-        id:"email",
-        label:t("email"),
-        name:"email",
-        type: "email",
-        htmlFor: "email",
-        placeholder: "email@email.com",
-        required: true,
-    },
-    {
         id:"password",
-        label:t("password"),
+        label:t("new_password"),
         name:"password",
         type: "password",
         htmlFor: "password",
-        placeholder: "●●●●●●●●●●●●",
+        placeholder: "● ● ● ● ● ● ●",
         required: true,
     },
     {
@@ -61,8 +29,7 @@ const inputs = [
         name:"confirm_password",
         type: "password",
         htmlFor: "confirm_password",
-        placeholder: "●●●●●●●●●●●●",
-        pattern: form.password,
+        placeholder: "● ● ● ● ● ● ●",
         required: true,
     }
 ]
@@ -81,9 +48,7 @@ return (
                         return  (
                             <FormInput 
                                 key={i} 
-                                onChange={onChange} 
                                 {...input}
-                                value={form[input.name]}
                             />
                         )}
                     )
@@ -91,20 +56,20 @@ return (
                     <button 
                     type="submit" 
                     className="w-full text-white 
-                    bg-btn-light 
-                    hover:bg-btn-hover 
+                    bg-primary-600
+                    hover:bg-primary-500 
                     focus:ring-4 focus:outline-none 
                     focus:ring-primary-300 font-medium rounded-lg 
                     text-sm px-5 py-2.5 text-center ">{t("register")}</button>
                     <p className="text-sm font-light text-gray-500">
-                    {t("sign_in_description")} <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_in_link")}</Link>
+                    {t("sign_in_description")} 
+                    <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_in_link")}</Link>
                     </p>
                 </form>
             </div>
         </div>
     </div>
     </section>
-
 )
 
 }
