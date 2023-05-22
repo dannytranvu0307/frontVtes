@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
+import {new_password, confirm_password} from "../instaces"
 
 const ConfirmResetPassword = () => {
 // change language
@@ -18,35 +19,16 @@ const onChange = e => {
 const onSubmit = e => {
     e.preventDefault();
     const submitInput = document.querySelectorAll("input")
-        const formSubmit = document.querySelector("#confirm_reset_password")
-        // if (ValidatorSubmit(formSubmit,submitInput)){
-        // }
-        if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log("submit form")
-        }
+    const formSubmit = document.querySelector("#confirm_reset_password")
+
+    if (ValidatorSubmit(formSubmit,submitInput)){
+        console.log("submit form")
+    }
 }
 
 const inputs = [
-    {
-        id:"password",
-        label:t("new_password"),
-        name:"password",
-        type: "password",
-        htmlFor: "password",
-        placeholder: "password_pla",
-        required: true,
-    },
-    {
-        id:"confirm_password",
-        label:t("confirm_password"),
-        name:"confirm_password",
-        type: "password",
-        htmlFor: "confirm_password",
-        placeholder: "confirm_password_pla",
-        required: true,
-    }
+    new_password,confirm_password
 ]
-
 return (
     <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

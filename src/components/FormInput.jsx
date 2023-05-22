@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useState,useRef,memo, useMemo } from "react";
+import { useState,useRef,memo } from "react";
 import Validators from "../functional/Validators";
 
 const FormInput = (props) => {

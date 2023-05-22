@@ -79,3 +79,23 @@ export const via = {
     required: true,
     autoComplete:"off"
 }
+
+export const new_password = {
+        id:"password",
+        label:"new_password",
+        name:"password",
+        type: "password",
+        htmlFor: "password",
+        placeholder: "password_pla",
+        required: true,
+    }
+//  export const confirm_password = 
+//     {
+//         id:"confirm_password",
+//         label:t("confirm_password"),
+//         name:"confirm_password",
+//         type: "password",
+//         htmlFor: "confirm_password",
+//         placeholder: "confirm_password_pla",
+//         required: true,
+//     }

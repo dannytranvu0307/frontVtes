@@ -40,7 +40,7 @@ export default function(workbook,user,exportOptions){
         // define column for sheet
         worksheet.columns = [
             { header: '日付', key: 'date' },
-            {  header: '訪問先', key: 'destination',width: 15  },
+            {  header: '訪問先', key: 'destination',width: 20  },
             {  header: '交通機関', key: 'transportation' }, 
             {  header: '出発地', key: 'start' },
             {  header: '到着地', key: 'end' },
@@ -57,7 +57,7 @@ export default function(workbook,user,exportOptions){
         // header for sheet
         const HEADER_TITLE =  worksheet.getCell('A1');
         HEADER_TITLE.value = "交通費精算書";
-        
+
         // header style
         HEADER_TITLE.alignment = middle
         HEADER_TITLE.font = {   bold: true, size: 15  };

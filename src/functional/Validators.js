@@ -147,8 +147,6 @@ function Validators (formId,options,value){
         };  
         
         if ( options.getAttribute("exclude") && `${options.getAttribute("exclude")}`.includes(formId.id)){
-            console.log(options.getAttribute("exclude"))
-            console.log(formId.id)
             if (value === ""){
                 error.name = "er_input_empty";
             }
