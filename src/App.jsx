@@ -10,7 +10,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
-import PassWordReset from './pages/PassWordReset';
+import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
 import ChangeUserInfor from './pages/ChangeUserInfor';
 import Demo from './pages/Demo';
@@ -32,25 +32,23 @@ function App() {
             <Navbar />
             <Language />
           </header>
-
-          <div className="flex h-full">
+          <div className="flex h-full bg-gray-50 mb-1">
             <Sidebar />
-            <main
-              className="flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto left-16 mb-14 -z-1"
-            >
-              <div className="h-full">
-                <Routes>
-                  <Route path='' element={<Home />} />
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/profile' element={<Profile />} />
-                  <Route path='/register' element={<SignUp />} />
-                  <Route path='/history' element={<History />} />
-                  <Route path='/changeuserinfor' element={<ChangeUserInfor />} />
-                  <Route path='/demo' element={<Demo />} />
-                  <Route path='/a' element={<ReduxLearning />} />
-                  <Route path='/passwordreset' element={<PassWordReset />} />
-                  <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
-                </Routes>
+            <main className="flex flex-col w-full bg-gray-50 overflow-x-hidden overflow-y-auto ml-16 left-16 -z-1">
+              <div className="w-full px-6 py-8">
+                <div className=" flex flex-col w-full h-full">
+                  <Routes>
+                    <Route path='' element={<Home />} />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/profile' element={<Profile />} />
+                    <Route path='/register' element={<SignUp />} />
+                    <Route path='/history' element={<History />} />
+                    <Route path='/changeuserinfor' element={<ChangeUserInfor />} />
+                    <Route path='/demo' element={<Demo />} />
+                    <Route path='/passwordreset' element={<PasswordReset />} />
+                    <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
+                  </Routes>
+                </div>
               </div>
             </main>
           </div>

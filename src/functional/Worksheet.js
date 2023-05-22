@@ -32,6 +32,7 @@ export default function(workbook,user,exportOptions){
         // init style cho border
         const thin = {style:'thin'}
         const border_cel = { top: thin, left: thin, bottom: thin, right: thin}
+
         const worksheet =  workbook.addWorksheet('交通費精算書', {
             pageSetup:{paperSize: 9, orientation:'landscape'}
         });
@@ -56,6 +57,7 @@ export default function(workbook,user,exportOptions){
         // header for sheet
         const HEADER_TITLE =  worksheet.getCell('A1');
         HEADER_TITLE.value = "交通費精算書";
+        
         // header style
         HEADER_TITLE.alignment = middle
         HEADER_TITLE.font = {   bold: true, size: 15  };

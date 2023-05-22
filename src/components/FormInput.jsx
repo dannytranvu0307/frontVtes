@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useState,useRef,useCallback,memo } from "react";
+import { useState,useRef,useCallback,memo, useMemo } from "react";
 import Validators from "../functional/Validators";
 
 const FormInput = (props) => {
@@ -11,7 +11,10 @@ const FormInput = (props) => {
         email: "",
         password: "",
         confirm_password: "",
-        department:""
+        department:"",
+        current_password: "",
+        new_password: "",
+        new_confirm_password: ""
     });
 
     const ref = useRef();
@@ -21,13 +24,14 @@ const FormInput = (props) => {
     const handleFocus = useCallback((e) => {
         setFocused("");
     },[])
-
-    const onBlur = useCallback(() => {
+    
+    const onBlur =() => {
         setError(
             Validators(ref.current.parentElement.parentElement,ref.current,ref.current.value)
         )
-    },[])
+    }
 
+    console.log(error)
     return (
         <div id="input-field"  className= "grid">
             <label 
@@ -36,9 +40,7 @@ const FormInput = (props) => {
                 {t(label)}
                 </label>
             {
-                label !== "department" ? (
-
-                
+                inputProps.type !== "department" ? (
                 <input 
                     ref={ref}
                     {...inputProps}
@@ -47,9 +49,12 @@ const FormInput = (props) => {
                     }
                     placeholder={t(placeholder)}
                     id={id} 
+                    // defaultValue={inputProps.value}
                     className={`
                     bg-gray-50 border border-gray-300 
                     text-gray-900 sm:text-sm rounded-lg 
+                    disabled:text-gray-600
+                    disabled:border-none 
                     focus:ring-primary-600 
                     focus:border-primary-600 w-full p-2.5 ${error[id] && ("border-red-500 bg-red-100")}`}
                     {...inputProps}
@@ -83,8 +88,8 @@ const FormInput = (props) => {
                     <option value="人事部">人事部</option>
                     <option value="採用部">採用部</option>
                     <option value="経理・会計ー財務部">経理・会計ー財務部</option>
-                </select>)
-                 }
+                </select>)}
+                
                 <span className={`${focused} text-red-500 text-xs`}>{"" || t(error[id])}</span>
            
         </div>

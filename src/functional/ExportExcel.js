@@ -1,8 +1,7 @@
 import ExcelJS from 'exceljs';
-
-// import Worksheet from './Worksheet';
 import WorksheetImg from './WorksheetImg';
 import Worksheet from './Worksheet';
+
 const ExportExcel = (props) =>{
 
     "_USERNAME_20230511"
@@ -20,18 +19,26 @@ const ExportExcel = (props) =>{
         
     // Dùng để export ra file excel theo kiểu buffter bằng cách fake url tạm thời
     workbook.xlsx.writeBuffer().then((buffer) => {
+        console.log(buffer)
         const blob = new Blob([buffer],{
             type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     })
-
     // tạo url
-    const url = window.URL.createObjectURL(blob);
+
+    // const url = window.URL.createObjectURL(blob);
+
+    var file = new File([blob], "交通費精算書");
+    console.log(file)
+
     const anchor = document.createElement("a");
     anchor.href = url;
+    
     anchor.download = "交通費精算書.xlsx";
-    anchor.click();
+    // anchor.download;
+    // anchor.click()
     // xóa url
-    window.URL.revokeObjectURL(url);
+    // window.URL.revokeObjectURL(url);
+
     });
                     
 }
