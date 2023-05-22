@@ -1,36 +1,27 @@
 import { useTranslation } from 'react-i18next';
-import { useState,useRef,useCallback,memo, useMemo } from "react";
+import { useState,useRef,memo } from "react";
 import Validators from "../functional/Validators";
 
 const FormInput = (props) => {
     const [focused, setFocused] = useState("hidden");
-    const {label, invalidErrorMessage, placeholder,id,forHtml,...inputProps} = props
+    const {label, placeholder,forHtml,...inputProps} = props
 
     const [error, setError]= useState({
+        id:"",
         name:"",
-        email: "",
-        password: "",
-        confirm_password: "",
-        department:"",
-        current_password: "",
-        new_password: "",
-        new_confirm_password: ""
     });
-
     const ref = useRef();
 
     const { t } = useTranslation();
 
-    const handleFocus = useCallback((e) => {
+    const handleFocus = (e) => {
         setFocused("");
-    },[])
-    
+    }
     const onBlur =() => {
         setError(
             Validators(ref.current.parentElement.parentElement,ref.current,ref.current.value)
         )
     }
-
     console.log(error)
     return (
         <div id="input-field"  className= "grid">
@@ -48,7 +39,6 @@ const FormInput = (props) => {
                     onFocus={(e) =>handleFocus(e)
                     }
                     placeholder={t(placeholder)}
-                    id={id} 
                     // defaultValue={inputProps.value}
                     className={`
                     bg-gray-50 border border-gray-300 
@@ -56,7 +46,7 @@ const FormInput = (props) => {
                     disabled:text-gray-600
                     disabled:border-none 
                     focus:ring-primary-600 
-                    focus:border-primary-600 w-full p-2.5 ${error[id] && ("border-red-500 bg-red-100")}`}
+                    focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}
                     {...inputProps}
                 />):(
                 <select
@@ -69,7 +59,7 @@ const FormInput = (props) => {
                     bg-gray-50 border border-gray-300 
                     text-gray-700 sm:text-sm rounded-lg 
                     focus:ring-primary-600
-                    focus:border-primary-600 w-full p-2.5 ${error[id] && ("border-red-500 bg-red-100")}`}>
+                    focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}>
                     <option value="">{t("chooseDepartment")}</option>
                     <option value="BOD">BOD</option>
                     <option value="COMMOM">COMMOM</option>
@@ -90,7 +80,7 @@ const FormInput = (props) => {
                     <option value="経理・会計ー財務部">経理・会計ー財務部</option>
                 </select>)}
                 
-                <span className={`${focused} text-red-500 text-xs`}>{"" || t(error[id])}</span>
+                <span className={`${focused} text-red-500 text-xs`}>{t("") || t(error.name)}</span>
            
         </div>
     )

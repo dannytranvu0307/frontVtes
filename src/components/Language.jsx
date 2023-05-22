@@ -13,10 +13,10 @@ const Language = () => {
     },[select])
 
     return (          
-        <div className="language-options relative inline-flex self-center hover:text-gray-600 rounded pr-2">
-            <label>
+        <div className="language-options hover:cursor-pointer relative inline-flex self-center hover:text-gray-600 rounded pr-2">
+            <label >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
-                className="w-4 h-4 absolute right-4 bottom-1/2 translate-y-1/2 text-gray-600">
+                className="w-4 h-4 absolute right-4 bottom-1/2 translate-y-1/2 text-gray-600 pointer-events-none">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                 </svg>
             </label>

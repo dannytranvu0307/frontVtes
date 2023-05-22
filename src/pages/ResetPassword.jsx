@@ -3,20 +3,21 @@ import { useTranslation } from 'react-i18next';
 import {useState} from "react";
 const ResetPassword = () => {
     const {t} = useTranslation();
-    const email = {
+    const [email, setEmail] = useState({email:""});
+    const input = {
         id:"email",
         label:"email",
         name:"email",
         type: "email",
         htmlFor: "email",
-        placeholder: "email@email.com",
-        invalidErrorMessage: "lỗi ở đây asd dasdas dsad ad asdsa das dsa das as dasd sad",
+        placeholder: "email_pla",
         required: true,
     }
     const onChange = e => {
-
+        setEmail({...email,[e.target.name]:e.target.value})
     }
 
+    console.log(email)
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -26,7 +27,7 @@ const ResetPassword = () => {
                         {t("register")}
                     </h1>
                     <form className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
-                        <FormInput type="email" placeholder="email@gmail.com" value={email}/>
+                        <FormInput  onChange = {e=> onChange(e)}type="email" {...input} value ={email}/>
                         <button 
                         type="submit" 
                         className="w-full text-white 

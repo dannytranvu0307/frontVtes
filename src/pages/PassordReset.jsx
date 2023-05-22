@@ -1,6 +1,7 @@
 import FormInput from "../components/FormInput";
 import { useTranslation } from 'react-i18next';
 import {useState} from "react";
+
 const PasswordReset = () => {
     const { t } = useTranslation();
     const email = {
