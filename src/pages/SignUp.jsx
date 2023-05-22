@@ -1,34 +1,33 @@
-import {useState, useCallback, useMemo, memo} from "react";
+import {useState, memo} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
 import { email, department,password, confirm_password, name} from "../instaces"
-import Validators from "../functional/Validators";
-
 
 const SignUp = () => {
     const { t } = useTranslation();
+
     // change language
     const [form, setForm] = useState({})
 
     const onSubmit = e => {
         e.preventDefault();
         // const check = document.querySelectorAll("input~span")
-        const submitInput = document.querySelectorAll("input")
-        const formSubmit = document.querySelector("#confirm_reset_password")
+        const submitInput = document.querySelectorAll("input[type='text']")
+        const formSubmit = document.querySelector("#signup")
         // if (ValidatorSubmit(formSubmit,submitInput)){
         // }
-        ValidatorSubmit(formSubmit,submitInput)
+        if (ValidatorSubmit(formSubmit,submitInput)){
+            console.log("submit form")
+        }
     }
 
     const onChange = e => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    const inputs = useMemo(()=>{
-        return [name,email,department,password,confirm_password]
-    },[])
+    const inputs =  [name,email,department,password,confirm_password]
 
 return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -38,7 +37,7 @@ return (
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                     {t("register")}
                 </h1>
-                <form id="confirm_reset_password" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
+                <form id="signup" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)} autoComplete="off">
                     {inputs.map((input,i)=>
                     {   
                         return  (
@@ -48,8 +47,8 @@ return (
                                 {...input}                      
                             />        
                         )}
-                    )
-                    }
+                    )}
+
                     <button 
                     type=""
                     className="w-full text-white 

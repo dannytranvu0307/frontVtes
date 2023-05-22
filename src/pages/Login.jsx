@@ -1,20 +1,19 @@
 import {useState} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
+import {email, password} from "../instaces"
+import FormInput from "../components/FormInput";
+import ValidatorSubmit from "../functional/ValidatorSubmit";
 
 function Login(){
     // change language
     const { t } = useTranslation();
 
-    // init form obj
-    const [form, setForm] = useState({
-        email: "",
-        password: "",
-        remember: false
-    });
+    const inputs = [email, password]
 
-    // break obj
-    const { email, password, remember} = form
+    // init form obj
+    const [form, setForm] = useState({});
+    const [remember, setRemember] = useState(false);
 
     // input change
     const onChange = e => {
@@ -23,13 +22,17 @@ function Login(){
 
     // checked?
     const handleCheck = (e) =>{
-        setForm({...form, [e.target.name] : e.target.checked})
+        setRemember(!remember)
     }
 
 
     const onSubmit = e => {
         e.preventDefault();
-        console.log(form)
+        const submitInput = document.querySelectorAll("input[type='text']")
+        const formSubmit = document.querySelector("#login")
+        if (ValidatorSubmit(formSubmit,submitInput)){
+            console.log({...form, ["remember"]:remember})
+        }
     }
 
     return (
@@ -45,29 +48,12 @@ function Login(){
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                         {t("login")}
                     </h1>
-                    <form className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
-                        <div>
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">
-                                {t("email")}
-                            </label>
-                            <input 
-                                type="email" 
-                                name="email" 
-                                id="email" 
-                                placeholder="メールアドレスを入力してください。"
-                                value={email}
-                                onChange={e=>onChange(e)}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                                required/>
-                        </div>
-                        <div>
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{t("password")}</label>
-                            <input 
-                            type="password" 
-                            onChange={e=>onChange(e)} 
-                            value={password} 
-                            name="password" id="password" placeholder="パスワードを入力してください。" className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required=""/>
-                        </div>
+                    <form id="login" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
+                        {inputs.map((input,i)=>(
+                            <FormInput  key={i} 
+                            onChange={e=>onChange(e)}
+                            {...input}/>
+                        ))}
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
@@ -79,7 +65,7 @@ function Login(){
                                     className="text-gray-500 dark:text-gray-300">{t("remember")}</label>
                                 </div>
                             </div>
-                            <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</a>
+                            <Link to="/passwordreset" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</Link>
                         </div>
                         <button 
                         type="submit" 

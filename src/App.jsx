@@ -14,7 +14,6 @@ import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
 import ChangeUserInfor from './pages/ChangeUserInfor';
 import Demo from './pages/Demo';
-import ReduxLearning from './pages/ReduxLearning';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
