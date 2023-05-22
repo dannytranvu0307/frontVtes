@@ -45,7 +45,7 @@ function History() {
             uploadedTime: "2023年10月04日"
         },
         {
-            fileName: "ccc",
+            fileName: "ccc asd asd asdasdas das das das das das dasd asd as asdas das das das dasd asd asd asd asd asd asdas dasd asd as dasd sad asd sdf sdf sdf sdfsd fsdf ds",
             fileURI: "交通費精算書_PHUCLH_2月分",
             uploadedTime: "2023年10月05日"
         },
@@ -97,7 +97,7 @@ function History() {
                                 <div className="item mb-2 md:flex md:flex-wrap md:justify-between">
                                     <div className="container w-full">
                                         <div className="flex flex-col">
-                                            <div className="overflow-x-auto">
+                                            <div className="overflow-x-hidden">
                                                 <div className=" inline-block w-full sm:px-6 lg:px-8">
                                                     <div className="table-wrp block max-h-96">
                                                         <table className="border w-full">

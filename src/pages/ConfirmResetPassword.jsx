@@ -2,16 +2,29 @@ import {useState} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import ValidatorSubmit from "../functional/ValidatorSubmit";
 
 const ConfirmResetPassword = () => {
 // change language
 const { t } = useTranslation();
+const [form, setForm] = useState({
 
-// init form obj
-// const onSubmit = e => {
-//     e.preventDefault();
-//     console.log(form)
-// }
+})
+
+const onChange = e => {
+    setForm({...form,[e.target.name]:e.target.value})
+}
+
+const onSubmit = e => {
+    e.preventDefault();
+    const submitInput = document.querySelectorAll("input")
+        const formSubmit = document.querySelector("#confirm_reset_password")
+        // if (ValidatorSubmit(formSubmit,submitInput)){
+        // }
+        if (ValidatorSubmit(formSubmit,submitInput)){
+            console.log("submit form")
+        }
+}
 
 const inputs = [
     {
@@ -47,6 +60,7 @@ return (
                     {   
                         return  (
                             <FormInput 
+                                onChange={e=> onChange(e)}
                                 key={i} 
                                 {...input}
                             />

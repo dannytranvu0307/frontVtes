@@ -9,6 +9,8 @@ function Login(){
     // change language
     const { t } = useTranslation();
 
+    const inputs = [email, password]
+
     // init form obj
     const [form, setForm] = useState({});
     const [remember, setRemember] = useState(false);
@@ -28,15 +30,11 @@ function Login(){
         e.preventDefault();
         const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#login")
-        // if (ValidatorSubmit(formSubmit,submitInput)){
-        // }
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log(form, remember)
+            console.log({...form, ["remember"]:remember})
         }
     }
 
-
-    const inputs = [email, password]
     return (
         <section 
         data-aos="fade-right"
@@ -52,8 +50,7 @@ function Login(){
                     </h1>
                     <form id="login" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
                         {inputs.map((input,i)=>(
-
-                        <FormInput  key={i} 
+                            <FormInput  key={i} 
                             onChange={e=>onChange(e)}
                             {...input}/>
                         ))}
@@ -68,7 +65,7 @@ function Login(){
                                     className="text-gray-500 dark:text-gray-300">{t("remember")}</label>
                                 </div>
                             </div>
-                            <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</a>
+                            <Link to="/passwordreset" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</Link>
                         </div>
                         <button 
                         type="submit" 

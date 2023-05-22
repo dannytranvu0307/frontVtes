@@ -1,21 +1,20 @@
-import {useState, useCallback, useMemo, memo} from "react";
+import {useState, memo} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
 import { email, department,password, confirm_password, name} from "../instaces"
-import Validators from "../functional/Validators";
-
 
 const SignUp = () => {
     const { t } = useTranslation();
+
     // change language
     const [form, setForm] = useState({})
 
     const onSubmit = e => {
         e.preventDefault();
         // const check = document.querySelectorAll("input~span")
-        const submitInput = document.querySelectorAll("input")
+        const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#signup")
         // if (ValidatorSubmit(formSubmit,submitInput)){
         // }

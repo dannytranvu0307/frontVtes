@@ -19,9 +19,8 @@ const Profile = () => {
         setForm({...form,[e.target.name]:e.target.value})
     }
     const onSubmit = e => {
-            console.log(form)
-            e.preventDefault();
-        }
+        e.preventDefault();
+    }
     return (
 
         <div className="flex flex-col items-center px-6 py-8 h-full md:h-full lg:py-0">

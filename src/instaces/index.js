@@ -27,7 +27,7 @@ export const department = {
     placeholder: "email_pla",
     required: true,
     autoComplete:"off",
-    exclude: ["login"]
+    exclude: ["login", "passwordreset"]
 }
 export const password = {
     id:"password",

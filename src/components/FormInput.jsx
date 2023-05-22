@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useState,useRef,memo } from "react";
+import { useState,useRef,memo, useMemo } from "react";
 import Validators from "../functional/Validators";
 
 const FormInput = (props) => {
@@ -17,12 +17,12 @@ const FormInput = (props) => {
     const handleFocus = (e) => {
         setFocused("");
     }
-    const onBlur =() => {
+    const onBlur = () => {
         setError(
             Validators(ref.current.parentElement.parentElement,ref.current,ref.current.value)
         )
     }
-    console.log(error)
+
     return (
         <div id="input-field"  className= "grid">
             <label 
