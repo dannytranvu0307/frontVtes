@@ -2,62 +2,33 @@ import {useState, useCallback, useMemo, memo} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 import FormInput from "../components/FormInput";
+import ValidatorSubmit from "../functional/ValidatorSubmit";
+import { email, department,password, confirm_password, name} from "../instaces"
 import Validators from "../functional/Validators";
+
 
 const SignUp = () => {
     const { t } = useTranslation();
     // change language
+    const [form, setForm] = useState({})
 
+    const onSubmit = e => {
+        e.preventDefault();
+        // const check = document.querySelectorAll("input~span")
+        const submitInput = document.querySelectorAll("input")
+        const formSubmit = document.querySelector("#confirm_reset_password")
+        // if (ValidatorSubmit(formSubmit,submitInput)){
+        // }
+        ValidatorSubmit(formSubmit,submitInput)
+    }
 
-const onSubmit = useCallback(e => {
-    e.preventDefault();
-},[])
-const inputs = useMemo(()=>{
-    return [{
-            id:"name",
-            label:"name",
-            name:"name",
-            htmlFor: "name",
-            type: "text",
-            placeholder: "name_pla",
-            required: true
-        },
-        {
-            id:"department",
-            label:"department",
-            name:"department",
-            htmlFor: "department",
-            required: true
-        },
-        {
-            id:"email",
-            label:"email",
-            name:"email",
-            type: "email",
-            htmlFor: "email",
-            placeholder: "email_pla",
-            required: true,
-        },
-        {
-            id:"password",
-            label:"password",
-            name:"password",
-            type: "password",
-            htmlFor: "password",
-            placeholder: "password_pla",
-            required: true,
-        },
-        {
-            id:"confirm_password",
-            label:"confirm_password",
-            name:"confirm_password",
-            type: "password",
-            htmlFor: "confirm_password",
-            placeholder: "confirm_password_pla",
-            required: true,
-        }
-    ]
-},[])
+    const onChange = e => {
+        setForm({...form, [e.target.name]: e.target.value})
+    }
+
+    const inputs = useMemo(()=>{
+        return [name,email,department,password,confirm_password]
+    },[])
 
 return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -72,6 +43,7 @@ return (
                     {   
                         return  (
                             <FormInput 
+                                onChange={e=>onChange(e)}
                                 key={i}  
                                 {...input}                      
                             />        
@@ -79,7 +51,7 @@ return (
                     )
                     }
                     <button 
-                    type="submit" title="ádddddddddddd ádddddddddddd áddddddddddddáddddddddddddáddddddddddddáddddddddddddádddddddddddd asd asd asd asd asdas ads ads asdas ds dsas"
+                    type=""
                     className="w-full text-white 
                     bg-primary-600
                     hover:bg-primary-500 

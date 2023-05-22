@@ -21,8 +21,6 @@ const Language = () => {
                 </svg>
             </label>
             <select
-            data-aos="fade-down" 
-            data-aos-duration = "1500"
             onChange={(e)=>handleChange(e) }
             defaultValue={select} 
             className="

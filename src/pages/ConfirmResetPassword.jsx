@@ -20,7 +20,7 @@ const inputs = [
         name:"password",
         type: "password",
         htmlFor: "password",
-        placeholder: "● ● ● ● ● ● ●",
+        placeholder: "password_pla",
         required: true,
     },
     {
@@ -29,7 +29,7 @@ const inputs = [
         name:"confirm_password",
         type: "password",
         htmlFor: "confirm_password",
-        placeholder: "● ● ● ● ● ● ●",
+        placeholder: "confirm_password_pla",
         required: true,
     }
 ]
@@ -40,7 +40,7 @@ return (
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    {t("register")}
+                    {t("confirm_reset_password_title")}
                 </h1>
                 <form id="confirm_reset_password" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
                     {inputs.map((input,i)=>
@@ -53,18 +53,30 @@ return (
                         )}
                     )
                     }
+                    <div className="flex pt-7 justify-between">
                     <button 
-                    type="submit" 
-                    className="w-full text-white 
-                    bg-primary-600
-                    hover:bg-primary-500 
-                    focus:ring-4 focus:outline-none 
-                    focus:ring-primary-300 font-medium rounded-lg 
-                    text-sm px-5 py-2.5 text-center ">{t("register")}</button>
-                    <p className="text-sm font-light text-gray-500">
-                    {t("sign_in_description")} 
-                    <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_in_link")}</Link>
-                    </p>
+                        type="submit" 
+                        className="w-auto text-white
+                        
+                        bg-primary-600
+                        hover:bg-primary-500
+                        focus:ring-4 focus:outline-none 
+                        focus:ring-primary-300 font-medium rounded-lg 
+                        text-sm px-5 py-2.5 text-center ">
+                    {t("cancel")}</button>
+            
+                    <button 
+                        type="submit" 
+                        className="w-auto text-white
+                        
+                        bg-primary-600
+                        hover:bg-primary-500
+                        focus:ring-4 focus:outline-none 
+                        focus:ring-primary-300 font-medium rounded-lg 
+                        text-sm px-5 py-2.5 text-center ">
+                    {t("save")}</button>
+
+                </div>
                 </form>
             </div>
         </div>

@@ -5,18 +5,18 @@ const ResetPassword = () => {
     const {t} = useTranslation();
     const email = {
         id:"email",
-        label:t("email"),
+        label:"email",
         name:"email",
         type: "email",
         htmlFor: "email",
         placeholder: "email@email.com",
-        // pattern: /[a-zA-Z0-9._%+-]+@[a-z0-9・],
         invalidErrorMessage: "lỗi ở đây asd dasdas dsad ad asdsa das dsa das as dasd sad",
         required: true,
     }
     const onChange = e => {
 
     }
+
     return (
         <section className="bg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -36,7 +36,8 @@ const ResetPassword = () => {
                         focus:ring-primary-300 font-medium rounded-lg 
                         text-sm px-5 py-2.5 text-center ">{t("register")}</button>
                         <p className="text-sm font-light text-gray-500">
-                        {t("sign_in_description")} <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_in_link")}</Link>
+                        {t("sign_in_description")} 
+                        <Link to="/login" className="font-medium text-primary-600 hover:underline dark:text-primary-500">{t("sign_in_link")}</Link>
                         </p>
                     </form>
                 </div>

@@ -65,11 +65,14 @@ function App() {
             setPreviewItemImg(null)
         }
     }
+    const handle = (e) => {
+        console.log(e.target.files[0])
+    }
 
     // fake options
     const options = [{
                 date: "yesterday",
-                destination:"fujitsu",
+                destination:"fujitsu asd asd asd asdasd asd sad asda sdas das dasd asdas das dsad as",
                 transportation:"電車",
                 start:"東京駅",
                 end:"品川駅",
@@ -105,6 +108,8 @@ function App() {
 
         <br/>
         <h1>My choose</h1>
+        <input type="file" onChange={e=>handle(e)}/>
+        
         {
         item &&  
         (
