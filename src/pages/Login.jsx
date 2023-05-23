@@ -1,20 +1,43 @@
-import {useState} from "react";
+import { useRef,useState, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { useLoginMutation} from '../features/auth/authApiSlice';
+import { setCredentials } from "../features/auth/authSlice";
+import { useDispatch } from "react-redux";
+
 import {email, password} from "../instaces"
+
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
+import { set } from "date-fns";
 
 function Login(){
     // change language
     const { t } = useTranslation();
+
+    const userRef = useRef()
+    const errRef = useRef()
 
     const inputs = [email, password]
 
     // init form obj
     const [form, setForm] = useState({});
     const [remember, setRemember] = useState(false);
+    const [errMsg, setErrMsg] = useState('')
+    const navigate = useNavigate()
 
+    const [login, {isLoading}] = useLoginMutation()
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        // userRef.current.focus()
+    },[])
+
+    useEffect(()=>{
+        setErrMsg('')
+    },[form])
     // input change
     const onChange = e => {
         setForm({...form, [e.target.name] : e.target.value})
@@ -26,16 +49,44 @@ function Login(){
     }
 
 
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
         const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#login")
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log({...form, ["remember"]:remember})
+            // try {
+                // const userData = await login({...form}).unwrap()
+                // console.log(userData)
+                // dispatch(setCredentials({...userData}))
+                // setUser('')
+                // navigate('/')
+            // }catch(err ){
+            //     if (err?.response){
+            //         setErrMsg('No server response');
+            //     }else if (err.response?.code === 400){
+            //         setErrMsg('Missing user name or password');
+            //     }else if (err.response?.code === 401){
+            //         setErrMsg('Authorized');
+            //     }else {
+            //         setErrMsg("Login Failed")
+            //     }
+            //     // errRef.current.focus();
+            // }
+            // console.log({...form, ["remember"]:remember})
+            const headers = {
+                "Content-Type":"Apllication/json"
+            }
+            const body = {...form, ["remember"]:remember}
+            const res = await axios.post("http://localhost:8080/api/v1/auth/login", body, headers)
+            console.log(res.data)
+            if (res.data.code === '200'){
+                console.log("pass")
+                // navigate("/")
+            }
         }
     }
 
-    return (
+    return isLoading ? <h1>Loading...</h1> :(
         <section 
         data-aos="fade-right"
         data-aos-offset="3"
@@ -54,6 +105,7 @@ function Login(){
                             onChange={e=>onChange(e)}
                             {...input}/>
                         ))}
+                        <p ref={errRef}>{errMsg}</p>
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">

@@ -17,7 +17,7 @@ const ReasonTicket = () => {
 
 
     return (
-        <div className="ml-6 mt-6">
+        <div className="ml-6 mt-6 flex-1">
             <span
                 className="flex mb-2 text-sm font-medium text-gray-900 grow-0 items-end">
                 {t("reason_ticket")}
@@ -32,19 +32,29 @@ const ReasonTicket = () => {
                         </div>
                         {t("btnAdd")}
                     </div> :
-                    <div>
-                        <form className="flex justify-between" id="ReasonTicket">
+                    <div className="relative">
+                       
+                            <svg onClick={handleToggleTicket} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" 
+                            className="w-5 h-5 absolute flex ml-auto top-0 right-0">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        <form className="flex justify-between space-x-[20px]" id="ReasonTicket">
                             {inputs.map((input, key)=>(
                                 <FormInput {...input} />
                             ))}
                         </form>
-                        <div className="group duration-300 transition w-7 h-7 cursor-pointer hover:bg-red-400 flex items-center bg-red-500 rounded-full  text-white hover:rotate-180" onClick={handleToggleTicket}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" 
-                            className="w-5 h-5 flex mx-auto ">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-
-                        </div>  
+                        <button 
+                        type=""
+                        className="
+                        my-4
+                        flex
+                         text-white 
+                        bg-primary-600
+                        mx-auto
+                        hover:bg-primary-500 
+                        focus:ring-4 focus:outline-none 
+                        focus:ring-primary-300 font-medium rounded-lg 
+                        text-sm px-5 py-2.5 text-center ">{t("search")}</button>
                     </div>
             }
         </div>

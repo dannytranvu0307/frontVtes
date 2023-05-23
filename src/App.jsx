@@ -12,11 +12,11 @@ import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
-import ChangeUserInfor from './pages/ChangeUserInfor';
 import Demo from './pages/Demo';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
+import RequireAuth from './features/auth/RequireAuth';
 
 function App() {
   useEffect(function () {
@@ -39,13 +39,14 @@ function App() {
                   <Routes>
                     <Route path='' element={<Home />} />
                     <Route path='/login' element={<Login />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/register' element={<SignUp />} />
-                    <Route path='/history' element={<History />} />
-                    <Route path='/changeuserinfor' element={<ChangeUserInfor />} />
-                    <Route path='/demo' element={<Demo />} />
-                    <Route path='/passwordreset' element={<PasswordReset />} />
                     <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
+                    <Route path='/register' element={<SignUp />} />
+                    <Route path='/passwordreset' element={<PasswordReset />} />
+                    {/* <Route element={<RequireAuth />}> */}
+                      <Route path='/demo' element={<Demo />} />
+                      <Route path='/history' element={<History />} />
+                      <Route path='/profile' element={<Profile />} />
+                    {/* </Route> */}
                   </Routes>
                 </div>
               </div>

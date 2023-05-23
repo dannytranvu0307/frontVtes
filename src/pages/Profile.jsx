@@ -31,10 +31,10 @@ const Profile = () => {
                     </h1>
 
 
-                    <form id="profile" className="flex" onSubmit={e => onSubmit(e)}>
+                    <form id="profile" className="flex flex-wrap" onSubmit={e => onSubmit(e)}>
                         <UserInfo onChange={onChange} {...user} />
                         <ReasonTicket />
-                        <div className="mt-8 flex col-span-2 justify-between">
+                        <div className="w-full mt-8 flex col-span-2 justify-between">
                             <button
                             type="submit"
                                 className="w-auto text-white
