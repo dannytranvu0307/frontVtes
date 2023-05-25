@@ -66,5 +66,30 @@
     "registerSuccess":"新規登録のため、お客様のメールアドレスにアドレス確認メールを送信しました。 アドレス確認メールが届きましたら、メール内のリンクをクリックしてください。",
     "TIMEOUT":"このリンクは有効期限が切れています。",
     "confirm_email_message":"メールを確認してください。",
-    "invalidEmail":"このメールアドレスは存在ありません。"
+    "invalidEmail":"このメールアドレスは存在ありません。",
+     "date":"訪問日付",
+    "vehicle":"交通機関",
+    "purchase":"IC・現金",
+    "Round":"片・往",
+    "train":"電車",
+    "bus":"バス",
+    "taxi":"タクシー",
+    "ic":"IC",
+    "cash":"現金",
+    "1way":"方道",
+    "2way":"往",
+    "Destination":"訪問先",
+    "Destination_pla":"訪問先を入力してください。",
+    "departure":"出発地",
+    "arrival":"到着地",
+    "price":"金額 (円)",
+    "add":"保存",
+    "addPath":"経由地の追加",
+    "date2":"日付",
+    "destination":"訪問先",
+    "delete":"削除",
+    "name2":"氏名",
+    "UploadFile":"領収書を添付",
+    "export":"エクスポート"
+
 }
