@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FormInput from '../components/FormInput';
 import {start, goal, via} from "../instaces"
 
@@ -8,10 +8,22 @@ const ReasonTicket = () => {
     const { t } = useTranslation();
 
     const [mounted, setMounted] = useState(true);
-
+    const res = {
+        data:"",
+        message: "something wrong",
+        status: 403
+    }
+    
+    const [error, setError] = useState();
     const handleToggleTicket = () => {
         setMounted(!mounted)
     }
+
+    useEffect(()=>{
+        if (res.status === 403){
+            setError("err_same_name")
+        }
+    },[res])
 
     const inputs = [start, goal]
 
@@ -35,7 +47,7 @@ const ReasonTicket = () => {
                     <div className="relative">
                        
                             <svg onClick={handleToggleTicket} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" 
-                            className="w-5 h-5 absolute flex ml-auto top-0 right-0">
+                            className="w-5 h-5 hover:cursor-pointer hover:text-gray-500 absolute flex ml-auto top-0 right-0">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         <form className="flex justify-between space-x-[20px]" id="ReasonTicket">

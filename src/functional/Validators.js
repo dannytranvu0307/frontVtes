@@ -6,16 +6,16 @@ function Validators (formId,options,value){
     const regex_name_vietnamese = /^[A-Z ]{1,}[A-Z]$/m;
     const regex_password = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W){8,24}/g; //regex cần có dấu kí tự đặt biệt
     if (formId){
-        if (options.name === "name"){
+        if (options.name === "fullName"){
             if (value === ""){
-                error.id = "name"
+                error.id = "fullName"
                 error.name =  "er_input_empty"
             }else if (value.length < 4 || value.length > 64 ){
-                error.id = "name"
+                error.id = "fullName"
                 error.name = "er_username_len"
             }
             else if (!regex_name_vietnamese.test(value)){
-                error.id = "name"
+                error.id = "fullName"
                 error.name = "er_username_undi"
             }else {
                 error.name = ""
@@ -41,14 +41,14 @@ function Validators (formId,options,value){
                 error.id = "password"
                 error.name =  "er_input_empty"
             }
-            else if (value.length < 8){
-                error.id = "password"
-                error.name =  "er_input_len_password"
-            }
-            else if (!(regex_password.test(value))){
-                error.id = "password"
-                error.name = "er_input_rule_password"
-            }
+            // else if (value.length < 8){
+            //     error.id = "password"
+            //     error.name =  "er_input_len_password"
+            // }
+            // else if (!(regex_password.test(value))){
+            //     error.id = "password"
+            //     error.name = "er_input_rule_password"
+            // }
             else {
                 error.name = ""
             }
@@ -68,9 +68,9 @@ function Validators (formId,options,value){
             }
         };
 
-        if (options.name === "department" ){
+        if (options.name === "departmentId" ){
             if (value === ""){
-                error.id = "department"
+                error.id = "departmentId"
                 error.name =  "er_select_empty"
             }
             else {
@@ -155,6 +155,7 @@ function Validators (formId,options,value){
             }
         }
     }
+    console.log(error)
     return error
 };  
 

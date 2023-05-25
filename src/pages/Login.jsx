@@ -1,43 +1,32 @@
-import { useRef,useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import { useLoginMutation} from '../features/auth/authApiSlice';
-import { setCredentials } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { Link,useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import {email, password} from "../instaces"
 
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
-import { set } from "date-fns";
+import { selectError,login, authenticate } from "../features/auth/loginSlice";
 
 function Login(){
+    
+
     // change language
     const { t } = useTranslation();
-
-    const userRef = useRef()
-    const errRef = useRef()
+    const navigate = useNavigate()
+    const error = useSelector(selectError);
+    // const checkPass = useSelector(selectCheckPass)
+    // const isAuthenticated = useSelector(selectIsAuthenticated)
 
     const inputs = [email, password]
+
+    const dispatch = useDispatch()
 
     // init form obj
     const [form, setForm] = useState({});
     const [remember, setRemember] = useState(false);
-    const [errMsg, setErrMsg] = useState('')
-    const navigate = useNavigate()
 
-    const [login, {isLoading}] = useLoginMutation()
-    const dispatch = useDispatch()
-
-    useEffect(()=>{
-        // userRef.current.focus()
-    },[])
-
-    useEffect(()=>{
-        setErrMsg('')
-    },[form])
     // input change
     const onChange = e => {
         setForm({...form, [e.target.name] : e.target.value})
@@ -48,49 +37,34 @@ function Login(){
         setRemember(!remember)
     }
 
-
     const onSubmit = async e => {
         e.preventDefault();
         const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#login")
         if (ValidatorSubmit(formSubmit,submitInput)){
-            // try {
-                // const userData = await login({...form}).unwrap()
-                // console.log(userData)
-                // dispatch(setCredentials({...userData}))
-                // setUser('')
-                // navigate('/')
-            // }catch(err ){
-            //     if (err?.response){
-            //         setErrMsg('No server response');
-            //     }else if (err.response?.code === 400){
-            //         setErrMsg('Missing user name or password');
-            //     }else if (err.response?.code === 401){
-            //         setErrMsg('Authorized');
-            //     }else {
-            //         setErrMsg("Login Failed")
-            //     }
-            //     // errRef.current.focus();
-            // }
-            // console.log({...form, ["remember"]:remember})
-            const headers = {
-                "Content-Type":"Apllication/json"
-            }
-            const body = {...form, ["remember"]:remember}
-            const res = await axios.post("http://localhost:8080/api/v1/auth/login", body, headers)
-            console.log(res.data)
-            if (res.data.code === '200'){
-                console.log("pass")
-                // navigate("/")
-            }
+            console.log(form, "will call api")
+            dispatch(login({...form, ["remember"]:remember}))
+            .unwrap()
+            .then(res=>{
+                if (res.status !== 401){
+                    ()=>dispatch(authenticate())
+                    .unwrap()
+                    .then(()=>navigate("/"))
+                }
+            })
+            
         }
     }
 
-    return isLoading ? <h1>Loading...</h1> :(
+    // if (isAuthenticated || checkPass){
+    //     navigate("/")
+    // }
+
+    return (
         <section 
-        data-aos="fade-right"
-        data-aos-offset="3"
-        data-aos-easing="ease-in-sine"
+        // data-aos="fade-right"
+        // data-aos-offset="3"
+        // data-aos-easing="ease-in-sine"
         className="bg-gray-50 dark:bg-gray-900"
         >
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -105,7 +79,7 @@ function Login(){
                             onChange={e=>onChange(e)}
                             {...input}/>
                         ))}
-                        <p ref={errRef}>{errMsg}</p>
+
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
@@ -118,6 +92,10 @@ function Login(){
                                 </div>
                             </div>
                             <Link to="/passwordreset" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</Link>
+                        </div>
+                        <div>
+
+                        <span className= "text-red-500 pt-2 text-xs">{error && t(error)}</span>
                         </div>
                         <button 
                         type="submit" 

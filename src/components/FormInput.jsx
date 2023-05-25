@@ -1,20 +1,26 @@
 import { useTranslation } from 'react-i18next';
-import { useState,useRef,memo } from "react";
+import { useState,useRef,memo, useMemo,useEffect } from "react";
 import Validators from "../functional/Validators";
+import { departments  ,selectDepartments} from '../features/department/departmentsSlice';
+import { useSelector, useDispatch } from 'react-redux';
 
 const FormInput = (props) => {
     const [focused, setFocused] = useState("hidden");
-    const {label, placeholder,forHtml,...inputProps} = props
+    const {label, placeholder,forHtml,defaultValue,...inputProps} = props
 
+    const dispatch = useDispatch()
+    const departments_lst = useSelector(selectDepartments)
+    useEffect(()=>{
+        dispatch(departments())
+    },[])
     const [error, setError]= useState({
         id:"",
         name:"",
     });
     const ref = useRef();
-
     const { t } = useTranslation();
 
-    const handleFocus = (e) => {
+    const handleFocus = () => {
         setFocused("");
     }
     const onBlur = () => {
@@ -22,7 +28,6 @@ const FormInput = (props) => {
             Validators(ref.current.parentElement.parentElement,ref.current,ref.current.value)
         )
     }
-
     return (
         <div id="input-field"  className= "grid">
             <label 
@@ -31,7 +36,7 @@ const FormInput = (props) => {
                 {t(label)}
                 </label>
             {
-                inputProps.type !== "department" ? (
+                inputProps.type !== "departmentId" ? (
                 <input 
                     ref={ref}
                     {...inputProps}
@@ -54,30 +59,33 @@ const FormInput = (props) => {
                     onFocus={(e) =>handleFocus(e)
                     }
                     ref={ref}
+                    value={defaultValue}
                     {...inputProps}
                     className={`
                     bg-gray-50 border border-gray-300 
                     text-gray-700 sm:text-sm rounded-lg 
                     focus:ring-primary-600
                     focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}>
-                    <option value="">{t("chooseDepartment")}</option>
-                    <option value="BOD">BOD</option>
-                    <option value="COMMOM">COMMOM</option>
-                    <option value="営業第一部">営業第一部</option>
-                    <option value="営業第ニ部">営業第ニ部</option>
-                    <option value="営業第三部">営業第三部</option>
-                    <option value="大阪事業所">大阪事業所</option>
-                    <option value="開発第一グループ">開発第一グループ</option>
-                    <option value="開発第二グループ">開発第二グループ</option>
-                    <option value="開発第三グループ">開発第三グループ</option>
-                    <option value="開発第四グループ">開発第四グループ</option>
-                    <option value="開発第五グループ">開発第五グループ</option>
+                <option value="">{t("chooseDepartmentId")}</option>
+                    {departments_lst.map((item,key)=>(
+                        <option key={key} value={item.id}>{t(item.departmentName)}</option>
+                    ))}
+                    {/* <option value="2">COMMOM</option>
+                    <option value="3">営業第一部</option>
+                    <option value="4">営業第ニ部</option>
+                    <option value="5">営業第三部</option>
+                    <option value="6">大阪事業所</option>
+                    <option value="7">開発第一グループ</option>
+                    <option value="8">開発第二グループ</option>
+                    <option value="9">開発第三グループ</option>
+                    <option value="10">開発第四グループ</option>
+                    <option value="group5">開発第五グループ</option>
                     <option value="開発第六グループ">開発第六グループ</option>
                     <option value="マーケティング部">マーケティング部</option>
                     <option value="総務部">総務部</option>
                     <option value="人事部">人事部</option>
                     <option value="採用部">採用部</option>
-                    <option value="経理・会計ー財務部">経理・会計ー財務部</option>
+                    <option value="経理・会計ー財務部">経理・会計ー財務部</option> */}
                 </select>)}
                 
                 <span className={`${focused} text-red-500 text-xs`}>{t("") || t(error.name)}</span>

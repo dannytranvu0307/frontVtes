@@ -1,9 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import actionsSlice from "../actions/actionsSlice";
+import loginReducer from '../features/auth/loginSlice';
+import departmentsReducer from '../features/department/departmentsSlice';
 
 export default configureStore({
   reducer: {
-    custom: actionsSlice
-  }
-})
-
+    login: loginReducer,
+    departments: departmentsReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});

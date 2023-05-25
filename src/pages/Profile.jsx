@@ -1,26 +1,26 @@
 import { useState, useCallback, useMemo, memo, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import UserInfo from "./UserInfo";
-import FormInput from "../components/FormInput";
+import axios from "axios";
 import ReasonTicket from '../pages/ReasonTicket';
 
 
 const Profile = () => {
     const { t } = useTranslation();
     const [form, setForm] = useState();
-    // change language
-    const user = useMemo(()=>({
-        name: "NGUYEN VAN A",
-        department: "営業第一部",
-        email: "emailcuatao@gmail.com.vn",
-    }),[])
+
+
+    useEffect(()=>{
+    },[])
 
     const onChange=(e) => {
         setForm({...form,[e.target.name]:e.target.value})
     }
+
     const onSubmit = e => {
         e.preventDefault();
     }
+    console.log("re")
     return (
 
         <div className="flex flex-col items-center px-6 py-8 h-full md:h-full lg:py-0">
@@ -32,7 +32,7 @@ const Profile = () => {
 
 
                     <form id="profile" className="flex flex-wrap" onSubmit={e => onSubmit(e)}>
-                        <UserInfo onChange={onChange} {...user} />
+                        <UserInfo onChange={onChange} />
                         <ReasonTicket />
                         <div className="w-full mt-8 flex col-span-2 justify-between">
                             <button
@@ -62,3 +62,5 @@ const Profile = () => {
     )
 }
 export default memo(Profile);
+
+// to fetch at 'http://localhost:8080/api/v1/auth/signin' from origin 'http://localhost:5173' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'.
