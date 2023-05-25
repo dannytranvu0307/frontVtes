@@ -1,22 +1,22 @@
-export const name = {
-    id:"name",
-    label:"name",
-    name:"name",
-    htmlFor: "name",
+export const fullName = {
+    id:"fullName",
+    label:"fullName",
+    name:"fullName",
+    htmlFor: "fullName",
     type: "text",
-    placeholder: "name_pla",
+    placeholder: "fullNamePla",
     required: true,
     autoComplete:"off",
     // exclude: ["login"]
 }
 export const department = {
-    id:"department",
-    label:"department",
-    name:"department",
-    htmlFor: "department",
-    type:"department",
+    id:"departmentId",
+    label:"departmentId",
+    name:"departmentId",
+    htmlFor: "departmentId",
+    placeholder: "chooseDepartmentId",
+    type:"departmentId",
     required: true,
-    autoComplete:"off"
 }
  export const email = {
     id:"email",

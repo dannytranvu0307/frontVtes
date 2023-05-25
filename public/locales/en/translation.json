@@ -26,5 +26,7 @@
     "er_input_emty": "This field is required and must have a value.",
     "er_input_len_password":"Your password must be have at least 8 characters.",
     "er_input_rule_password":"Your password must be have long 1 uppercase & 1 lowercase character 1 number.",
-    "er_input_confirm_password": "Confirm password did not match."
+    "er_input_confirm_password": "Confirm password did not match.",
+    "D2":"Develop Group",
+    "D5":"Training Group"
 }

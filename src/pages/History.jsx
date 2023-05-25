@@ -35,8 +35,8 @@ function History() {
             uploadedTime: "2023年10月05日"
         },
         {
-            fileName: "aaaa",
-            fileURI: "交通費精算書_PHUCLH_4月分",
+            fileName: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
+            fileURI: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
             uploadedTime: "2023年10月03日"
         },
         {
@@ -66,61 +66,42 @@ function History() {
         }
     ]
     return (
-        <div className="flex flex-col items-center mb-16 py-8 h-full md:h-full lg:py-0">
-            <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:w-full h-full xl:p-0">
+        <div className="flex flex-col mx-auto items-center -sm:py-4 sm:px-6 mb-16 py-8 h-full xl:w-3/5 lg:w-3/5 sm:w-full md:w-full lg:py-0">
+            <div className="bg-white rounded-lg shadow md:mt-0 sm:w-full h-full xl:p-0">
                 <div className="flex flex-col  h-full">
-                    <h1 className="text-xl pt-4 px-12 sm:px-12 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                    <h1 className="text-xl pt-8 px-12 sm:px-12 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                         {t("lbviewExportFileHistory")}
                     </h1>
-                    {/* <span className="flex w-full justify-center text-gray-500 mt-4">{t("lbviewExportFileHistoryEmpty")}</span>
-                     */}
-                    {/* <div className="table-wrp block max-h-96 mt-4">
-                        <table className="w-full">
-                            <thead className="bg-white border-b sticky top-0">
-                                <tr className="border border-borderTable">
-                                    <th className="border border-borderTable w-1/5">{t("lbDate")}</th>
-                                    <th className="border border-borderTable">{t("lbFileName")}</th>
-                                </tr>
-                            </thead>
-                            <tbody className="h-96 overflow-y-auto">
-                                {files.map((file, key) => (
-                                    <tr className="border" key={key}>
-                                        <td className="border px-2 border-borderTable">{file.uploadedTime}</td>
-                                        <td className="px-2"><a target="_blank" href={file.fileURI}>{file.fileName}</a></td>
-                                    </tr>))}
-                            </tbody>
-                        </table>
-                    </div> */}
-                    <div className="py-12">
-                        <div className="max-w-7xl mx-auto">
+                    <div className="xl:py-8 xl:px-8 sm:py-1 sm:px-1 md:py-8 md:px-8">
+                        <div className="mx-auto">
                             <div className="bg-white overflow-hidden">
                                 <div className="item mb-2 md:flex md:flex-wrap md:justify-between">
-                                    <div className="container w-full">
-                                        <div className="flex flex-col">
+                                    <div className="container">
+                                        {/* <div className="flex flex-col"> */}
                                             <div className="overflow-x-hidden">
-                                                <div className=" inline-block w-full sm:px-6 lg:px-8">
-                                                    <div className="table-wrp block max-h-96">
-                                                        <table className="border w-full">
+                                                <div className="border-borderTable-borderTable">
+                                                    <div className="table-wrp  max-h-[420px]">
+                                                        <table className="border table-fixed w-full border-borderTable-borderTable">
                                                             <thead className="bg-gray-300 border sticky top-0">
                                                                 <tr>
-                                                                    <th scope="col" className="text-md text-center border w-1/5 font-medium text-gray-900 px-6 py-4 text-left">
+                                                                    <th  className="text-md w-1/4 text-center border border-borderTable-borderTable font-medium text-gray-900 px-6 py-2 text-left">
                                                                         {t("lbDate")}
                                                                     </th>
-                                                                    <th scope="col" className="text-md text-center border font-medium text-gray-900 px-6 py-4 text-left">
+                                                                    <th  className="text-md text-center border border-borderTable-borderTable   font-medium text-gray-900 px-6 py-2 text-left">
                                                                         {t("lbFileName")}
                                                                     </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody className="border h-96 overflow-y-auto">
+                                                            <tbody className="border w-1/5 h-96 ">
                                                                 {files.map((file, key) => (
-                                                                    <tr className="bg-white border transition duration-300 ease-in-out hover:bg-gray-100" key={key}>
-                                                                        <td className="text-sm border font-extrabold border-borderTable font-light px-6 py-4 whitespace-nowrap">{file.uploadedTime}</td>
-                                                                        <td className="text-sm text-blue-700 underline px-6 py-4 whitespace-nowrap underline-offset-4"><a target="_blank" href={file.fileURI}>{file.fileName}</a></td>
+                                                                    <tr className="bg-white border  border-borderTable-borderTable transition duration-300 ease-in-out hover:bg-gray-100" key={key}>
+                                                                        <td className="text-sm border font-extrabold border-borderTable-borderTable font-light px-6 py-2 whitespace-nowrap">{file.uploadedTime}</td>
+                                                                        <td className="text-sm text-blue-700 underline px-6 py-2 whitespace-nowrap underline-offset-4"><a target="_blank" href={file.fileURI}>{file.fileName}</a></td>
                                                                     </tr>))}
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                </div>
+                                                {/* </div> */}
                                             </div>
                                         </div>
                                     </div>

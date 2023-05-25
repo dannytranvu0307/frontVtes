@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 
 import Aos from "aos";
 import 'aos/dist/aos.css';
@@ -12,16 +12,24 @@ import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
-import ChangeUserInfor from './pages/ChangeUserInfor';
+import VerifyCode from './pages/VerifyCode'
 import Demo from './pages/Demo';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
+import { authenticate, selectIsAuthenticated } from "./features/auth/loginSlice";
+import { useDispatch, useSelector  } from "react-redux";
+
 
 function App() {
-  useEffect(function () {
+
+  const isAuthenticated = useSelector(selectIsAuthenticated)
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
     Aos.init({ duration: 1000 });
-  }, []);
+    dispatch(authenticate())
+  },[isAuthenticated])
 
   return (
     <Router>
@@ -32,20 +40,26 @@ function App() {
             <Language />
           </header>
           <div className="flex h-full bg-gray-50 mb-1">
-            <Sidebar />
+            {isAuthenticated && <Sidebar />}
             <main className="flex flex-col w-full bg-gray-50 overflow-x-hidden overflow-y-auto ml-16 left-16 -z-1">
               <div className="w-full px-6 py-8">
                 <div className=" flex flex-col w-full h-full">
                   <Routes>
-                    <Route path='' element={<Home />} />
-                    <Route path='/login' element={<Login />} />
+                    {isAuthenticated ? (<>
                     <Route path='/profile' element={<Profile />} />
-                    <Route path='/register' element={<SignUp />} />
-                    <Route path='/history' element={<History />} />
-                    <Route path='/changeuserinfor' element={<ChangeUserInfor />} />
-                    <Route path='/demo' element={<Demo />} />
-                    <Route path='/passwordreset' element={<PasswordReset />} />
-                    <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
+                      <Route path='' element={<Home />} />
+                      <Route path='/demo' element={<Demo />} />
+                      <Route path='/history' element={<History />} />
+                      <Route path='*' to="/" element={<Home />} />
+                    </>):(<>
+                    <Route path='/login' element={<Login />} />
+                      <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
+                      <Route path='/register' element={<SignUp />} />
+                      <Route path='/passwordreset' element={<PasswordReset />} />
+                      <Route path='verify/:verifyCode' element={<VerifyCode />} />
+                      <Route path='*' to="login" element={<Login />} />
+                      </>
+                      )}
                   </Routes>
                 </div>
               </div>

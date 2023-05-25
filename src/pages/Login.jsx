@@ -1,15 +1,27 @@
-import {useState} from "react";
+import { useState, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import {email, password} from "../instaces"
+
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
+import { selectError,login, authenticate } from "../features/auth/loginSlice";
 
 function Login(){
+    
+
     // change language
     const { t } = useTranslation();
+    const navigate = useNavigate()
+    const error = useSelector(selectError);
+    // const checkPass = useSelector(selectCheckPass)
+    // const isAuthenticated = useSelector(selectIsAuthenticated)
 
     const inputs = [email, password]
+
+    const dispatch = useDispatch()
 
     // init form obj
     const [form, setForm] = useState({});
@@ -25,21 +37,34 @@ function Login(){
         setRemember(!remember)
     }
 
-
-    const onSubmit = e => {
+    const onSubmit = async e => {
         e.preventDefault();
         const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#login")
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log({...form, ["remember"]:remember})
+            console.log(form, "will call api")
+            dispatch(login({...form, ["remember"]:remember}))
+            .unwrap()
+            .then(res=>{
+                if (res.status !== 401){
+                    ()=>dispatch(authenticate())
+                    .unwrap()
+                    .then(()=>navigate("/"))
+                }
+            })
+            
         }
     }
 
+    // if (isAuthenticated || checkPass){
+    //     navigate("/")
+    // }
+
     return (
         <section 
-        data-aos="fade-right"
-        data-aos-offset="3"
-        data-aos-easing="ease-in-sine"
+        // data-aos="fade-right"
+        // data-aos-offset="3"
+        // data-aos-easing="ease-in-sine"
         className="bg-gray-50 dark:bg-gray-900"
         >
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -54,6 +79,7 @@ function Login(){
                             onChange={e=>onChange(e)}
                             {...input}/>
                         ))}
+
                         <div className="flex items-center justify-between">
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
@@ -66,6 +92,10 @@ function Login(){
                                 </div>
                             </div>
                             <Link to="/passwordreset" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">{t("forgot_password")}</Link>
+                        </div>
+                        <div>
+
+                        <span className= "text-red-500 pt-2 text-xs">{error && t(error)}</span>
                         </div>
                         <button 
                         type="submit" 

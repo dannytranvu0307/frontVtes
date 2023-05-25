@@ -3,18 +3,24 @@ import { useTranslation } from 'react-i18next';
 import {email} from "../instaces"
 import {useState} from "react";
 import { Link } from "react-router-dom";
+import ValidatorSubmit from "../functional/ValidatorSubmit";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSendMail,passwordReset,selectPasswordResetError } from "../features/auth/loginSlice";
 
 const PasswordReset = () => {
     const [form, setForm] = useState();
     const { t } = useTranslation();
 
+    const dispatch = useDispatch()
+    const sendMail = useSelector(selectSendMail)
+    const invalidEmail = useSelector(selectPasswordResetError)
+
     const onSubmit = e => {
         e.preventDefault();
-
-        const submitInput = document.querySelectorAll("input[type='text']")
-        const formSubmit = document.querySelector("#resetpassword")
+        const submitInput = document.querySelectorAll("input")
+        const formSubmit = document.querySelector("#passwordreset")
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log("submit form")
+            dispatch(passwordReset(form)).unwrap()
         }
     }
 
@@ -41,11 +47,11 @@ const PasswordReset = () => {
                     <div className="py-4 text-gray-500">{t("ConfirmEmaiMessage")}</div>
                     <form id="passwordreset" className="space-y-4 md:space-y-6" onSubmit={e => onSubmit(e)}>
                         <FormInput {...email} onChange = {e => onChange(e)} placeholder="ex_email"/>
+                        <div><span className="absolute text-red-500 text-xs">{t(invalidEmail)}</span></div>
                         <div className="flex justify-end">
                             <button 
                                 type="submit" 
                                 className="w-auto text-white
-                                
                                 bg-primary-600
                                 hover:bg-primary-500
                                 focus:ring-4 focus:outline-none 
@@ -56,6 +62,10 @@ const PasswordReset = () => {
                     </form>
                 </div>
             </div>
+            {
+            sendMail && 
+                <ErrorNotification>confirm_email_message</ErrorNotification>
+                }
         </div>
         </section>
     )
