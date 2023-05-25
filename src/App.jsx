@@ -53,7 +53,7 @@ function App() {
                       <Route path='*' to="/" element={<Home />} />
                     </>):(<>
                     <Route path='/login' element={<Login />} />
-                      <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
+                      <Route path='/confirmresetpassword/:authToken' element={<ConfirmResetPassword />}></Route>
                       <Route path='/register' element={<SignUp />} />
                       <Route path='/passwordreset' element={<PasswordReset />} />
                       <Route path='verify/:verifyCode' element={<VerifyCode />} />

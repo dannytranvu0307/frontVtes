@@ -1,21 +1,32 @@
 import {useState} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
-import {new_password, confirm_password} from "../instaces"
+import { confirmPasswordReset,selectConfirmPasswordResetSuccess,selectConfirmPasswordResetReject } from "../features/auth/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {new_password, confirm_password} from "../instaces";
+import ErrorNotification from "../components/ErrorNotification";
 
 const ConfirmResetPassword = () => {
 // change language
 const { t } = useTranslation();
-const [form, setForm] = useState({
+const [form, setForm] = useState({})
 
-})
+const isSuccess = useSelector(selectConfirmPasswordResetSuccess)
+const isReject = useSelector(selectConfirmPasswordResetReject)
+
+const param = useParams ()
+
+const inputs = [
+    new_password,confirm_password
+]
 
 const onChange = e => {
     setForm({...form,[e.target.name]:e.target.value})
 }
 
+const dispatch = useDispatch();
 const onSubmit = e => {
     e.preventDefault();
     const submitInput = document.querySelectorAll("input")
@@ -23,12 +34,10 @@ const onSubmit = e => {
 
     if (ValidatorSubmit(formSubmit,submitInput)){
         console.log("submit form")
+        dispatch(confirmPasswordReset({newPassword:form.password, ...param}))
     }
 }
 
-const inputs = [
-    new_password,confirm_password
-]
 return (
     <section className="bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -49,17 +58,20 @@ return (
                         )}
                     )
                     }
+                    {isReject && <span className="text-red-500 text-sm">{t('mailTimeOut')}</span>}
                     <div className="flex pt-7 justify-between">
-                    <button 
-                        type="submit" 
-                        className="w-auto text-white
-                        
-                        bg-primary-600
-                        hover:bg-primary-500
-                        focus:ring-4 focus:outline-none 
-                        focus:ring-primary-300 font-medium rounded-lg 
-                        text-sm px-5 py-2.5 text-center ">
-                    {t("cancel")}</button>
+                        <Link to="/login">
+                        <button 
+                            type="submit" 
+                            className="w-auto text-white
+                            
+                            bg-primary-600
+                            hover:bg-primary-500
+                            focus:ring-4 focus:outline-none 
+                            focus:ring-primary-300 font-medium rounded-lg 
+                            text-sm px-5 py-2.5 text-center ">
+                        {t("cancel")}</button>
+                    </Link>
             
                     <button 
                         type="submit" 
@@ -74,6 +86,9 @@ return (
                 </form>
             </div>
         </div>
+        {
+            isSuccess && <ErrorNotification>confirmPassWordMessage</ErrorNotification>
+        }
     </div>
     </section>
 )

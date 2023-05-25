@@ -73,6 +73,17 @@ export const passwordReset = createAsyncThunk(
     }
 )
 
+export const confirmPasswordReset = createAsyncThunk(
+    'login/confirmPasswordReset',
+    async (form) => {
+        try {
+            const response = await axios.post(`${baseURL}/users/reset-password`,form )
+            return response
+        }catch(err){
+            return err.response
+        }
+    }
+)
 
 
 
@@ -85,10 +96,15 @@ const authSlice = createSlice({
                     sendMailNotification: null,
                     isAuthenticated:false,
                     checkPass: false,
-                    isLoading: false, 
+                    isLoading: true, 
                     isActive : false,
-                    passwordResetError: null
+                    passwordResetError: null,
+                    // email reset password instace
+                    sendMailMessage: null,
                     // mailTimeOut: false
+                    // confirm password and auth token message
+                    confirmPasswordResetSuccess: null,
+                    confirmPasswordResetReject: false
                 },
     extraReducers:(builder) =>  {
         // login thunk
@@ -99,7 +115,6 @@ const authSlice = createSlice({
         }),
         builder.addCase(login.fulfilled, (state,action)=> {
             if(action.payload.status === 200){
-                state.isLoading = false
                 state.error = null
                 state.isAuthenticated = true
             }else if (action.payload.status === 401){
@@ -131,7 +146,6 @@ const authSlice = createSlice({
             state.isLoading = true
         }),
         builder.addCase(register.fulfilled, (state, action)=>{
-            console.log(action.payload)
             if(action.payload.status === 200){
                 state.isLoading = false
                 state.isSuccess = true
@@ -174,6 +188,28 @@ const authSlice = createSlice({
                 state.sendMailNotification = false
                 state.passwordResetError = 'invalidEmail'
             }
+        }),
+        // password reset thunk
+        builder.addCase(confirmPasswordReset.pending, (state, action)=>{
+            state.error= null
+            state.isLoading = true
+            state.confirmPasswordResetReject = false
+            state.confirmPasswordResetSuccess= false
+            state.sendMailNotification = false
+        }),
+        builder.addCase(confirmPasswordReset.fulfilled, (state, action)=>{
+            console.log(action.payload)
+            if(action.payload.status === 200){
+                state.isLoading = false
+                state.sendMailNotification = true
+                state.confirmPasswordResetSuccess= true
+                state.confirmPasswordResetReject = false
+            }else if (action.payload.status === 400){
+                state.isLoading = false
+                state.confirmPasswordResetSuccess=false
+                state.sendMailNotification = false
+                state.confirmPasswordResetReject = true
+            }
         })
     }
 })
@@ -188,6 +224,8 @@ export const selectIsAuthenticated = (state) =>  state.login.isAuthenticated
 export const selectIsSuccess = (state) => state.login.isSuccess
 export const selectIsActive = (state) => state.login.isActive
 export const selectRegisterError = (state) => state.login.registerError
-export const selectSendMail = (state) => state.login.sendMailNotification
+export const selectSendMailNotification = (state) => state.login.sendMailNotification
 export const selectMailTimeOut = (state) => state.login.mailTimeOut
 export const selectPasswordResetError = (state) => state.login.passwordResetError
+export const selectConfirmPasswordResetSuccess = (state) => state.login.confirmPasswordResetSuccess
+export const selectConfirmPasswordResetReject = (state) => state.login.confirmPasswordResetReject

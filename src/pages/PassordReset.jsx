@@ -1,18 +1,19 @@
 import FormInput from "../components/FormInput";
-import { useTranslation } from 'react-i18next';
+import ErrorNotification from "../components/ErrorNotification";
 import {email} from "../instaces"
+import ValidatorSubmit from "../functional/ValidatorSubmit";
+import { useTranslation } from 'react-i18next';
+import { selectSendMailNotification,passwordReset,selectPasswordResetError } from "../features/auth/loginSlice";
 import {useState} from "react";
 import { Link } from "react-router-dom";
-import ValidatorSubmit from "../functional/ValidatorSubmit";
 import { useDispatch, useSelector } from "react-redux";
-import { selectSendMail,passwordReset,selectPasswordResetError } from "../features/auth/loginSlice";
 
 const PasswordReset = () => {
     const [form, setForm] = useState();
     const { t } = useTranslation();
 
     const dispatch = useDispatch()
-    const sendMail = useSelector(selectSendMail)
+    const sendMail = useSelector(selectSendMailNotification)
     const invalidEmail = useSelector(selectPasswordResetError)
 
     const onSubmit = e => {

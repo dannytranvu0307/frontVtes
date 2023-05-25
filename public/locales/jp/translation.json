@@ -66,5 +66,8 @@
     "registerSuccess":"新規登録のため、お客様のメールアドレスにアドレス確認メールを送信しました。 アドレス確認メールが届きましたら、メール内のリンクをクリックしてください。",
     "TIMEOUT":"このリンクは有効期限が切れています。",
     "confirm_email_message":"メールを確認してください。",
-    "invalidEmail":"このメールアドレスは存在ありません。"
+    "invalidEmail":"このメールアドレスは存在ありません。",
+    "btnRegister": "アカウント登録",
+    "confirmPassWordMessage":"パスワードが更新されました。",
+    "mailTimeOut":"メールURL有効期限が切れています。"
 }
