@@ -65,13 +65,13 @@ const Table = ({tableData})=>{
          {tableData.map((data,i)=>(
             <tr className="bg-white" key={i}>
                 <td className="px-2 py-1  border border-gray-400 text-xs">{FormatDate(data.date,"YYYY/MM/DD")}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.Destination}</td>
                 <td className="px-2  border border-gray-400 text-xs">{data.vehicle}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
-                <td className="px-2  border border-gray-400 text-xs">{}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.departure}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.arrival}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.round}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.payment}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.price}</td>
                 <td className="px-2  border border-gray-400 text-xs">delete</td>
             </tr>
          ))}

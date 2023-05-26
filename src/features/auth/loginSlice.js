@@ -115,6 +115,7 @@ const authSlice = createSlice({
                     passwordResetError: null,
                     // email reset password instace
                     sendMailMessage: null,
+
                     // mailTimeOut: false
                     // confirm password and auth token message
                     confirmPasswordResetSuccess: null,

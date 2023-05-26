@@ -50,7 +50,7 @@ function App() {
           <div className="flex h-full bg-gray-50 mb-1">
             {isAuthenticated && <Sidebar />}
             <main className="flex flex-col w-full bg-gray-50 overflow-x-hidden overflow-y-auto ml-16 left-16 -z-1">
-              <div className="w-full px-6 py-8">
+              <div className="w-full px-6 py-8 ">
                 <div className=" flex flex-col w-full h-full">
                   <Routes>
                     {isAuthenticated ? (<>
@@ -67,6 +67,7 @@ function App() {
                         {/* <Route path='/verify?verifyCode=:verifyCode' element={<Active />} /> */}
                         <Route path='/verify/:verifyCode' element={<Active />} />
                         <Route path='/*' element={<Login />} />
+
                       </>
                       )}
                   </Routes>

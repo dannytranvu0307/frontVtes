@@ -20,7 +20,7 @@ const SignUp = () => {
 
     // change language
     const [form, setForm] = useState({})
-
+ console.log(form)
     const onSubmit = e => {
         e.preventDefault();
 
@@ -30,7 +30,7 @@ const SignUp = () => {
         if (ValidatorSubmit(formSubmit,submitInput)){
             let {departmentId, confirm_password,password, fullName, email} = {...form}
             // console.log({...form})
-            dispatch(register({departmentId:+departmentId,password,fullName,email}))
+            dispatch(register({departmentId:1,password,fullName,email}))
             .unwrap()
         }
     }
