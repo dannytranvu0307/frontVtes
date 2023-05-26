@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
     }
 )
 
-//  try to authenticate by accessToken and refreshToken
+//  try to authenticate by accessToken
 export const authenticate = createAsyncThunk(
     'login/users',
     async () => {
@@ -49,7 +49,19 @@ export const verify = createAsyncThunk(
     'login/verify',
     async (form) => {
         try {
-            const response = await axios.post(`${baseURL}/auth/verify`,form,{withCredentials: true})
+            const response = await axios.post(`${baseURL}/users/active`,form,{withCredentials: true})
+            return response
+        }catch(err){
+            return err.response
+        }
+    }
+)
+// refresh token
+export const refreshToken =  createAsyncThunk(
+    'login/refreshToken',
+    async () => {
+        try {
+            const response = await axios.get(`${baseURL}/auth/refreshToken`,{withCredentials: true})
             return response
         }catch(err){
             return err.response
@@ -77,6 +89,7 @@ export const confirmPasswordReset = createAsyncThunk(
     'login/confirmPasswordReset',
     async (form) => {
         try {
+
             const response = await axios.post(`${baseURL}/users/reset-password`,form )
             return response
         }catch(err){
@@ -97,6 +110,8 @@ const authSlice = createSlice({
                     isAuthenticated:false,
                     checkPass: false,
                     isLoading: true, 
+                    // acctive parameter
+                    isActiveMessage: null,
                     isActive : false,
                     passwordResetError: null,
                     // email reset password instace
@@ -155,30 +170,30 @@ const authSlice = createSlice({
             }
         }),
 
-        // verify thunk
+        // active verify thunk
         builder.addCase(verify.pending, (state, action)=>{
             state.error= null
             state.isLoading = true
         }),
         builder.addCase(verify.fulfilled, (state, action)=>{
-            console.log(action.payload)
             if(action.payload.status === 200){
                 state.isLoading = false
-                state.isSuccess = true
+                state.isActive = true
                 state.activeError = null
-            }else if (action.payload.status === 404){
+                state.isActiveMessage = "activeIsSuccess"
+            }else if (action.payload.status === 400){
                 state.isLoading = false
                 state.isActive = false
                 state.activeError = 'TIMEOUT'
             }
         }),
+        
         // password reset thunk
         builder.addCase(passwordReset.pending, (state, action)=>{
             state.error= null
             state.isLoading = true
         }),
         builder.addCase(passwordReset.fulfilled, (state, action)=>{
-            console.log(action.payload)
             if(action.payload.status === 200){
                 state.isLoading = false
                 state.sendMailNotification = true
@@ -198,7 +213,6 @@ const authSlice = createSlice({
             state.sendMailNotification = false
         }),
         builder.addCase(confirmPasswordReset.fulfilled, (state, action)=>{
-            console.log(action.payload)
             if(action.payload.status === 200){
                 state.isLoading = false
                 state.sendMailNotification = true
@@ -210,6 +224,14 @@ const authSlice = createSlice({
                 state.sendMailNotification = false
                 state.confirmPasswordResetReject = true
             }
+        }),
+        builder.addCase(refreshToken.pending, (state,action )=>{
+            state.error= null
+            state.isLoading = true
+        }),
+        builder.addCase(refreshToken.fulfilled, (state,action )=>{
+            state.error= null
+            state.isLoading = false
         })
     }
 })
@@ -217,15 +239,26 @@ const authSlice = createSlice({
 export default authSlice.reducer
 
 
+// 
 export const selectIsLoading = (state ) => state.login.isLoading
 export const selectError = (state) => state.login.error
+// user info
 export const selectUser = (state) => state.login.user
+// is authen
 export const selectIsAuthenticated = (state) =>  state.login.isAuthenticated
+// authen is success
 export const selectIsSuccess = (state) => state.login.isSuccess
+// active account
 export const selectIsActive = (state) => state.login.isActive
+export const selectIsActiveMessage = (state) => state.login.isActiveMessage
+export const selectActiveError = (state) => state.login.activeError
+
+// register state
 export const selectRegisterError = (state) => state.login.registerError
 export const selectSendMailNotification = (state) => state.login.sendMailNotification
 export const selectMailTimeOut = (state) => state.login.mailTimeOut
+
+// reset password state
 export const selectPasswordResetError = (state) => state.login.passwordResetError
 export const selectConfirmPasswordResetSuccess = (state) => state.login.confirmPasswordResetSuccess
 export const selectConfirmPasswordResetReject = (state) => state.login.confirmPasswordResetReject

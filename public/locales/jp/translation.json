@@ -1,6 +1,6 @@
 {
     "login":"ログイン",
-    "english": "英語",
+    "english": "English",
     "japanese":"日本語",
     "home": "ホーム",
     "email": "メールアドレス（半角）",
@@ -70,7 +70,7 @@
     "btnRegister": "アカウント登録",
     "confirmPassWordMessage":"パスワードが更新されました。",
     "mailTimeOut":"メールURL有効期限が切れています。",
-     "date":"訪問日付",
+    "date":"訪問日付",
     "vehicle":"交通機関",
     "purchase":"IC・現金",
     "Round":"片・往",
@@ -93,5 +93,8 @@
     "delete":"削除",
     "name2":"氏名",
     "UploadFile":"領収書を添付",
-    "export":"エクスポート"
+    "export":"エクスポート",
+    "close": "閉じる",
+    "errorTitle":"エラー！！",
+    "activeIsSuccess":"アカウントを作成されました。"
 }

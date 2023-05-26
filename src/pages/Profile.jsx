@@ -11,7 +11,7 @@ const Profile = () => {
     const onSubmit = e => {
         e.preventDefault();
     }
-
+    console.log("re-render")
     return (
 
         <div className="flex flex-col items-center px-6 py-8 h-full md:h-full lg:py-0 mb-16">

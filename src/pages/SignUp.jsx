@@ -28,7 +28,6 @@ const SignUp = () => {
         const formSubmit = document.querySelector("#signup")
  
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log("run")
             let {departmentId, confirm_password,password, fullName, email} = {...form}
             // console.log({...form})
             dispatch(register({departmentId:+departmentId,password,fullName,email}))

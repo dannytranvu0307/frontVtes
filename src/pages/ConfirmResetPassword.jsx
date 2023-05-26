@@ -1,12 +1,13 @@
 import {useState} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from "react-router-dom";
+import { Link,useParams, useNavigate } from "react-router-dom";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
 import { confirmPasswordReset,selectConfirmPasswordResetSuccess,selectConfirmPasswordResetReject } from "../features/auth/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import {new_password, confirm_password} from "../instaces";
 import ErrorNotification from "../components/ErrorNotification";
+
 
 const ConfirmResetPassword = () => {
 // change language
@@ -16,7 +17,8 @@ const [form, setForm] = useState({})
 const isSuccess = useSelector(selectConfirmPasswordResetSuccess)
 const isReject = useSelector(selectConfirmPasswordResetReject)
 
-const param = useParams ()
+const param = useParams()
+const navigate = useNavigate()
 
 const inputs = [
     new_password,confirm_password
@@ -33,8 +35,13 @@ const onSubmit = e => {
     const formSubmit = document.querySelector("#confirm_reset_password")
 
     if (ValidatorSubmit(formSubmit,submitInput)){
-        console.log("submit form")
         dispatch(confirmPasswordReset({newPassword:form.password, ...param}))
+        .unwrap().then(res =>{
+          if (res.status === 200){
+            setTimeout(()=>{
+                navigate('/login')
+            },1000)
+          } })
     }
 }
 
