@@ -2,21 +2,32 @@ import { useState, useMemo, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 import FormInput from "../components/FormInput";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../features/auth/loginSlice"
-import {fullName, email, department, password, new_password, } from '../instaces'
+import { selectUser, selectIsLoading } from "../features/auth/loginSlice"
+import {fullName, email, department, password, new_password, confirm_password} from '../instaces'
 function UserInfo() {
     const user = useSelector(selectUser)
+    const isLoading = useSelector(selectIsLoading)
     const {t} = useTranslation()
+
+    const [infor, setInfor] = useState([])
+
     const [form, setForm] = useState({
         departmentId: ""
     });
-
+    
     const onChange=(e) => {
         setForm({...form,[e.target.name]:e.target.value})
     }
-    console.log(form)
-    useEffect(()=>{
 
+    useEffect(()=>{
+        if (!isLoading){
+            setInfor([
+                {...fullName,index:0,disabled: true, value: user.data.fullName}, 
+                {...department,index:1,disabled: true,type: "departmentId", value: user.data.department.departmentId},
+                { ...email,index:2,disabled: true, value: user.data.email},
+                {...password,index:3,disabled: true, placeholder: "●●●●●●●●●●●●",}
+            ])
+        }
     },[user])
     const inputs =
         [{
@@ -35,7 +46,7 @@ function UserInfo() {
             id: "departmentId",
             label: "departmentId",
             name: "departmentId",
-            type: "text",
+            type: "departmentId",
             htmlFor: "departmentId_pla",
             defaultValue: department,
             disabled: true,
@@ -63,6 +74,7 @@ function UserInfo() {
         }
         ]
 
+
     const passwords =
         [{
             index: 4,
@@ -84,39 +96,45 @@ function UserInfo() {
             placeholder: "confirm_new_password",
             required: true,
         }]
-    const [infor, setInfor] = useState([
-        {...fullName,index:0,disabled: true, defaultValue: user.data.fullName}, 
-        {...department,index:1,disabled: true,type: "text", defaultValue: t(user.data.department.departmentName)},
-        { ...email,index:2,disabled: true, defaultValue: user.data.email},
-        {...password,index:3,disabled: true, placeholder: "●●●●●●●●●●●●",}])
     
-
     const handleEnable = (key) => {
-        const newState = infor.map(obj => {
+        console.log(key)
+        const newState = inputs.map(obj => {
             //  if idex equals key, update disabled property
-            if (obj.index === key) {
-                if (obj.index === 1) {
-                    return { ...obj, defaultValue: user.data.department.departmentName,
-                        value: form.departmentId,disabled: false, type: "departmentId"};
-                }
-                if (obj.index === 3) {
-                    return {
-                        ...obj, disabled: false,
-                        required: true,
-                        id: "current_password",
-                        label: "current_password",
-                        name: "current_password",
-                        placeholder: "current_password_pla",
-                        htmlFor: "current_password",
-                    };
-                }
-                return { ...obj, disabled: false };
-            }
-            return obj;
+            // console.log(obj.index === key, obj.id)
+            // if (obj.index === key) {
+            //     if (obj.index === 1) {
+            //         return { ...obj,disabled: false};
+            //     }
+            //     if (obj.index === 3) {
+            //         return {
+            //             required: true,
+            //             id: "current_password",
+            //             label: "current_password",
+            //             name: "current_password",
+            //             placeholder: "current_password_pla",
+            //             htmlFor: "current_password",
+            //         };
+            //     }
+            //     return { ...obj, disabled: false };
+            // }
+            // return obj;
+            // if (obj.index === key){
+            //     return {...obj, disabled: false}
+            // }
+            return {...obj, disabled: false}
         });
+        console.log(newState)
         setInfor(newState);
     }
-
+    //  return {
+    //     required: true,
+    //     id: "current_password",
+    //     label: "current_password",
+    //     name: "current_password",
+    //     placeholder: "current_password_pla",
+    //     htmlFor: "current_password",
+    // };
     const handleDisable = (key) => {
         const newState = infor.map(obj => {
             //  if idex equals key, update disabled property
@@ -140,6 +158,7 @@ function UserInfo() {
         });
         setInfor(newState);
     }
+
     return (
         <div className="flex flex-col w-1/2 flex-none">
             {infor && infor.map((item, key) => (
@@ -153,7 +172,7 @@ function UserInfo() {
                     }
                 </div>
             ))}
-            <>{
+            {/* <>{
                 !infor[3].disabled &&   
                 <div className="relative">
                     {passwords.map((item, key) => (
@@ -168,7 +187,7 @@ function UserInfo() {
                         </div>
                 </div>
             }
-            </>
+            </> */}
         </div>
     )
 }

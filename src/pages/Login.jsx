@@ -2,23 +2,30 @@ import { useState, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
 import { Link,useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
+import ErrorNotification from "../components/ErrorNotification";
 import {email, password} from "../instaces"
-
+import Modal from "../components/Modal";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
-import { selectError,login, authenticate } from "../features/auth/loginSlice";
+import { selectError,login, authenticate,
+    selectIsActive,selectIsActiveMessage,
+    selectActiveError } from "../features/auth/loginSlice";
 
 function Login(){
     
-
+    
     // change language
     const { t } = useTranslation();
     const navigate = useNavigate()
     const error = useSelector(selectError);
+    const isActiveMessage= useSelector(selectIsActiveMessage)
+    const isActiveError = useSelector(selectActiveError)
+    const isActive = useSelector(selectIsActive)
     // const checkPass = useSelector(selectCheckPass)
     // const isAuthenticated = useSelector(selectIsAuthenticated)
-
+    console.log(isActiveMessage, "isActiveMessage")
+    console.log(isActiveError, "isActiveError")
+    console.log(isActive, "isActive")
     const inputs = [email, password]
 
     const dispatch = useDispatch()
@@ -42,7 +49,6 @@ function Login(){
         const submitInput = document.querySelectorAll("input[type='text']")
         const formSubmit = document.querySelector("#login")
         if (ValidatorSubmit(formSubmit,submitInput)){
-            console.log(form, "will call api")
             dispatch(login({...form, ["remember"]:remember}))
             .unwrap()
             .then(res=>{
@@ -114,7 +120,9 @@ function Login(){
                     </form>
                 </div>
             </div>
-        </div>
+            </div>
+          {isActive&&  <ErrorNotification>{isActiveMessage}</ErrorNotification>}
+        {isActiveError &&  <Modal />}
     </section>
     )
 }

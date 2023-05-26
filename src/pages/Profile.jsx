@@ -7,34 +7,23 @@ import ReasonTicket from '../pages/ReasonTicket';
 
 const Profile = () => {
     const { t } = useTranslation();
-    const [form, setForm] = useState();
-
-
-    useEffect(()=>{
-    },[])
-
-    const onChange=(e) => {
-        setForm({...form,[e.target.name]:e.target.value})
-    }
 
     const onSubmit = e => {
         e.preventDefault();
     }
-    console.log("re")
+    console.log("re-render")
     return (
 
-        <div className="flex flex-col items-center px-6 py-8 h-full md:h-full lg:py-0">
+        <div className="flex flex-col items-center px-6 py-8 h-full md:h-full lg:py-0 mb-16">
             <div className="min-w-77 bg-white rounded-lg shadow md:mt-0 sm:w-full md:w-full  xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
                         {t("profile")}
                     </h1>
-
-
                     <form id="profile" className="flex flex-wrap" onSubmit={e => onSubmit(e)}>
-                        <UserInfo onChange={onChange} />
+                        <UserInfo />
                         <ReasonTicket />
-                        <div className="w-full mt-8 flex col-span-2 justify-between">
+                        {/* <div className="w-full mt-8 flex col-span-2 justify-between">
                             <button
                             type="submit"
                                 className="w-auto text-white
@@ -54,7 +43,7 @@ const Profile = () => {
                             text-sm px-5 py-2.5 text-center ">
                                 {t("save")}</button>
 
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             </div>

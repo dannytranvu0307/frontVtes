@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 import Aos from "aos";
 import 'aos/dist/aos.css';
@@ -12,12 +12,12 @@ import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
-import VerifyCode from './pages/VerifyCode'
+import Active from './pages/Active'
 import Demo from './pages/Demo';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
-import { authenticate, selectIsAuthenticated } from "./features/auth/loginSlice";
+import { authenticate, selectIsAuthenticated, refreshToken } from "./features/auth/loginSlice";
 import { useDispatch, useSelector  } from "react-redux";
 
 
@@ -29,7 +29,13 @@ function App() {
   useEffect(()=>{
     Aos.init({ duration: 1000 });
     dispatch(authenticate())
-  },[isAuthenticated])
+    .unwrap()
+    .then(res =>{
+      if (res.status === 401){
+        dispatch(refreshToken()).unwrap().then(res => res.status === 200 && dispatch(authenticate()))
+      }
+    })
+  },[])
 
   return (
     <Router>
@@ -53,11 +59,12 @@ function App() {
                       <Route path='*' to="/" element={<Home />} />
                     </>):(<>
                     <Route path='/login' element={<Login />} />
-                      <Route path='/confirmresetpassword' element={<ConfirmResetPassword />}></Route>
-                      <Route path='/register' element={<SignUp />} />
-                      <Route path='/passwordreset' element={<PasswordReset />} />
-                      <Route path='verify/:verifyCode' element={<VerifyCode />} />
-                      <Route path='*' to="login" element={<Login />} />
+                        <Route path='/confirmresetpassword/:authToken' element={<ConfirmResetPassword />}></Route>
+                        <Route path='/register' element={<SignUp />} />
+                        <Route path='/passwordreset' element={<PasswordReset />} />
+                        {/* <Route path='/verify?verifyCode=:verifyCode' element={<Active />} /> */}
+                        <Route path='/verify/:verifyCode' element={<Active />} />
+                        <Route path='/*' element={<Login />} />
                       </>
                       )}
                   </Routes>
