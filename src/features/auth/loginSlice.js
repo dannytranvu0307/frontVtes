@@ -87,7 +87,8 @@ const authSlice = createSlice({
                     checkPass: false,
                     isLoading: false, 
                     isActive : false,
-                    passwordResetError: null
+                    passwordResetError: null,
+                    
                     // mailTimeOut: false
                 },
     extraReducers:(builder) =>  {

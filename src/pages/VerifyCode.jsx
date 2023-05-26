@@ -9,7 +9,9 @@ const VerifyCode = () => {
     const isActive = useSelector(selectIsActive)
     const error = useSelector(selectError)
     const dispatch = useDispatch()
-    const param = useParams ()
+    const param = useParams ('verifyCode')
+    
+    console.log(param)
     useEffect(()=>{
         dispatch(verify(param)).unwrap().then()
     },[])
