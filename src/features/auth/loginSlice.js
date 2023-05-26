@@ -60,10 +60,13 @@ export const verify = createAsyncThunk(
 export const refreshToken =  createAsyncThunk(
     'login/refreshToken',
     async () => {
+
         try {
             const response = await axios.get(`${baseURL}/auth/refreshToken`,{withCredentials: true})
+            console.log(response)
             return response
         }catch(err){
+            console.log(err)
             return err.response
         }
     }
@@ -72,10 +75,6 @@ export const refreshToken =  createAsyncThunk(
 export const passwordReset = createAsyncThunk(
     'login/passwordReset',
     async (form) => {
-        const headers    = {
-            'content-type':'application/json',
-            'accept':'application/json'
-        }
         try {
             const response = await axios.post(`${baseURL}/users/emails`,form )
             return response
@@ -147,7 +146,7 @@ const authSlice = createSlice({
             if(action.payload.status === 200){
             state.isLoading = false
             state.isAuthenticated = true
-            state.user = action.payload.data
+            state.user = action.payload.data.data
             }else if (action.payload.status === 401){
                 state.isLoading = false
                 state.isAuthenticated = false
@@ -230,6 +229,7 @@ const authSlice = createSlice({
             state.isLoading = true
         }),
         builder.addCase(refreshToken.fulfilled, (state,action )=>{
+            console.log(action.payload)
             state.error= null
             state.isLoading = false
         })

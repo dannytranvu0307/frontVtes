@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const FormInput = (props) => {
     const [focused, setFocused] = useState("hidden");
-    const {label, placeholder,forHtml,...inputProps} = props
+    const {label, placeholder,forHtml,value,...inputProps} = props
     const dispatch = useDispatch()
     const departments_lst = useSelector(selectDepartments)
     useEffect(()=>{
@@ -28,7 +28,6 @@ const FormInput = (props) => {
             Validators(ref.current.parentElement.parentElement,ref.current,ref.current.value)
         )
     }
-
     return (
         <div id="input-field"  className= "grid">
             <label 
@@ -44,6 +43,7 @@ const FormInput = (props) => {
                     onBlur={onBlur}
                     onFocus={(e) =>handleFocus(e)
                     }
+                    value={value}
                     placeholder={t(placeholder)}
                     className={`
                     bg-gray-50 border border-gray-300 
@@ -58,6 +58,7 @@ const FormInput = (props) => {
                     onBlur={onBlur}
                     onFocus={(e) =>handleFocus(e)}
                     ref={ref}
+                    value={value}
                     {...inputProps}
                     className={`
                     disabled:appearance-none
@@ -67,7 +68,7 @@ const FormInput = (props) => {
                     focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}>
                 <option value = "" >{t("chooseDepartmentId")}</option>
                     {departments_lst.map((item,key)=>(
-                        <option key={key} value={item.departmentId}>{t(item.departmentName)}</option>
+                        <option key={key} value={item.departmentId}>{t(`D${item.departmentId}`)}</option>
                     ))}
                 </select>)}
                 

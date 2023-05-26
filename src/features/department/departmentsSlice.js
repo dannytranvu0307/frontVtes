@@ -1,6 +1,6 @@
 import {  createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-export const baseURL = 'http://localhost:8080/api/v1';
+import { baseURL } from "../auth/loginSlice";
 
 export const departments = createAsyncThunk(
     'departments/department',

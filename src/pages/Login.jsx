@@ -21,11 +21,7 @@ function Login(){
     const isActiveMessage= useSelector(selectIsActiveMessage)
     const isActiveError = useSelector(selectActiveError)
     const isActive = useSelector(selectIsActive)
-    // const checkPass = useSelector(selectCheckPass)
-    // const isAuthenticated = useSelector(selectIsAuthenticated)
-    console.log(isActiveMessage, "isActiveMessage")
-    console.log(isActiveError, "isActiveError")
-    console.log(isActive, "isActive")
+
     const inputs = [email, password]
 
     const dispatch = useDispatch()
@@ -53,7 +49,7 @@ function Login(){
             .unwrap()
             .then(res=>{
                 if (res.status !== 401){
-                    ()=>dispatch(authenticate())
+                    dispatch(authenticate())
                     .unwrap()
                     .then(()=>navigate("/"))
                 }
@@ -62,15 +58,12 @@ function Login(){
         }
     }
 
-    // if (isAuthenticated || checkPass){
-    //     navigate("/")
-    // }
 
     return (
         <section 
-        // data-aos="fade-right"
-        // data-aos-offset="3"
-        // data-aos-easing="ease-in-sine"
+        data-aos="fade-right"
+        data-aos-offset="3"
+        data-aos-easing="ease-in-sine"
         className="bg-gray-50 dark:bg-gray-900"
         >
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

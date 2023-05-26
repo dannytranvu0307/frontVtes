@@ -41,14 +41,14 @@ function Validators (formId,options,value){
                 error.id = "password"
                 error.name =  "er_input_empty"
             }
-            // else if (value.length < 8){
-            //     error.id = "password"
-            //     error.name =  "er_input_len_password"
-            // }
-            // else if (!(regex_password.test(value))){
-            //     error.id = "password"
-            //     error.name = "er_input_rule_password"
-            // }
+            else if (value.length < 8){
+                error.id = "password"
+                error.name =  "er_input_len_password"
+            }
+            else if (!(regex_password.test(value))){
+                error.id = "password"
+                error.name = "er_input_rule_password"
+            }
             else {
                 error.name = ""
             }
@@ -89,14 +89,15 @@ function Validators (formId,options,value){
             if (value === ""){
                 error.id = "new_password"
                 error.name = "er_input_empty"
-            }else if (value.length < 8){
-                error.id = "new_password"
-                error.name =  "er_input_len_password"
             }
-            else if (!(regex_password.test(value))){
-                error.id = "new_password"
-                error.name = "er_input_rule_password"
-            }
+            // else if (value.length < 8){
+            //     error.id = "new_password"
+            //     error.name =  "er_input_len_password"
+            // }
+            // else if (!(regex_password.test(value))){
+            //     error.id = "new_password"
+            //     error.name = "er_input_rule_password"
+            // }
             else {
                 error.name = ""
             }
@@ -107,7 +108,7 @@ function Validators (formId,options,value){
                 error.id = "confirm_new_password"
                 error.name =  "er_input_empty"
             }
-            else if (value !== form.parentElement.querySelector("#new_password").value){
+            else if (value !== formId.parentElement.parentElement.parentElement.querySelector("#new_password").value){
                 error.id = "confirm_new_password"
                 error.name = "er_input_confirm_password"
             }
@@ -147,6 +148,7 @@ function Validators (formId,options,value){
         };  
         
         if ( options.getAttribute("exclude") && `${options.getAttribute("exclude")}`.includes(formId.id)){
+            console.log("?")
             if (value === ""){
                 error.name = "er_input_empty";
             }

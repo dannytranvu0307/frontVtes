@@ -96,5 +96,6 @@
     "export":"エクスポート",
     "close": "閉じる",
     "errorTitle":"エラー！！",
-    "activeIsSuccess":"アカウントを作成されました。"
+    "activeIsSuccess":"アカウントを作成されました。",
+    "D1":"customJpane"
 }
