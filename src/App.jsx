@@ -32,7 +32,9 @@ function App() {
     .unwrap()
     .then(res =>{
       if (res.status === 401){
-        dispatch(refreshToken()).unwrap().then(res => res.status === 200 && dispatch(authenticate()))
+        dispatch(refreshToken())
+        .unwrap()
+        .then(res => res.status === 200 && dispatch(authenticate()))
       }
     })
   },[])
