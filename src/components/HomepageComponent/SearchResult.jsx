@@ -5,7 +5,31 @@ function SearchResult({search,data ,onPrice}){
     const{t}=useTranslation()
     const [selectedObject, setSelectedObject] = useState(null);
     const [selectedObject2, setSelectedObject2] = useState(null);
-
+    
+    function convertHexToRGB(hexCode) {
+        // Kiểm tra định dạng đúng của mã màu Hex
+        const hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+        if (!hexRegex.test(hexCode)) {
+          return null; // Mã màu Hex không hợp lệ
+        }
+      
+        // Xử lý định dạng mã màu Hex
+        let formattedHexCode = hexCode.replace("#", "");
+        if (formattedHexCode.length === 3) {
+          formattedHexCode = formattedHexCode
+            .split("")
+            .map((char) => char + char)
+            .join("");
+        }
+      
+        // Chuyển đổi mã màu Hex thành mã màu RGB
+        const r = parseInt(formattedHexCode.substring(0, 2), 16);
+        const g = parseInt(formattedHexCode.substring(2, 4), 16);
+        const b = parseInt(formattedHexCode.substring(4, 6), 16);
+      
+        const RGBCode = `rgb(${r}, ${g}, ${b})`;
+        return RGBCode;
+      }
 
     const handleObjectHover = (object) => {
         setSelectedObject(object);
@@ -23,7 +47,9 @@ function SearchResult({search,data ,onPrice}){
         }
         
       };
-
+      const styleObject = {
+        backgroundColor: 'blue'
+      };
 return(
     <div className=" text-xs my-5">
         {search.map((search,i)=>(
@@ -60,7 +86,7 @@ return(
                          {section.type==='point'&&<div className="text-xs">{section.StationName}</div>}
                          {section.type==='move'&&<div className="flex" >
                         {section.transport?<div className="flex">
-                        <div className={`text-[8px] bg-[${section.transport.lineColor.toLowerCase()}] py-2 w-3 h-10`}></div>
+                        <div className={`text-[8px]  py-2 w-3 h-10 `} style={{backgroundColor:section.transport.lineColor}}></div>
                          <span className="flex items-center mx-auto font-bold pl-5">{section.transport.lineName}</span>
                         </div>
                         :<div className="bg-gray-300 h-10 w-3">

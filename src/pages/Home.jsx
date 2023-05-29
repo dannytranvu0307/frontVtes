@@ -10,26 +10,27 @@ import Table from '../components/HomepageComponent/Table';
 import HomeFooter2 from '../components/HomepageComponent/HomeFooter2';
 import PreviewImage from '../components/HomepageComponent/PreviewImage';
 import SearchResult from '../components/HomepageComponent/SearchResult';
-import { useSelector } from 'react-redux';
+import FormatDate from '../functional/FormatDate';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { authenticate } from '../features/auth/loginSlice';
 function Home() {
    const { t } = useTranslation();
     const [data,setData] =useState({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
     const [error,setError]=useState({date:false ,payment:false,Destination:false,departure:false,arrival:false , price:false})
     const [TableData,setTableData]= useState([])
     const [image, setImage] =useState([]);
-    const [imageURL, setImageURL] =useState([]);
-    const [searching , setSearching] = useState([])
+    const [searching , setSearching] = useState([]);
+    const [isOn, setIsOn] = useState(true);
+    const dispatch = useDispatch()
+
     const  user= useSelector(state =>state.login.user)
+
      useEffect(()=>{
-      if(user){
+      if(user){ 
         setTableData(user.fares)
       }
-
-     },[TableData])
-
-
-
+     },[user, image])
 
       const handleDateChange = (newData) => {
       setData({ ...data,date:newData});
@@ -68,28 +69,63 @@ function Home() {
 
 
 
-      const handleFileChange = (file) => {
-      
-          setImage([...image,...file])
-
-          const urls =[]
-
-          for(let i=0; i<file.length;i++){
-            urls.push({name:file[i].name,fileURL:URL.createObjectURL(file[i])})
-          }
-          setImageURL([...imageURL,...urls])
-      
+  const handleFileChange = (file) => {
+         convertAllToBase64(file)
       };
+     
 
-      const handleDeleteImage= (index)=>{
-       setImageURL(imageURL.filter((_, i) => i!== index))
+  const convertToBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+  const convertAllToBase64 = async (img) => {
+  const base64Images = [];
+
+  for (const file of img) {
+    try {
+      const base64 = await convertToBase64(file);
+      base64Images.push({name:file.name,fileURL:base64});
+    } catch (error) {
+      console.error('Error converting file to base64:', error);
+    }
+  }
+      setImage([...image,...base64Images])
+        const data = {
+              imageList:[...image,...base64Images],
+            };
+        
+          try { const dataJSON = JSON.stringify(data);
+            localStorage.setItem('imageData', dataJSON);
+            console.log('Data saved to localStorage.');
+          } catch (error) {
+            console.error('Error saving data to localStorage:', error);
+          }
+
+};
+
+
+
+  const handleDeleteImage= (index)=>{
        setImage(image.filter((_ , i) => i!== index))
-       URL.revokeObjectURL(image[index])
-       console.log(URL)
+       try {
+        const data = {
+          imageList:[...image.filter((_ , i) => i!== index)],
+        };
+    
+        const dataJSON = JSON.stringify(data);
+        localStorage.setItem('imageData', dataJSON);
+        console.log('Data saved to localStorage.');
+      } catch (error) {
+        console.error('Error saving data to localStorage:', error);
+      }
        }
 
        
-       const handleValidation = () => {
+       const  handleAddTable= () => {
         if(data.vehicle===t('train')){
           const { date, Destination, departure, arrival, payment , price} = data;
           const updatedError = {
@@ -102,26 +138,27 @@ function Home() {
         };
         setError(updatedError);
         if(Object.values(updatedError).every((value)=> value===false)){
-
           const form = {
              visitLocation: data.Destination,
              departure:data.departure,
              destination: data.arrival,
              payMethod: data.payment===t('IC')?"1":"2",
-             useCommuterPass: true,
-             isRoundTrip: true,
-             fee: 2000,
-             transportation: "電車",
-             visitDate: "2023/04/06"
+             useCommuterPass: isOn,
+             isRoundTrip: data.round ===t('2way'),
+             fee: data.price,
+             transportation:data.vehicle,
+             visitDate: FormatDate(data.date,"YYYY/MM/DD")
           }
-
-
+          
           axios.post('http://localhost:8080/api/v1/fares', form, {
             withCredentials: true,
           })
             .then(response => {
-              // Handle the response
-              console.log(response.data);
+              dispatch(authenticate())
+              // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
+              setData({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
+              setSearching([])
+             
             })
             .catch(error => {
               // Handle errors
@@ -129,21 +166,11 @@ function Home() {
             });
 
           
-
-
-
-
-
-
-
-
-
-          setData({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
-          setSearching([])
         }else{
           console.log("dame")
         }
-      }else{
+      }
+      else{
         const { date, Destination, departure, arrival,price} = data;
         const updatedError = {
           date: date === "",
@@ -154,26 +181,47 @@ function Home() {
         };
         setError(updatedError);
         if(Object.values(updatedError).every((value)=> value===false)){
-          setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
+          const form = {
+            visitLocation: data.Destination,
+            departure:data.departure,
+            destination: data.arrival,
+            payMethod: "1",
+            useCommuterPass: false,
+            isRoundTrip: false,
+            fee: data.price,
+            transportation:data.vehicle,
+            visitDate: FormatDate(data.date,"YYYY/MM/DD")
+         }
+         axios.post('http://localhost:8080/api/v1/fares', form, {
+          withCredentials: true,
+        })
+          .then(response => {
+            dispatch(authenticate())
+            // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
+            setData({date:"",vehicle:data.vehicle, Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
+            setSearching([])
+           
+          })
+          .catch(error => {
+            // Handle errors
+            console.error(error);
+          })
         }else{
           console.log("dame")
         }
-      }
-
-        }
+      } }
        
 
-      const handleAddTable=()=>{
-        handleValidation()
-      
-      }
-
-
-
 useEffect(()=>{
-return () => imageURL.forEach((url)=>{
-    URL.revokeObjectURL(url)
-  })
+
+
+  const dataJSON = localStorage.getItem('imageData');
+  
+    if (dataJSON) {
+      const data = JSON.parse(dataJSON);
+      setImage(data.imageList)
+      
+    }
 },[])
 
     return (
@@ -193,7 +241,8 @@ return () => imageURL.forEach((url)=>{
                  /> </div>
               <div className='flex'>
                  {data.vehicle===t('train')&&<SearchTrain 
-                
+                 isOn={isOn}
+                 setIsOn ={setIsOn}
                  onSearching={setSearching} onDepart ={handleDeparture} onArrival={handleArrial} onTransport ={handleTransport} data={data} error ={error} setError={setError}/>}
                  {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
                  {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
@@ -208,8 +257,8 @@ return () => imageURL.forEach((url)=>{
               <div className='flex flex-col h-full'>
                 <div className='flex'><HomeUserData /></div>
                 <div className=''> <Table tableData={TableData}/></div>
-                <div className='border-dotted border border-gray-400 w-[90%] my-2 h-[30%]'><PreviewImage image={imageURL} onDelete ={handleDeleteImage}/></div>
-                <div className='flex mt-auto pb-[150px]' ><HomeFooter2 onFileChange={handleFileChange}/></div>
+                <div className=' max-w-[750px] my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
+                <div className='flex mt-auto pb-[150px] max-w-[750px]' ><HomeFooter2 img={image} deleteAllFile={setImage} onFileChange={handleFileChange} tableData={TableData}/></div>
               </div>
                
              </div>

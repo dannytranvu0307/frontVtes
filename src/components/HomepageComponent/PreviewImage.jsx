@@ -1,9 +1,9 @@
 
 function PreviewImage({image , onDelete}){
     return(
-        <div className='flex flex-row h-full mx-auto'>
+        <div className='flex flex-row h-full mx-auto border-dotted border border-gray-400'>
             {image.map((img,i)=>(
-                <div key={i} className="basis-1/5 flex flex-col h-full  px-2 bg-red-100">
+                <div key={i} className="basis-1/5 flex flex-col h-full  px-2 ">
 
                 <button onClick={() => onDelete(i)} className="   py-2 mx-auto">     
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-red-400">

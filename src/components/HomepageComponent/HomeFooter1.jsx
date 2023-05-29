@@ -5,7 +5,7 @@ function HomeFooter({onAdd , data, onPrice , error, setError}){
      <div className='flex justify-between w-full'>
         <div className=''>
             <span className='my-5 text-xs'>{t("price")}</span>
-            <div className=' '><input className={`w-32 h-8 border-[1px] border-black rounded px-2${error.price&&("border-red-500 bg-red-100")}`} 
+            <div className=' '><input className={`w-32 h-8 border-[1px] border-black rounded px-2 ${error.price&&("border-red-500 bg-red-100")}`} 
             value={data.price} 
             onChange={e=>{onPrice(e.target.value),setError({...error,price:false})}}/></div> 
          </div>
