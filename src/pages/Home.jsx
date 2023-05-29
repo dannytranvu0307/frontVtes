@@ -247,7 +247,7 @@ useEffect(()=>{
                  {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
                  {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
                </div>
-               <SearchResult search={searching} data={data} onPrice={handlePrice} />
+               <SearchResult search={searching} data={data} onPrice={handlePrice} isOn ={isOn} />
               <div className='flex mt-auto pb-[150px]'><HomeFooter onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/></div>
              </div>
 

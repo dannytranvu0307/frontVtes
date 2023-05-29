@@ -1,42 +1,22 @@
 import { useState } from "react"
 import { useTranslation } from "react-i18next";
-function SearchResult({search,data ,onPrice}){
+function SearchResult({search,data ,onPrice , isOn}){
+  console.log(search)
     
     const{t}=useTranslation()
     const [selectedObject, setSelectedObject] = useState(null);
     const [selectedObject2, setSelectedObject2] = useState(null);
     
-    function convertHexToRGB(hexCode) {
-        // Kiểm tra định dạng đúng của mã màu Hex
-        const hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-        if (!hexRegex.test(hexCode)) {
-          return null; // Mã màu Hex không hợp lệ
-        }
-      
-        // Xử lý định dạng mã màu Hex
-        let formattedHexCode = hexCode.replace("#", "");
-        if (formattedHexCode.length === 3) {
-          formattedHexCode = formattedHexCode
-            .split("")
-            .map((char) => char + char)
-            .join("");
-        }
-      
-        // Chuyển đổi mã màu Hex thành mã màu RGB
-        const r = parseInt(formattedHexCode.substring(0, 2), 16);
-        const g = parseInt(formattedHexCode.substring(2, 4), 16);
-        const b = parseInt(formattedHexCode.substring(4, 6), 16);
-      
-        const RGBCode = `rgb(${r}, ${g}, ${b})`;
-        return RGBCode;
-      }
 
     const handleObjectHover = (object) => {
         setSelectedObject(object);
       };
       const handleObjectClick = (object) => {
         setSelectedObject2(object);
-        if(data.payment===t('ic')&&data.round===t('1way')){
+        if(isOn){
+         onPrice(object.summary.move.fare.unit114)
+        }else{
+          if(data.payment===t('ic')&&data.round===t('1way')){
             onPrice(object.summary.move.fare.IC)
         }else if(data.payment===t('ic')&&data.round===t('2way')){
             onPrice(object.summary.move.fare.IC*2)
@@ -46,6 +26,8 @@ function SearchResult({search,data ,onPrice}){
             onPrice(object.summary.move.fare.現金*2)
         }
         
+        }
+       
       };
       const styleObject = {
         backgroundColor: 'blue'
@@ -73,9 +55,11 @@ return(
           }
 
           <div className="mx-2">{t('transit')}:{search.summary.move.transitCount}回</div>
+          
+          {isOn?<div>{search.summary.move.fare.unit114}</div>:<div>
           {data.payment===t('ic')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.IC}</span>:<span>{data.payment}:{search.summary.move.fare.IC*2}</span>}</div>}
           {data.payment===t('cash')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.現金}</span>:<span>{data.payment}:{search.summary.move.fare.現金*2}</span>}</div>}
-          
+          </div>}
 
           </div>
           <div className={`absolute z-10 w-full bg-white p-2 rounded-md shadow-md transition-opacity duration-300 overflow-auto mx-auto max-h-[200px] overflow-y-scroll
