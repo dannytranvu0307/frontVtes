@@ -119,7 +119,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
 </div>
 <div className='py-5 '>
     <span className=''>{t('Destination')}</span>
-    <div className='' ><input   className={`w-full h-8 px-2 border border-black ${error.Destination&&("border-red-500 bg-red-100")}`} placeholder={t('Destination_pla')} onChange={(e)=> {onDestination(e.target.value),setError({...error,Destination:false})}} /></div> 
+    <div className='' ><input value ={data.Destination}  className={`w-full h-8 px-2 border border-black ${error.Destination&&("border-red-500 bg-red-100")}`} placeholder={t('Destination_pla')} onChange={(e)=> {onDestination(e.target.value),setError({...error,Destination:false})}} /></div> 
 </div>
 </div>
 )

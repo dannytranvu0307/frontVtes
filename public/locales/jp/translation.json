@@ -94,11 +94,14 @@
     "name2":"氏名",
     "UploadFile":"領収書を添付",
     "export":"エクスポート",
+    "commuterPassMess":"定期券をご利用なら、個人設定に定期券を登録しなければならない。",
+    "transit":"乗換",
     "close": "閉じる",
     "errorTitle":"エラー！！",
     "activeIsSuccess":"アカウントを作成されました。",
     "D1":"customJpane",
-    "commuterPassMess":"定期券をご利用なら、個人設定に定期券を登録しなければならない。"
-
-
+    "er_input_japanese":"日本語を入力してください。",
+    "er_input_search_length":"少なくとも2文字以上を入力してください。",
+    "userInfoUpdateMessageSuccess":"個人設定を更新されました。",
+    "change":"変更"
 }

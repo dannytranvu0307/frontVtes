@@ -5,6 +5,7 @@ function Validators (formId,options,value){
     const regex_email = /^[a-z]{1,15}[.][a-z]{1,30}([0-9]{0,3})@(vti.com.vn)$/gm;
     const regex_name_vietnamese = /^[A-Z ]{1,}[A-Z]$/m;
     const regex_password = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W){8,24}/g; //regex cần có dấu kí tự đặt biệt
+    const regex_japanese = /^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠ー]*$/g
     if (formId){
         if (options.name === "fullName"){
             if (value === ""){
@@ -41,14 +42,14 @@ function Validators (formId,options,value){
                 error.id = "password"
                 error.name =  "er_input_empty"
             }
-            else if (value.length < 8){
-                error.id = "password"
-                error.name =  "er_input_len_password"
-            }
-            else if (!(regex_password.test(value))){
-                error.id = "password"
-                error.name = "er_input_rule_password"
-            }
+            // else if (value.length < 8){
+            //     error.id = "password"
+            //     error.name =  "er_input_len_password"
+            // }
+            // else if (!(regex_password.test(value))){
+            //     error.id = "password"
+            //     error.name = "er_input_rule_password"
+            // }
             else {
                 error.name = ""
             }
@@ -122,6 +123,14 @@ function Validators (formId,options,value){
                 error.id = "start"
                 error.name = "er_input_empty"
             }
+            // else if (!regex_japanese.test(value)){
+            //     error.id = "start"
+            //     error.name = "er_input_japanese"
+            // }
+            else if (value.length < 2){
+                error.id = "start"
+                error.name = "er_input_search_length"
+            }
             else {
                 error.name = ""
             }
@@ -132,15 +141,29 @@ function Validators (formId,options,value){
                 error.id = "goal"
                 error.name = "er_input_empty"
             }
+            // else if (!regex_japanese.test(value)){
+            //     error.id = "goal"
+            //     error.name = "er_input_japanese"
+            // }
+            else if (value.length < 2){
+                error.id = "goal"
+                error.name = "er_input_search_length"
+            }
             else {
                 error.name = ""
             }
         };
-
         if (options.name === "via"){
             if (value === ""){
                 error.id = "via"
                 error.name = "er_input_empty"
+            }
+            else if (!regex_japanese.test(value)){
+                error.name = "er_input_japanese"
+            }
+            else if (value.length < 2){
+                error.id = "goal"
+                error.name = "er_input_search_length"
             }
             else {
                 error.name = ""
@@ -148,7 +171,6 @@ function Validators (formId,options,value){
         };  
         
         if ( options.getAttribute("exclude") && `${options.getAttribute("exclude")}`.includes(formId.id)){
-            console.log("?")
             if (value === ""){
                 error.name = "er_input_empty";
             }
@@ -157,7 +179,6 @@ function Validators (formId,options,value){
             }
         }
     }
-    console.log(error)
     return error
 };  
 

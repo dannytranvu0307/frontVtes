@@ -23,6 +23,7 @@ export const authenticate = createAsyncThunk(
             const response = await axios.get(`${baseURL}/users`,{withCredentials: true})
             return response
         }catch(err){
+            console.log(err.response)
             return err.response
         }
     }
@@ -63,10 +64,9 @@ export const refreshToken =  createAsyncThunk(
 
         try {
             const response = await axios.get(`${baseURL}/auth/refreshToken`,{withCredentials: true})
-            console.log(response)
             return response
         }catch(err){
-            console.log(err)
+            console.log(err.response)
             return err.response
         }
     }
@@ -98,6 +98,19 @@ export const confirmPasswordReset = createAsyncThunk(
 )
 
 
+export const logout = createAsyncThunk(
+    'login/logout',
+    async () => {
+        try {
+
+            const response = await axios.get(`${baseURL}/auth/logout`, {withCredentials: true} )
+            return response
+        }catch(err){
+            return err.response
+        }
+    }
+)
+
 
 const authSlice = createSlice({
     name:'login',
@@ -115,7 +128,8 @@ const authSlice = createSlice({
                     passwordResetError: null,
                     // email reset password instace
                     sendMailMessage: null,
-
+                    // login error 
+                    errorLogin: null,
                     // mailTimeOut: false
                     // confirm password and auth token message
                     confirmPasswordResetSuccess: null,
@@ -129,11 +143,13 @@ const authSlice = createSlice({
             state.checkPass = false
         }),
         builder.addCase(login.fulfilled, (state,action)=> {
+            console.log(action.payload)
             if(action.payload.status === 200){
                 state.error = null
+                state.errorLogin = null
                 state.isAuthenticated = true
             }else if (action.payload.status === 401){
-                state.error = 'Unauthorized'
+                state.errorLogin = 'Unauthorized'
             }
         }),
 
@@ -225,15 +241,30 @@ const authSlice = createSlice({
                 state.confirmPasswordResetReject = true
             }
         }),
+
+        // get new access token by refresh token
         builder.addCase(refreshToken.pending, (state,action )=>{
             state.error= null
             state.isLoading = true
         }),
         builder.addCase(refreshToken.fulfilled, (state,action )=>{
-            console.log(action.payload)
             state.error= null
             state.isLoading = false
+        }),
+
+        // logout  function
+        builder.addCase(logout.pending, (state,action )=>{
+            state.isLoading = true
+        }),
+        builder.addCase(logout.fulfilled, (state,action )=>{
+            if (action.payload.status === 200){
+                state.error= null
+                state.isLoading = false
+                state.user = null
+                state.isAuthenticated = false
+            }
         })
+
     }
 })
 
@@ -243,6 +274,7 @@ export default authSlice.reducer
 // 
 export const selectIsLoading = (state ) => state.login.isLoading
 export const selectError = (state) => state.login.error
+export const selectErrorLogin = (state) => state.login.errorLogin
 // user info
 export const selectUser = (state) => state.login.user
 // is authen

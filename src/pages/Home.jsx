@@ -9,21 +9,32 @@ import HomeFooter from '../components/HomepageComponent/HomeFooter1';
 import Table from '../components/HomepageComponent/Table';
 import HomeFooter2 from '../components/HomepageComponent/HomeFooter2';
 import PreviewImage from '../components/HomepageComponent/PreviewImage';
-
+import SearchResult from '../components/HomepageComponent/SearchResult';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 function Home() {
    const { t } = useTranslation();
     const [data,setData] =useState({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
-    const [error,setError]=useState({date:false ,payment:false,Destination:false,departure:false,arrival:false})
+    const [error,setError]=useState({date:false ,payment:false,Destination:false,departure:false,arrival:false , price:false})
     const [TableData,setTableData]= useState([])
     const [image, setImage] =useState([]);
     const [imageURL, setImageURL] =useState([]);
-    const [searching , setSearching] = useState()
-    // console.log(user)
+    const [searching , setSearching] = useState([])
+    const  user= useSelector(state =>state.login.user)
+     useEffect(()=>{
+      if(user){
+        setTableData(user.fares)
+      }
 
-    const handleDateChange = (newData) => {
+     },[TableData])
+
+
+
+
+      const handleDateChange = (newData) => {
       setData({ ...data,date:newData});
-    };
-    const handleVehicleChange = (option) => {
+      };
+      const handleVehicleChange = (option) => {
         setData({ ...data,vehicle:option});
       };
       const handlePayment = (option) => {
@@ -49,6 +60,13 @@ function Home() {
       const handleTransport= (option) => {
         setData({ ...data,transport:option});
       };
+      const handlePrice= (option) => {
+        setData({ ...data,price:option});
+      };
+
+
+
+
 
       const handleFileChange = (file) => {
       
@@ -73,29 +91,73 @@ function Home() {
        
        const handleValidation = () => {
         if(data.vehicle===t('train')){
-          const { date, Destination, departure, arrival, payment } = data;
+          const { date, Destination, departure, arrival, payment , price} = data;
+          const updatedError = {
+          date: date === "",
+          Destination: Destination === "",
+          departure: departure === "",
+          arrival: arrival === "",
+          payment: payment === "",
+          price: price ===""
+        };
+        setError(updatedError);
+        if(Object.values(updatedError).every((value)=> value===false)){
+
+          const form = {
+             visitLocation: data.Destination,
+             departure:data.departure,
+             destination: data.arrival,
+             payMethod: data.payment===t('IC')?"1":"2",
+             useCommuterPass: true,
+             isRoundTrip: true,
+             fee: 2000,
+             transportation: "電車",
+             visitDate: "2023/04/06"
+          }
+
+
+          axios.post('http://localhost:8080/api/v1/fares', form, {
+            withCredentials: true,
+          })
+            .then(response => {
+              // Handle the response
+              console.log(response.data);
+            })
+            .catch(error => {
+              // Handle errors
+              console.error(error);
+            });
+
+          
+
+
+
+
+
+
+
+
+
+          setData({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
+          setSearching([])
+        }else{
+          console.log("dame")
+        }
+      }else{
+        const { date, Destination, departure, arrival,price} = data;
         const updatedError = {
           date: date === "",
           Destination: Destination === "",
           departure: departure === "",
           arrival: arrival === "",
-          payment: payment === ""
+          price: price ===""
         };
         setError(updatedError);
         if(Object.values(updatedError).every((value)=> value===false)){
-          setTableData((prev)=>[...prev,data])
+          setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
         }else{
           console.log("dame")
         }
-      }else{
-        const { date, Destination, departure, arrival,} = data;
-        const updatedError = {
-          date: date === "",
-          Destination: Destination === "",
-          departure: departure === "",
-          arrival: arrival === ""
-        };
-        setError(updatedError);
       }
 
         }
@@ -115,7 +177,7 @@ return () => imageURL.forEach((url)=>{
 },[])
 
     return (
-        <div className="w-full h-full bg-[#F9FAFB] h-screen ">
+        <div className="w-full h-full bg-[#F9FAFB] ">
           
          
           <div className='flex  sm:flex-col md:flex-row h-full  mb-auto'>  
@@ -129,11 +191,15 @@ return () => imageURL.forEach((url)=>{
                              error={error}
                              setError={setError}
                  /> </div>
-              <div className='flex'> {data.vehicle===t('train')&&<SearchTrain onDepart ={handleDeparture} onArrival={handleArrial} onTransport ={handleTransport} data={data} error ={error} setError={setError}/>}
-                                     {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data error ={error} setError={setError}/>}
-                                     {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data error ={error} setError={setError}/>}
+              <div className='flex'>
+                 {data.vehicle===t('train')&&<SearchTrain 
+                
+                 onSearching={setSearching} onDepart ={handleDeparture} onArrival={handleArrial} onTransport ={handleTransport} data={data} error ={error} setError={setError}/>}
+                 {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
+                 {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
                </div>
-              <div className='flex mt-auto pb-[50px]'><HomeFooter onAdd={handleAddTable}/></div>
+               <SearchResult search={searching} data={data} onPrice={handlePrice} />
+              <div className='flex mt-auto pb-[150px]'><HomeFooter onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/></div>
              </div>
 
 

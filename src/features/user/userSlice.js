@@ -3,28 +3,32 @@ import axios from "axios";
 import { baseURL } from "../auth/loginSlice";
 
 export const userUpdate = createAsyncThunk(
-    'login/userUpdate',
+    'user/userUpdate',
     async (form) => {
         console.log(form)
-        // try {
-        //     const response = await axios.post(`${baseURL}/users`,form,{withCredentials: true})
-        //     return response
-        // }catch(err){
-        //     return err.response
-        // }
+        try {
+            const response = await axios.put(`${baseURL}/users`,form,{withCredentials: true})
+            return response
+        }catch(err){
+            console.log(err.response)
+            return err.response
+        }
     }
 )
 
 const userSlice = createSlice({
     name:'user',
-    initialState: {},
+    initialState: { updateSuccess: false, updateMessage: null },
     extraReducers:(builder) =>  {
         builder.addCase(userUpdate.pending, (state)=> {
-            state.departments = []
+            state.updateSuccess = false
+            state.updateMessage = null
         }),
         builder.addCase(userUpdate.fulfilled, (state,action)=> {
+            console.log(action.payload)
             if(action.payload.status === 200){
-                state.departments = action.payload.data.data
+                state.updateSuccess = true
+                state.updateMessage = null
             }else if (action.payload === 401){
                 state.error = []
             }
@@ -33,3 +37,6 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
+
+export const selectUpdateSuccess = (state) => state.user.updateSuccess;
+export const selectUpdateMessage = (state) => state.user.updateMessage;

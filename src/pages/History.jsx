@@ -1,70 +1,79 @@
 import { useTranslation } from 'react-i18next';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import { useState, useLayoutEffect } from 'react';
+import axios from 'axios';
+import { baseURL } from '../features/auth/loginSlice';
 function History() {
     const { t } = useTranslation();
 
-    const files = [
-        {
-            fileName: "aaaa",
-            fileURI: "交通費精算書_PHUCLH_4月分",
-            uploadedTime: "2023年10月03日"
-        },
-        {
-            fileName: "bbbb",
-            fileURI: "交通費精算書_PHUCLH_3月分",
-            uploadedTime: "2023年10月04日"
-        },
-        {
-            fileName: "ccc",
-            fileURI: "交通費精算書_PHUCLH_2月分",
-            uploadedTime: "2023年10月05日"
-        },
-        {
-            fileName: "aaaa",
-            fileURI: "交通費精算書_PHUCLH_4月分",
-            uploadedTime: "2023年10月03日"
-        },
-        {
-            fileName: "bbbb",
-            fileURI: "交通費精算書_PHUCLH_3月分",
-            uploadedTime: "2023年10月04日"
-        },
-        {
-            fileName: "ccc",
-            fileURI: "交通費精算書_PHUCLH_2月分",
-            uploadedTime: "2023年10月05日"
-        },
-        {
-            fileName: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
-            fileURI: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
-            uploadedTime: "2023年10月03日"
-        },
-        {
-            fileName: "bbbb",
-            fileURI: "交通費精算書_PHUCLH_3月分",
-            uploadedTime: "2023年10月04日"
-        },
-        {
-            fileName: "ccc asd asd asdasdas das das das das das dasd asd as asdas das das das dasd asd asd asd asd asd asdas dasd asd as dasd sad asd sdf sdf sdf sdfsd fsdf ds",
-            fileURI: "交通費精算書_PHUCLH_2月分",
-            uploadedTime: "2023年10月05日"
-        },
-        {
-            fileName: "aaaa",
-            fileURI: "交通費精算書_PHUCLH_4月分",
-            uploadedTime: "2023年10月03日"
-        },
-        {
-            fileName: "bbbb",
-            fileURI: "交通費精算書_PHUCLH_3月分",
-            uploadedTime: "2023年10月04日"
-        },
-        {
-            fileName: "ccc",
-            fileURI: "交通費精算書_PHUCLH_2月分",
-            uploadedTime: "2023年10月05日"
-        }
-    ]
+    const [files, setFiles] = useState([]);
+
+    const getAllFiles = async ()=>{
+        const res = await axios.get(`${baseURL}/files`)
+    }
+
+    // const files = [
+    //     {
+    //         fileName: "aaaa",
+    //         fileURI: "交通費精算書_PHUCLH_4月分",
+    //         uploadedTime: "2023年10月03日"
+    //     },
+    //     {
+    //         fileName: "bbbb",
+    //         fileURI: "交通費精算書_PHUCLH_3月分",
+    //         uploadedTime: "2023年10月04日"
+    //     },
+    //     {
+    //         fileName: "ccc",
+    //         fileURI: "交通費精算書_PHUCLH_2月分",
+    //         uploadedTime: "2023年10月05日"
+    //     },
+    //     {
+    //         fileName: "aaaa",
+    //         fileURI: "交通費精算書_PHUCLH_4月分",
+    //         uploadedTime: "2023年10月03日"
+    //     },
+    //     {
+    //         fileName: "bbbb",
+    //         fileURI: "交通費精算書_PHUCLH_3月分",
+    //         uploadedTime: "2023年10月04日"
+    //     },
+    //     {
+    //         fileName: "ccc",
+    //         fileURI: "交通費精算書_PHUCLH_2月分",
+    //         uploadedTime: "2023年10月05日"
+    //     },
+    //     {
+    //         fileName: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
+    //         fileURI: "交通費精算書_NGUYEN_NGUYEN_NGUYEN_NGUYEN_4月分.xlxs",
+    //         uploadedTime: "2023年10月03日"
+    //     },
+    //     {
+    //         fileName: "bbbb",
+    //         fileURI: "交通費精算書_PHUCLH_3月分",
+    //         uploadedTime: "2023年10月04日"
+    //     },
+    //     {
+    //         fileName: "ccc asd asd asdasdas das das das das das dasd asd as asdas das das das dasd asd asd asd asd asd asdas dasd asd as dasd sad asd sdf sdf sdf sdfsd fsdf ds",
+    //         fileURI: "交通費精算書_PHUCLH_2月分",
+    //         uploadedTime: "2023年10月05日"
+    //     },
+    //     {
+    //         fileName: "aaaa",
+    //         fileURI: "交通費精算書_PHUCLH_4月分",
+    //         uploadedTime: "2023年10月03日"
+    //     },
+    //     {
+    //         fileName: "bbbb",
+    //         fileURI: "交通費精算書_PHUCLH_3月分",
+    //         uploadedTime: "2023年10月04日"
+    //     },
+    //     {
+    //         fileName: "ccc",
+    //         fileURI: "交通費精算書_PHUCLH_2月分",
+    //         uploadedTime: "2023年10月05日"
+    //     }
+    // ]
     return (
         <div className="flex flex-col mx-auto items-center -sm:py-4 sm:px-6 mb-16 py-8 h-full xl:w-3/5 lg:w-3/5 sm:w-full md:w-full lg:py-0">
             <div className="bg-white rounded-lg shadow md:mt-0 sm:w-full h-full xl:p-0">

@@ -3,21 +3,19 @@ import React, { useState } from 'react';
 import SwitchButton from './SwitchButton';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { baseURL } from '../../features/department/departmentsSlice';
+import { baseURL } from '../../features/auth/loginSlice';
 
-function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError}){
+function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError, onSearching }){
     const { t } = useTranslation();
     const [isInputVisible, setInputVisible] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
     const [suggestionsArrival, setSuggestionsArrival] = useState([]);
     const [suggestionsTransport, setSuggestionsTransport] = useState([]);
     const [focus, setFocus] = useState({departure:false,arrival:false,transport:false});
-    const [id, setId]=useState({departure:"",arrival:"",transport:""});
-    const [isOn, setIsOn] = useState(true); 
-
-    console.log(id)
-
-  
+    const [id, setId]=useState({}); //id of station 
+    const [isOn, setIsOn] = useState(true); //trigger of switch button 
+    const [alert, setAlert]= useState('')
+   console.log(alert)
     
   const handleClick = () => {
     setInputVisible(true)
@@ -25,17 +23,17 @@ function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError}){
 
   const handleSuggestionClick = (suggestion) => {
     onDepart(suggestion.stationName);
-    setId({...id,departure:suggestion.stationCode})
+    setId({...id,start:suggestion.stationCode})
     setSuggestions([])
   };
   const handleSuggestionClickArrival = (suggestion) => {
     onArrival(suggestion.stationName);
-    setId({...id,arrival:suggestion.stationCode})
+    setId({...id,goal:suggestion.stationCode})
     setSuggestionsArrival([])
   };
   const handleSuggestionClickTransport = (suggestion) => {
     onTransport(suggestion.stationName);
-    setId({...id,transport:suggestion.stationCode})
+    setId({...id,viaCode:suggestion.stationCode})
     setSuggestionsTransport([])
   };
   const handleBlur = () => {
@@ -57,27 +55,42 @@ function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError}){
 
 
 const handleSearch =()=>{
+  const { date, Destination, departure, arrival, payment } = data;
+  const updatedError = {
+  date: date === "",
+  Destination: Destination === "",
+  departure: departure === ""||departure === arrival,
+  arrival: arrival === ""||departure === arrival,
+  payment: payment === ""
+};
+setError(updatedError);
+if(departure===arrival){
+  setAlert("同じ駅名は連続して設定できません")
+}else{
+  setAlert('')
+}
 
+if(Object.values(updatedError).every((value)=> value===false)){
   axios.get(`${baseURL}/routes`,{
     params: {
-      start:id.departure,
-      goal:id.arrival,
+      ...id,
       commuterPass:isOn?1:0,
-      viaCode:id.transport
     },withCredentials: true
   } )
   .then(response => {
     // Handle the response
     console.log(response.data)
-  
+   onSearching(response.data.data)
   })
   .catch(error => {
     // Handle the error
     console.error(error)
   });
+}else{
+  console.log("dame")
+}
 
-
-
+  
 
 
 }
@@ -229,7 +242,7 @@ useEffect(()=>{
                </div> 
             </div>
         </div>
-        <div className=' px-[25%] pt-5 '> 
+        <div className=' px-[25%]'> 
 
 
 
@@ -268,7 +281,7 @@ useEffect(()=>{
         </div>
 
         <div><SwitchButton isOn={isOn} setIsOn ={setIsOn}/></div>
-
+        <div className='text-xs py-2 text-red-500'>{alert}</div>
 
         <button  className='w-24 h-8 items-center  text-xs justify-center rounded-md text-white flex mx-auto  bg-primary-600 hover:bg-primary-500' onClick={handleSearch}> {t("search")}</button>
     </div>      

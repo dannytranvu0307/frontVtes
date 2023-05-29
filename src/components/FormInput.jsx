@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const FormInput = (props) => {
     const [focused, setFocused] = useState("hidden");
-    const {label, placeholder,forHtml,value,...inputProps} = props
+    const {label, placeholder,forHtml,value,onChange,invalidError,...inputProps} = props
     const dispatch = useDispatch()
     const departments_lst = useSelector(selectDepartments)
+
     useEffect(()=>{
         dispatch(departments())
     },[])
@@ -43,6 +44,7 @@ const FormInput = (props) => {
                     onBlur={onBlur}
                     onFocus={(e) =>handleFocus(e)
                     }
+                    onChange={onChange}
                     value={value}
                     placeholder={t(placeholder)}
                     className={`
@@ -57,8 +59,9 @@ const FormInput = (props) => {
                 <select
                     onBlur={onBlur}
                     onFocus={(e) =>handleFocus(e)}
+                    onChange = {onChange}
+                    value ={value}
                     ref={ref}
-                    value={value}
                     {...inputProps}
                     className={`
                     disabled:appearance-none

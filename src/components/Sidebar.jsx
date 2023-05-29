@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from "react-redux";
-// import { logout } from '../features/auth/authenticateSlice'
+import { logout } from '../features/auth/loginSlice';
 import AOS from "aos";
 AOS.init({
     once: true,
@@ -16,7 +16,7 @@ const Sidebar = () => {
         setMounted(!mounted)
     }
     const handleLogout = () => {
-        // dispatch(logout())
+        dispatch(logout())
     }
 
     const sideBarItem = [
