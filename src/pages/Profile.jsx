@@ -22,9 +22,7 @@ const Profile = () => {
     const [disabledName, setDisabledname] = useState(true);
     const [disabledDepartment, setDisabledDepartment] = useState(true);
     const [disabledPassWord, setDisabledPassword] = useState(true);
-
-    // set focus input
-    const [focus, setFocus] = useState()
+    const [lstCp, setLstCp] = useState([])
 
     // user infor state [dependences ①]
     const infor = [
@@ -34,7 +32,7 @@ const Profile = () => {
         { ...password, disabled: disabledPassWord, placeholder: "●●●●●●●●●●●●", }
     ]
     // commuter pass search instances
-    const inputTickets = useMemo(()=>{ return [start, goal]},[]);
+    const inputTickets = useMemo(() => { return [start, goal] }, []);
     //  password update instances
     const passwords = useMemo(() => {
         return [{
@@ -62,19 +60,22 @@ const Profile = () => {
             htmlFor: "confirm_new_password",
             placeholder: "confirm_new_password",
             required: true,
-        }]}, [])
+        }]
+    }, [])
 
     // commuter pass state
-    const [commuterPass, setCommuterPass] = useState({start:"",goal:"",viaDetails:""})
+    const [commuterPass, setCommuterPass] = useState({ start: "", goal: "", viaDetails: [] })
 
     // start point 
     const [startPoint, setStartPoint] = useState({
-        stationCode:""
+        stationCode: "",
+        stateName: ""
     })
 
     // goal point
     const [goaltPoint, setGoalPoint] = useState({
-        stationCode:""
+        stationCode: "",
+        stationName: ""
     })
     // update success message state
     const isSuccess = useSelector(selectUpdateSuccess);
@@ -82,19 +83,9 @@ const Profile = () => {
     const [form, setForm] = useState({});
 
     // sugesstion state
-    const [startSuggestion,setStartSuggestion] = useState([
-        // {stationCode:"1",stationName:"aa"},
-        // {stationCode:"2",stationName:"aaa"},
-        // {stationCode:"3",stationName:"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
-        // {stationCode:"4",stationName:"aaaaaaaaaaaa"}
-    ])
+    const [startSuggestion, setStartSuggestion] = useState([])
     // sugesstion state
-    const [goaltSuggestion,setGoalSuggestion] = useState([
-        // {stationCode:"5",stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-        // {stationCode:"6",stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-        // {stationCode:"7",stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-        // {stationCode:"8",stationName:"bbbbbbbbbbbbbbbbbbbbbbb"}
-    ])
+    const [goaltSuggestion, setGoalSuggestion] = useState([])
 
     // set init value for user and input form
     useEffect(() => {
@@ -107,10 +98,10 @@ const Profile = () => {
                 new_password: null,
                 confirm_new_password: null,
             });
-            if (user.commuterPass){
+            if (user.commuterPass) {
                 setCommuterPass({
-                    start:user.commuterPass.departure,
-                    goal:user.commuterPass.destination,
+                    start: user.commuterPass.departure,
+                    goal: user.commuterPass.destination,
                     viaDetails: user.commuterPass.viaDetails
                 })
             }
@@ -124,63 +115,47 @@ const Profile = () => {
 
     // value start and goal point was changed will be call api
 
-    const ApiSearchStation = async (name,value) =>{
-        console.log("call")
-        try{
-            // const res = await axios.get(`${baseURL}/stations?stationName=${value}`)
-            const res = {code:"",data:[ 
-                {stationCode:"1",stationName:"aa"},
-                {stationCode:"2",stationName:"aaa"},
-                {stationCode:"3",stationName:"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
-                {stationCode:"4",stationName:"aaaaaaaaaaaa"}
-                ]}
-            if (name === "start"){
-                console.log("r")
-                setStartSuggestion([...res.data])
-            }else{
-                // setGoalSuggestion([...res.data])
-                setGoalSuggestion([{stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-                {stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-                {stationName:"bbbbbbbbbbbbbbbbbbbbbbb"},
-                {stationName:"bbbbbbbbbbbbbbbbbbbbbbb"}])
+    useEffect(()=>{
+
+    },[])
+
+    const ApiSearchStation = async (name, value) => {
+        try {
+            const res = await axios.get(`${baseURL}/stations?stationName=${value}`,{withCredentials: true})
+            console.log(res.data)
+            if (name === "start") {
+                setStartSuggestion([...res.data.data])
+            } else {
+                setGoalSuggestion([...res.data.data])
+                
             }
-        }catch(err){
+        } catch (err) {
             console.log(err.response)
         }
     }
 
-    useEffect(()=>{
-        if (commuterPass.start.length >= 2){
-            ApiSearchStation("start",commuterPass.start)
-        }else{
-            setStartSuggestion([])
-        }
-    },[commuterPass.start])
-    useEffect(()=>{
-        if (commuterPass.goal.length >= 2){
-            ApiSearchStation("goal",commuterPass.goal)
-        }else {
-            setGoalSuggestion([])
-        }
-    },[commuterPass.goal])
+    useEffect(() => {
 
-    const handleStartPoint = (stationCode,stationName) => {
+    }, [commuterPass.start, commuterPass.goal])
 
+    const handleStartPoint = (stationCode, stationName) => {
+        console.log(stationCode, stationName)
+        setStartPoint({ stationCode: stationCode, stationName: stationName })
+        setCommuterPass({ ...commuterPass, start: stationName })
+        setStartSuggestion([])
     }
 
-    const handleGoalPoint = (stationCode,stationName) => {
-        
+    const handleGoalPoint = (stationCode, stationName) => {
+        console.log(stationCode, stationName)
+        setGoalPoint({ stationCode: stationCode, stationName: stationName })
+        setCommuterPass({ ...commuterPass, goal: stationName })
+        setGoalSuggestion([])
     }
 
     const onChange = e => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
-    const onFocus = (e) => {
-        setFocus(e.target.name)
-    }
-    const onBlur = e => {
-        setFocus('')
-    }
+
     const [validError, setInvalidError] = useState()
     // dissable handle change password
     const handleDisable = () => {
@@ -197,26 +172,48 @@ const Profile = () => {
     }
 
     // submit to search commuter pass 
-    const onSubmitSearch = () => {
-        console.log(startPoint,goaltPoint)
-            //dispatch(searchCummuterPass)
+    const onSubmitSearch = async () => {
+        try {
+            const res = await axios.get(`${baseURL}/cp-routes?start=${startPoint.stationCode}&goal=${goaltPoint.stationCode}`,{withCredentials: true})
+            console.log( res.data.data)
+            setLstCp(res.data.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+
+    const handleUpdateItem = (e,start_,goal_,links_ ) => {
+        setCommuterPass({start:start_,goal:goal_, viaDetails:links_})
+        const Elements = document.querySelectorAll('div.divCp')
+        Elements.forEach((item, i) => {
+            if (item.classList.contains("clicked")){
+                item.classList.remove("clicked",'bg-blue-700','text-white')
+            }
+        })
+        e.target.classList.add('clicked', 'bg-blue-700', 'text-white')
     }
 
     // update commuter pass value start and goal
     const onChangeStation = e => {
-        setCommuterPass({...commuterPass, [e.target.name]: e.target.value})
+        setCommuterPass({ ...commuterPass, [e.target.name]: e.target.value })
+        ApiSearchStation(e.target.name,e.target.value)
     }
 
     // submit all record on form
     const onSubmit = e => {
         e.preventDefault();
-        const { departmentId,fullName,email, current_password, new_password, ...userData } = form
+        const { departmentId, fullName, email, current_password, new_password, ...userData } = form
         dispatch(userUpdate({
-            fullName:fullName,
-            email:email,
+            fullName: fullName,
+            email: email,
             departmentId: +departmentId,
             oldPassword: current_password,
-            newPassword: new_password, 
+            newPassword: new_password,
+            commuterPass: {
+                departure:commuterPass.start, 
+                destination:commuterPass.goal, 
+                viaDetails: commuterPass.viaDetails}
         }));
     }
 
@@ -282,88 +279,122 @@ const Profile = () => {
                                         className="flex mb-2 text-sm font-medium text-gray-900 grow-0 items-end">
                                         {t("reason_ticket")}
                                     </span>
-                                    { mounted ? (
-                                        commuterPass.start === "" && commuterPass.goal === ""  ?
-                                        <div onClick={handleToggleTicket} className="group flex w-[80px] border border-gray-500 border-solid rounded-[10px] px-2 py-1 items-center bg-gray-100 text-gray-900 cursor-pointer">
-                                        <div className="duration-300 transition w-[20px] h-[20px] bg-green-500 text-white rounded-full flex items-center mr-2 group-hover:bg-gray-100 group-hover:text-green-500 group-hover:rotate-180">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 flex mx-auto">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                                            </svg>
-                                        </div>
-                                    {t("btnAdd")}</div>:<div className="flex flex-col">
-                                        <div className="space-y-4">
-                                            <div className="flex flex-col min-w-[150px]">
-                                                <h1 className="text-sm font-medium">{t("start")}</h1>
-                                                <span className="mt-2 border flex rounded-[10px] h-[40px] text-stone-500">
-                                                    <p className="flex my-auto px-2.5">{commuterPass && commuterPass.start}</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex flex-col min-w-[150px]">
-                                                <h1 className="text-sm font-medium">{t("goal")}</h1>
-                                                <span className="mt-2 border flex rounded-[10px] h-[40px] text-stone-500">
-                                                    <p className="flex my-auto px-2.5">{commuterPass && commuterPass.goal}</p>
-                                                </span>
-                                            </div>
-                                            <button
-                                                onClick={handleToggleTicket}
-                                                className="flex ml-auto w-auto text-black border 
+                                    {mounted ? (
+                                        commuterPass.start === "" && commuterPass.goal === "" ?
+                                            <div onClick={handleToggleTicket} className="group flex w-[80px] border border-gray-500 border-solid rounded-[10px] px-2 py-1 items-center bg-gray-100 text-gray-900 cursor-pointer">
+                                                <div className="duration-300 transition w-[20px] h-[20px] bg-green-500 text-white rounded-full flex items-center mr-2 group-hover:bg-gray-100 group-hover:text-green-500 group-hover:rotate-180">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-4 h-4 flex mx-auto">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                    </svg>
+                                                </div>
+                                                {t("btnAdd")}</div> : <div className="flex flex-col">
+                                                <div className="space-y-4">
+                                                    <div className="flex flex-col min-w-[150px]">
+                                                        <h1 className="text-sm font-medium">{t("start")}</h1>
+                                                        <span className="mt-2 border flex rounded-[10px] h-[40px] text-stone-500">
+                                                            <p className="flex my-auto px-2.5">{commuterPass && commuterPass.start}</p>
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex flex-col min-w-[150px]">
+                                                        <h1 className="text-sm font-medium">{t("goal")}</h1>
+                                                        <span className="mt-2 border flex rounded-[10px] h-[40px] text-stone-500">
+                                                            <p className="flex my-auto px-2.5">{commuterPass && commuterPass.goal}</p>
+                                                        </span>
+                                                    </div>
+                                                    <button
+                                                        onClick={handleToggleTicket}
+                                                        className="flex ml-auto w-auto text-black border 
                                                         border-black bg-gray-50 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none 
                                                          focus:bg-gray-100 font-medium rounded-lg  text-sm px-5 py-2 text-center">{t("change")}</button>
-                                        </div>
-                                    </div>
-                                    ):(
-                                    <div className="relative">
-                                        <svg onClick={handleToggleTicket} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
-                                            className="w-5 h-5 hover:cursor-pointer hover:text-gray-500 absolute flex ml-auto top-0 right-0">
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        <div className="flex justify-between space-x-[20px]" id="ReasonTicket">
+                                                </div>
+                                            </div>
+                                    ) : (
+                                        <>
                                             <div className="relative">
-                                                <FormInput value={commuterPass.start} onChange={e => onChangeStation(e)} {...inputTickets[0]} />
-                                                
-                                                {/* <SearchCommuterPass name="start" setPoint={setStartPoint} onSuggestion={setStartSuggestion} value={commuterPass.start}/> */}
-                                                <div className="absolute bg-white rounded drop-shadow-lg">
-                                                    {startSuggestion.map((item,i)=>(
-                                                        <p className="px-2 py-1 duration-100 
+                                                <svg onClick={handleToggleTicket} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor"
+                                                    className="w-5 h-5 hover:cursor-pointer hover:text-gray-500 absolute flex ml-auto top-0 right-0">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                                <div className="flex justify-between space-x-[20px]" id="ReasonTicket">
+                                                    <div className="relative">
+                                                        <FormInput value={commuterPass.start} onChange={e => onChangeStation(e)} {...inputTickets[0]} />
+
+                                                        {/* <SearchCommuterPass name="start" setPoint={setStartPoint} onSuggestion={setStartSuggestion} value={commuterPass.start}/> */}
+                                                        <div className="absolute bg-white rounded drop-shadow-lg">
+                                                            {startSuggestion.map((item, i) => (
+                                                                <p className="px-2 py-1 duration-100 
                                                         transision-all cursor-pointer 
                                                         hover:bg-blue-200
                                                         last:rounded-b
                                                         first:rounded-t
                                                         "
-                                                        onClick={()=>handleStartPoint(item.stationCode,item.stationName)}
-                                                        key={i}>{item.stationName}
-                                                        </p>
-                                                    ))}
-                                                </div>
-                                    
-                                            </div>
-                                            
+                                                                    onClick={() => handleStartPoint(item.stationCode, item.stationName)}
+                                                                    key={i}>{item.stationName}
+                                                                </p>
+                                                            ))}
+                                                        </div>
 
-                                            <div className="relative">
-                                                <FormInput value={commuterPass.goal} onChange={e => onChangeStation(e)} {...inputTickets[1]} />
+                                                    </div>
 
-                                                {/* <SearchCommuterPass name="goal" setPoint={setGoalPoint} onSuggestion={setGoalSuggestion} value={commuterPass.goal} /> */}
-                                                    <div  className="absolute bg-white rounded drop-shadow-lg">
-                                                        {goaltSuggestion.map((item,i)=>(
-                                                            <p className="px-2 py-1 duration-100 
+
+                                                    <div className="relative">
+                                                        <FormInput value={commuterPass.goal} onChange={e => onChangeStation(e)} {...inputTickets[1]} />
+
+                                                        {/* <SearchCommuterPass name="goal" setPoint={setGoalPoint} onSuggestion={setGoalSuggestion} value={commuterPass.goal} /> */}
+                                                        <div className="absolute bg-white rounded drop-shadow-lg">
+                                                            {goaltSuggestion.map((item, i) => (
+                                                                <p className="px-2 py-1 duration-100 
                                                             transision-all cursor-pointer 
                                                             hover:bg-blue-200
                                                             last:rounded-b
                                                             first:rounded-t
                                                             "
-                                                            onClick={()=>
-                                                                    handleGoalPoint(item.stationCode,item.stationName)}
-                                                            key={i}>{item.stationName}
-                                                            </p>
-                                                        ))}
+                                                                    onClick={() =>
+                                                                        handleGoalPoint(item.stationCode, item.stationName)}
+                                                                    key={i}>{item.stationName}
+                                                                </p>
+                                                            ))}
+                                                        </div>
+
                                                     </div>
-    
+                                                </div>
+                                                <button
+                                                    onClick={onSubmitSearch}
+                                                    className="my-4 flex text-white bg-primary-600 mx-auto hover:bg-primary-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">{t("search")}</button>
                                             </div>
-                                        </div>
-                                        <button
-                                            onClick={onSubmitSearch}
-                                            className="my-4 flex text-white bg-primary-600 mx-auto hover:bg-primary-500 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">{t("search")}</button>
-                                    </div>
+                                            <div className="space-y-3">
+                                                {lstCp && lstCp.map((item, i) => (
+                                                    <div key={i} className="group cursor-pointer">
+                                                        <div className={`divCp justify-items-stretch w-full border rounded-[10px] border-black flex h-10 px-3 pointer`} 
+                                                        onClick={(e) => handleUpdateItem(e,item.summary.start.stationName,item.summary.goal.stationName,item.commuterPassLink)} key={i}>
+                                                            <span className="pointer-events-none flex my-auto after:content-['ー'] after:px-1">{item.summary.start.stationName}</span>
+                                                            <span className="pointer-events-none flex my-auto  whitespace-nowrap text-ellipsis overflow-hidden max-w-[200px]">
+                                                                {item.sections.map((e, i) => {
+                                                                    if (e.type === "point" && e.stationName !== item.summary.start.stationName && e.stationName !== item.summary.goal.stationName) {
+                                                                        return <span className="after:content-['ー'] after:px-2" key={i}>{e.stationName}</span>
+                                                                    }
+                                                                })
+                                                                }
+                                                            </span>
+                                                            <span className="pointer-events-none flex my-auto ">{item.summary.goal.stationName}</span>
+                                                            <span className="pointer-events-none flex my-auto pl-3 ml-auto">{t("transfer")}：{item.summary.move.transitCount}{t('times')}</span>
+                                                        </div>
+                                                        <div className="absolute flex flex-col hidden group-hover:block z-99 bg-white drop-shadow-lg px-3 py-2 rounded">
+                                                            {item.sections.map((e, i) => {
+                                                                if (e.type === "move" && e.transport) {
+                                                                    return <div key={i} className="pointer-events-none flex my-auto after:px-1"><span  className="border border-2 rounded mx-2" style={{borderColor: e.transport.lineColor}}></span>{e.transport.lineName}</div>
+                                                                } else if (e.type === "point") {
+                                                                    return <div key={i} className="pointer-events-none flex my-auto after:px-1">{e.stationName}</div>
+                                                                }
+                                                                else {
+                                                                    return <spanp className="text-gray-500 border border-2 rounded mx-2"></spanp>
+                                                                }
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </>
                                     )}
                                 </div>
                             </div>

@@ -127,10 +127,10 @@ function Validators (formId,options,value){
             //     error.id = "start"
             //     error.name = "er_input_japanese"
             // }
-            else if (value.length < 2){
-                error.id = "start"
-                error.name = "er_input_search_length"
-            }
+            // else if (value.length < 2){
+            //     error.id = "start"
+            //     error.name = "er_input_search_length"
+            // }
             else {
                 error.name = ""
             }
@@ -145,10 +145,10 @@ function Validators (formId,options,value){
             //     error.id = "goal"
             //     error.name = "er_input_japanese"
             // }
-            else if (value.length < 2){
-                error.id = "goal"
-                error.name = "er_input_search_length"
-            }
+            // else if (value.length < 2){
+            //     error.id = "goal"
+            //     error.name = "er_input_search_length"
+            // }
             else {
                 error.name = ""
             }

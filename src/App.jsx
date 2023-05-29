@@ -13,7 +13,6 @@ import SignUp from './pages/SignUp';
 import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
 import Active from './pages/Active'
-import Demo from './pages/Demo';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
@@ -56,7 +55,6 @@ function App() {
                     {isAuthenticated ? (<>
                     <Route path='/profile' element={<Profile />} />
                       <Route path='' element={<Home />} />
-                      <Route path='/demo' element={<Demo />} />
                       <Route path='/history' element={<History />} />
                       <Route path='*' to="/" element={<Home />} />
                     </>):(<>
