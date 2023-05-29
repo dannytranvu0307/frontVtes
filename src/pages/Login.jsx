@@ -1,14 +1,14 @@
 import { useState, useEffect} from "react";
 import { useTranslation } from 'react-i18next';
-import { Link,useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ErrorNotification from "../components/ErrorNotification";
 import {email, password} from "../instaces"
 import Modal from "../components/Modal";
 import FormInput from "../components/FormInput";
 import ValidatorSubmit from "../functional/ValidatorSubmit";
-import { selectError,login, authenticate,
-    selectIsActive,selectIsActiveMessage,
+import { login, authenticate,
+    selectIsActive,selectIsActiveMessage,selectErrorLogin,
     selectActiveError } from "../features/auth/loginSlice";
 
 function Login(){
@@ -16,8 +16,7 @@ function Login(){
     
     // change language
     const { t } = useTranslation();
-    const navigate = useNavigate()
-    const error = useSelector(selectError);
+    const error = useSelector(selectErrorLogin);
     const isActiveMessage= useSelector(selectIsActiveMessage)
     const isActiveError = useSelector(selectActiveError)
     const isActive = useSelector(selectIsActive)
@@ -51,7 +50,6 @@ function Login(){
                 if (res.status !== 401){
                     dispatch(authenticate())
                     .unwrap()
-                    .then(()=>navigate("/"))
                 }
             })
             

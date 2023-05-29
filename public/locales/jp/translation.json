@@ -79,8 +79,8 @@
     "taxi":"タクシー",
     "ic":"IC",
     "cash":"現金",
-    "1way":"方道",
-    "2way":"往",
+    "1way":"片道",
+    "2way":"往復",
     "Destination":"訪問先",
     "Destination_pla":"訪問先を入力してください。",
     "departure":"出発地",
@@ -94,8 +94,16 @@
     "name2":"氏名",
     "UploadFile":"領収書を添付",
     "export":"エクスポート",
+    "commuterPassMess":"定期券をご利用なら、個人設定に定期券を登録しなければならない。",
+    "transit":"乗換",
     "close": "閉じる",
     "errorTitle":"エラー！！",
     "activeIsSuccess":"アカウントを作成されました。",
-    "D1":"customJpane"
+    "D1":"customJpane",
+    "er_input_japanese":"日本語を入力してください。",
+    "er_input_search_length":"少なくとも2文字以上を入力してください。",
+    "userInfoUpdateMessageSuccess":"個人設定を更新されました。",
+    "change":"変更",
+    "transfer":"乗換",
+"times":"回"
 }

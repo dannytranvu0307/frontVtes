@@ -13,8 +13,7 @@ const VerifyCode = () => {
     
     useEffect(()=>{
         dispatch(verify(param))
-        .unwrap().then((res)=>{
-            console.log(res)
+        .unwrap().then(()=>{
             navigate("/login")
         })
     },[])

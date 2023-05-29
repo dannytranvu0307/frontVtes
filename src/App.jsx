@@ -13,7 +13,6 @@ import SignUp from './pages/SignUp';
 import PasswordReset from './pages/PassordReset';
 import History from './pages/History';
 import Active from './pages/Active'
-import Demo from './pages/Demo';
 import ConfirmResetPassword from './pages/ConfirmResetPassword';
 import Sidebar from "./components/Sidebar";
 import React from 'react';
@@ -50,13 +49,12 @@ function App() {
           <div className="flex h-full bg-gray-50 mb-1">
             {isAuthenticated && <Sidebar />}
             <main className="flex flex-col w-full bg-gray-50 overflow-x-hidden overflow-y-auto ml-16 left-16 -z-1">
-              <div className="w-full px-6 py-8">
+              <div className="w-full px-6 py-8 ">
                 <div className=" flex flex-col w-full h-full">
                   <Routes>
                     {isAuthenticated ? (<>
                     <Route path='/profile' element={<Profile />} />
                       <Route path='' element={<Home />} />
-                      <Route path='/demo' element={<Demo />} />
                       <Route path='/history' element={<History />} />
                       <Route path='*' to="/" element={<Home />} />
                     </>):(<>
@@ -67,6 +65,7 @@ function App() {
                         {/* <Route path='/verify?verifyCode=:verifyCode' element={<Active />} /> */}
                         <Route path='/verify/:verifyCode' element={<Active />} />
                         <Route path='/*' element={<Login />} />
+
                       </>
                       )}
                   </Routes>
