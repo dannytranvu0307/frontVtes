@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import SwitchButton from './SwitchButton';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { baseURL } from '../../features/auth/loginSlice';
+import {baseURL} from '../../features/auth/loginSlice'
 
-function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError, onSearching }){
+function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError, onSearching , isOn,setIsOn}){
     const { t } = useTranslation();
     const [isInputVisible, setInputVisible] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
@@ -13,9 +13,9 @@ function SearchTrain({onDepart, onArrival, data ,onTransport,error,setError, onS
     const [suggestionsTransport, setSuggestionsTransport] = useState([]);
     const [focus, setFocus] = useState({departure:false,arrival:false,transport:false});
     const [id, setId]=useState({}); //id of station 
-    const [isOn, setIsOn] = useState(true); //trigger of switch button 
+    //trigger of switch button 
     const [alert, setAlert]= useState('')
-   console.log(alert)
+   
     
   const handleClick = () => {
     setInputVisible(true)
@@ -89,29 +89,7 @@ if(Object.values(updatedError).every((value)=> value===false)){
 }else{
   console.log("dame")
 }
-
-  
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -210,7 +188,7 @@ useEffect(()=>{
                onKeyDown={handleKeyDown}
                />
               
-            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto'>
+            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
              {suggestions.map((suggestion, index) => (
               <li key={index} onClick={() => handleSuggestionClick(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded pt-2'>
               {suggestion.stationName}
@@ -232,7 +210,7 @@ useEffect(()=>{
                onBlur={(prev)=>setFocus({...prev,arrival:false})}
                onChange={e=>{onArrival(e.target.value),setError({...error,arrival:false})}}/>
 
-                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto' >
+                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto max-h-64 overflow-y-scroll' >
                     {suggestionsArrival.map((suggestion, index) => (
                     <li key={index} onClick={() => handleSuggestionClickArrival(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}
@@ -270,7 +248,7 @@ useEffect(()=>{
       )}
 
 
-                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto'>
+                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
                     {suggestionsTransport.map((suggestion, index) => (
                     <li key={index} onClick={() => handleSuggestionClickTransport(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}

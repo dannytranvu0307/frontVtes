@@ -52,7 +52,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
                <option  value={t("taxi")}>{t("taxi")}</option>
              
              </select>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
+              <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
                 className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0 ">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
@@ -61,7 +61,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
           
        </div>
 
-      {data.vehicle=== t('train')&& <div className='shrink w-16'>
+      {data.vehicle==='電車'&& <div className='shrink w-16'>
           <span className='whitespace-nowrap text-xs '>{t("purchase")}</span>
           <div className=" flex   border border-black bg-white relative  ">
           
@@ -82,13 +82,13 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
              
              </select>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
-                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0 ">
+                className="w-4 h-4 bottom-1/2 pointer-events-none translate-y-1/2 text-gray-600 absolute right-0 ">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
            </div>
        </div>}
 
-       {data.vehicle===t('train') &&  <div className='shrink w-16'>
+        {data.vehicle==t('train') &&  <div className='shrink w-16'>
            <span className='whitespace-nowrap text-xs'>{t("Round")}</span>
            <div className=" flex border border-black bg-white  relative ">
           

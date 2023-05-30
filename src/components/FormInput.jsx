@@ -38,23 +38,24 @@ const FormInput = (props) => {
                 </label>
             {
                 inputProps.type !== "departmentId" ? (
-                <input 
-                    ref={ref}
-                    {...inputProps}
-                    onBlur={onBlur}
-                    onFocus={(e) =>handleFocus(e)
-                    }
-                    onChange={onChange}
-                    value={value}
-                    placeholder={t(placeholder)}
-                    className={`
-                    bg-gray-50 border border-gray-300 
-                    text-gray-900 sm:text-sm rounded-lg 
-                    disabled:text-gray-600
-                    disabled:border-none 
-                    focus:ring-primary-600 
-                    focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}
-                    {...inputProps}
+
+                        <input 
+                        ref={ref}
+                        {...inputProps}
+                        onBlur={onBlur}
+                        onFocus={(e) =>handleFocus(e)
+                        }
+                        onChange={onChange}
+                        value={value}
+                        placeholder={t(placeholder)}
+                        className={`
+                        bg-gray-50 border border-gray-300 
+                        text-gray-900 sm:text-sm rounded-lg 
+                        disabled:text-gray-600
+                        disabled:border-none 
+                        focus:ring-primary-600 
+                        focus:border-primary-600 w-full p-2.5 ${error.name && ("border-red-500 bg-red-100")}`}
+                        {...inputProps}
                 />):(
                 <select
                     onBlur={onBlur}

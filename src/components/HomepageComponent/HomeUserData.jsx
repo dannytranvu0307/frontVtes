@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 function HomeUserData(){
     const { t } = useTranslation();
     const user= useSelector(state =>state.login.user)
-  
-   console.log(user)
+   
     return (
     <div className="">
        {user&&<div className='flex gap-20 '>

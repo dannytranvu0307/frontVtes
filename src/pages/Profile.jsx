@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectIsLoading, authenticate } from "../features/auth/loginSlice";
 import { userUpdate, selectUpdateSuccess, selectUpdateMessage } from "../features/user/userSlice";
 import { useTranslation } from 'react-i18next';
-import SearchCommuterPass from "../components/ProfileComponents/SearchCommuterPass";
 import ErrorNotification from "../components/ErrorNotification";
 import { baseURL } from "../features/auth/loginSlice";
 import axios from "axios";
@@ -122,7 +121,6 @@ const Profile = () => {
     const ApiSearchStation = async (name, value) => {
         try {
             const res = await axios.get(`${baseURL}/stations?stationName=${value}`,{withCredentials: true})
-            console.log(res.data)
             if (name === "start") {
                 setStartSuggestion([...res.data.data])
             } else {
@@ -139,14 +137,12 @@ const Profile = () => {
     }, [commuterPass.start, commuterPass.goal])
 
     const handleStartPoint = (stationCode, stationName) => {
-        console.log(stationCode, stationName)
         setStartPoint({ stationCode: stationCode, stationName: stationName })
         setCommuterPass({ ...commuterPass, start: stationName })
         setStartSuggestion([])
     }
 
     const handleGoalPoint = (stationCode, stationName) => {
-        console.log(stationCode, stationName)
         setGoalPoint({ stationCode: stationCode, stationName: stationName })
         setCommuterPass({ ...commuterPass, goal: stationName })
         setGoalSuggestion([])
