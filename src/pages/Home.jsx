@@ -24,8 +24,7 @@ function Home() {
     const [isOn, setIsOn] = useState(true);
     const dispatch = useDispatch()
     const [warning , setWarning ]= useState('');
-     console.log(warning)
-
+   console.log(image)
 
     const  user= useSelector(state =>state.login.user)
 
@@ -221,6 +220,7 @@ useEffect(()=>{
 
 
   const dataJSON = localStorage.getItem('imageData');
+  console.log(dataJSON)
   
     if (dataJSON) {
       const data = JSON.parse(dataJSON);
@@ -269,7 +269,7 @@ useEffect(()=>{
                 <div className='w-full my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
                 </div>
                
-                <div className='flex mt-auto pb-[150px] max-w-[750px]' ><HomeFooter2 img={image} deleteAllFile={setImage} onFileChange={handleFileChange} tableData={TableData}/></div>
+                <div className='flex mt-auto pb-[150px] max-w-[750px] mt-5' ><HomeFooter2 img={image} deleteAllFile={setImage} onFileChange={handleFileChange} tableData={TableData}/></div>
               </div>
                
              </div>

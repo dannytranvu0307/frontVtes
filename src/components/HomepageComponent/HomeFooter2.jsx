@@ -12,7 +12,7 @@ function HomeFooter2({onFileChange, tableData ,img }){
     const dispatch = useDispatch()
     const userDetail= useSelector(state =>state.login.user)
 const handleExportExcel =()=>{
-
+    
     if(tableData.length>0&&img.length>0){
            
         const user ={
@@ -42,13 +42,6 @@ const handleExportExcel =()=>{
                 }
             }
           });
-
-
-console.log(exportOptions)
-
-
-
-
     //    ExportExcel(user,exportOptions,evidences) 
     const toDay = new Date();
     const workbook = new ExcelJS.Workbook();
@@ -62,7 +55,7 @@ console.log(exportOptions)
             
     })
     const url = window.URL.createObjectURL(blob);
-    const file = new File([blob], `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`, {type: blob.type });
+    const file = new File([blob], `交通費_${user.fullname.replace(/\s/g, '')}_${toDay.getMonth()+1}月.xlsx`, {type: blob.type });
     const formData = new FormData();
     formData.append('file', file);
 
@@ -70,14 +63,15 @@ console.log(exportOptions)
         withCredentials: true,
       })
         .then(response => {
-       localStorage.clear()
+       localStorage.setItem('imageData',[])
+       
        const anchor = document.createElement("a");
        anchor.href = url;
-       anchor.download = `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`;
+       anchor.download = `交通費_${user.fullname.replace(/\s/g, '')}_${toDay.getMonth()+1}月.xlsx`;
        anchor.download;
        anchor.click()
        dispatch(authenticate())
-       onFileChange([])
+
     
        window.URL.revokeObjectURL(url);
         })
