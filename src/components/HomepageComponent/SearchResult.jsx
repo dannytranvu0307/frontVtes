@@ -56,7 +56,7 @@ return(
 
           <div className="mx-2">{t('transit')}:{search.summary.move.transitCount}回</div>
           
-          {isOn?<div>{search.summary.move.fare.unit114}</div>:<div>
+          {isOn?<div>Price:{search.summary.move.fare.unit114}</div>:<div>
           {data.payment===t('ic')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.IC}</span>:<span>{data.payment}:{search.summary.move.fare.IC*2}</span>}</div>}
           {data.payment===t('cash')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.現金}</span>:<span>{data.payment}:{search.summary.move.fare.現金*2}</span>}</div>}
           </div>}
