@@ -61,7 +61,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
           
        </div>
 
-      {data.vehicle==='電車'&& <div className='shrink w-16'>
+      {data.vehicle==='電車'&&<> <div className='shrink w-16'>
           <span className='whitespace-nowrap text-xs '>{t("purchase")}</span>
           <div className=" flex   border border-black bg-white relative  ">
           
@@ -86,9 +86,9 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
            </div>
-       </div>}
+       </div>
 
-        {data.vehicle==t('train') &&  <div className='shrink w-16'>
+       <div className='shrink w-16'>
            <span className='whitespace-nowrap text-xs'>{t("Round")}</span>
            <div className=" flex border border-black bg-white  relative ">
           
@@ -114,7 +114,64 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
           </div>
-       </div>}
+       </div></>}
+
+       {data.vehicle==='train'&&<> <div className='shrink w-16'>
+          <span className='whitespace-nowrap text-xs '>{t("purchase")}</span>
+          <div className=" flex   border border-black bg-white relative  ">
+          
+             <select
+              value={data.payment}
+              onChange={(e)=>{onPayment(e.target.value) ,setError({...error,payment:false})}}
+              className={`
+              h-6 px-2
+              flex-auto 
+              text-xs
+              appearance-none ${error.payment&&("border-red-500 bg-red-100")}`}
+          
+               > 
+               <option >ーー</option>
+               <option  value={t("cash")}>{t("cash")}</option>
+               <option  value={t("ic")}>{t("ic")}</option>
+               
+             
+             </select>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
+                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0 ">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+           </div>
+       </div>
+
+       <div className='shrink w-16'>
+           <span className='whitespace-nowrap text-xs'>{t("Round")}</span>
+           <div className=" flex border border-black bg-white  relative ">
+          
+            <select
+             value={data.round}
+             onChange={(e)=>onRound(e.target.value)}
+             className="
+             text-base 
+             h-6 px-2
+             border-2 border-white
+             text-gray-600 h-6 
+             text-xs
+             flex-auto 
+             appearance-none
+                ">
+
+                <option value={t("1way")}>{t("1way")}</option>
+                <option value={t("2way")}>{t("2way")}</option>
+              
+             </select>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
+                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-2 flex-initial ">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </div>
+       </div></>}
+
+       
 
 </div>
 <div className='py-5 '>
