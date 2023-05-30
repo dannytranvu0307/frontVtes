@@ -188,9 +188,9 @@ useEffect(()=>{
                onKeyDown={handleKeyDown}
                />
               
-            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
+            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll '>
              {suggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded pt-2'>
+              <li key={index} onClick={() => handleSuggestionClick(suggestion)} className='text-sm px-2 hover:bg-blue-200 rounded py-1'>
               {suggestion.stationName}
               </li> ))}
             </ul> 
@@ -210,9 +210,9 @@ useEffect(()=>{
                onBlur={(prev)=>setFocus({...prev,arrival:false})}
                onChange={e=>{onArrival(e.target.value),setError({...error,arrival:false})}}/>
 
-                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto max-h-64 overflow-y-scroll' >
+                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto max-h-64 overflow-y-scroll ' >
                     {suggestionsArrival.map((suggestion, index) => (
-                    <li key={index} onClick={() => handleSuggestionClickArrival(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
+                    <li key={index} onClick={() => handleSuggestionClickArrival(suggestion)} className='text-sm px-2 py-1 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}
                    </li>))}
                  </ul> 
@@ -248,9 +248,9 @@ useEffect(()=>{
       )}
 
 
-                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
+                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll '>
                     {suggestionsTransport.map((suggestion, index) => (
-                    <li key={index} onClick={() => handleSuggestionClickTransport(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
+                    <li key={index} onClick={() => handleSuggestionClickTransport(suggestion)} className='text-sm py-1 px-2 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}
                    </li>))}
                  </ul> 

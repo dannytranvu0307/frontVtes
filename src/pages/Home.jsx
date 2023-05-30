@@ -257,8 +257,11 @@ useEffect(()=>{
              <div className='pl-5 w-full flex-1 h-full'>
               <div className='flex flex-col h-full'>
                 <div className='flex'><HomeUserData /></div>
-                <div className=''> <Table tableData={TableData}/></div>
-                <div className=' max-w-[750px] my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
+                <div className='max-w-[700px]'> <Table tableData={TableData}/>
+                
+                <div className='w-full my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
+                </div>
+               
                 <div className='flex mt-auto pb-[150px] max-w-[750px]' ><HomeFooter2 img={image} deleteAllFile={setImage} onFileChange={handleFileChange} tableData={TableData}/></div>
               </div>
                

@@ -50,7 +50,7 @@ const Table = ({tableData})=>{
  return (
     <div className='py-3'>
         
-<div className=" relative max-h-[250px]  lg:max-w-[750px] overflow-auto">
+<div className=" relative max-h-[250px] max-w-[750px] overflow-auto">
     
     <table className="">
         <thead className="text-xs text-black uppercase bg-[#D9D9D9] ">
@@ -58,7 +58,7 @@ const Table = ({tableData})=>{
                 <th scope="col" className="py-3 px-6 px-auto border border-gray-500">
                  {t('date2')}
                 </th>
-                <th scope="col" className="py-3 px-12 border border-gray-500">
+                <th scope="col" className="py-3 px-14 border border-gray-500">
                 {t('destination')}
                 </th>
                 <th scope="col" className="border px-4 border border-gray-500">
