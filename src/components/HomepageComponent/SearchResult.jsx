@@ -29,9 +29,7 @@ function SearchResult({search,data ,onPrice , isOn}){
         }
        
       };
-      const styleObject = {
-        backgroundColor: 'blue'
-      };
+     
 return(
     <div className=" text-xs my-5">
         {search.map((search,i)=>(

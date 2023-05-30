@@ -94,7 +94,7 @@ if(Object.values(updatedError).every((value)=> value===false)){
 
 
 useEffect(()=>{
-  if( data.departure.length>1 && focus.departure){
+  if( data.departure.length>2 && focus.departure){
     
      console.log('call departure')
     axios.get(`${baseURL}/stations`,{
@@ -121,7 +121,7 @@ useEffect(()=>{
 //Arrival
 useEffect(()=>{
 
-  if( data.arrival.length>1 && focus.arrival){
+  if( data.arrival.length>2 && focus.arrival){
     console.log('call arrival')
     console.log(data.arrival.length)
     axios.get(`${baseURL}/stations`,{
@@ -144,7 +144,7 @@ useEffect(()=>{
 // transport 
 
 useEffect(()=>{
-  if( data.transport.length>1 && focus.transport){
+  if( data.transport.length>2 && focus.transport){
     console.log('call trans')
     axios.get(`${baseURL}/stations`,{
       params: {
