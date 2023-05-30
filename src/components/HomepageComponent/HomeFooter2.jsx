@@ -20,6 +20,7 @@ const handleExportExcel =()=>{
             department: userDetail.department.departmentName
         }
         const evidences =img.map((ob)=>ob.fileURL)
+        
         const exportOptions = tableData.map((item) => {
             const { useCommuterPass,payMethod,...rest } = item; // Lược bỏ thuộc tính useCommuterPass
             if (item.isRoundTrip) {
@@ -43,7 +44,7 @@ const handleExportExcel =()=>{
           });
 
 
-
+console.log(exportOptions)
 
 
 
