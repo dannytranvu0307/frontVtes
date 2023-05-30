@@ -196,6 +196,7 @@ function Validators (formId,options,value){
             }
         }
     }
+    console.log(error)
     return error
 };  
 
