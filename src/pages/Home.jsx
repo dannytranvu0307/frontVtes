@@ -23,7 +23,8 @@ function Home() {
     const [searching , setSearching] = useState([]);
     const [isOn, setIsOn] = useState(true);
     const dispatch = useDispatch()
- 
+    const [warning , setWarning ]= useState('');
+     console.log(warning)
 
 
     const  user= useSelector(state =>state.login.user)
@@ -127,7 +128,7 @@ function Home() {
 
        
        const  handleAddTable= () => {
-        if(data.vehicle===t('train')){
+        if(data.vehicle==='train'){
           const { date, Destination, departure, arrival, payment , price} = data;
           const updatedError = {
           date: date === "",
@@ -157,8 +158,9 @@ function Home() {
             .then(response => {
               dispatch(authenticate())
               // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
-              setData({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
+              setData({date:"",vehicle:data.vehicle, Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
               setSearching([])
+              setWarning('')
              
             })
             .catch(error => {
@@ -168,7 +170,8 @@ function Home() {
 
           
         }else{
-          console.log("dame")
+          setWarning(t('warning'))
+    
         }
       }
       else{
@@ -201,6 +204,7 @@ function Home() {
             // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
             setData({date:"",vehicle:data.vehicle, Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
             setSearching([])
+            setWarning('')
            
           })
           .catch(error => {
@@ -208,7 +212,7 @@ function Home() {
             console.error(error);
           })
         }else{
-          console.log("dame")
+          setWarning(t('warning'))
         }
       } }
        
@@ -249,7 +253,10 @@ useEffect(()=>{
                  {data.vehicle==='taxi'&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
                </div>
                <SearchResult search={searching} data={data} onPrice={handlePrice} isOn ={isOn} />
-              <div className='flex mt-auto pb-[150px]'><HomeFooter onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/></div>
+              <div className='flex mt-auto pb-[150px]'>
+                <HomeFooter warning={warning} onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/>
+                </div>
+             
              </div>
 
 
