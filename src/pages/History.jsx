@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
-import { useState, useLayoutEffect } from 'react';
+import { useState, useLayoutEffect, useEffect } from 'react';
 import axios from 'axios';
 import { baseURL } from '../features/auth/loginSlice';
 function History() {
@@ -8,10 +8,59 @@ function History() {
 
     const [files, setFiles] = useState([]);
 
-    const getAllFiles = async ()=>{
-        const res = await axios.get(`${baseURL}/files`)
+    const getFiles = async () => {
+        try {
+            const res = await axios.get(`${baseURL}/files`,{withCredentials: true})
+            return setFiles([...res.data.data])
+        }catch(err){
+            return err.response
+        }
     }
+    // const handleDowload = async (id,name) => 
+    // {   console.log(name)
+    //     try {
+    //         console.log(`${baseURL}/files/${id}`)
+    //         const res = await axios.get(`${baseURL}/files/${id}`,{withCredentials: true})
+    //         console.log(res.data)
+    //         // const file = new File([res.data], `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`, {type: blob.type });
+    //         // const a = document.createElement("a") 
+    //         const blob = new Blob([res.data],{name},
+    //             {
+    //             type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    //         })
+    //     //     const file = new File([blob],`${name}`,{type: blob.type });
+    //         const url = window.URL.createObjectURL(blob);
+            
+    //         const anchor = document.createElement("a");
+    //     anchor.href = url;
+    //     anchor.download;
+    //     anchor.click()
+    //     }catch(err){
+    //         return err.response
+    //     }
 
+    // }
+
+
+    useEffect(()=>{
+        getFiles()
+    },[])
+    const renderTable = () => {
+        const table = [];
+        for (let i = 0; i < (10-files.length); i++) {
+          const row = [];
+    
+          for (let j = 0; j < 2; j++) {
+            row.push(
+              <td  className="text-sm h-9 border font-extrabold border-borderTable-borderTable font-light px-6 py-2 whitespace-nowrap"key={j}>{``}</td>
+            );
+          }
+    
+          table.push(<tr className="bg-white border h-9  border-borderTable-borderTable transition duration-300 ease-in-out hover:bg-gray-100" key={i}>{row}</tr>);
+        }
+    
+        return table;
+      };
     // const files = [
     //     {
     //         fileName: "aaaa",
@@ -75,10 +124,10 @@ function History() {
     //     }
     // ]
     return (
-        <div className="flex flex-col mx-auto items-center -sm:py-4 sm:px-6 mb-16 py-8 h-full xl:w-3/5 lg:w-3/5 sm:w-full md:w-full lg:py-0">
-            <div className="bg-white rounded-lg shadow md:mt-0 sm:w-full h-full xl:p-0">
+        <div className="flex flex-col mx-auto items-center -sm:py-4 sm:px-6 mb-16 py-8 h-full xl:w-3/5 lg:w-full sm:w-full 2xl:w-3/5 md:w-full lg:py-0">
+            <div className="bg-white rounded-lg shadow md:mt-0 2xl:w-full sm:w-full h-full xl:p-0">
                 <div className="flex flex-col  h-full">
-                    <h1 className="text-xl pt-8 px-12 sm:px-12 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
+                    <h1 className="text-xl pt-8 px-12 sm:px-12 sm:text-lg  md:text-lg  lg:text-lg 2xl:text-2xl  font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                         {t("lbviewExportFileHistory")}
                     </h1>
                     <div className="xl:py-8 xl:px-8 sm:py-1 sm:px-1 md:py-8 md:px-8">
@@ -86,34 +135,34 @@ function History() {
                             <div className="bg-white overflow-hidden">
                                 <div className="item mb-2 md:flex md:flex-wrap md:justify-between">
                                     <div className="container">
-                                        {/* <div className="flex flex-col"> */}
                                             <div className="overflow-x-hidden">
                                                 <div className="border-borderTable-borderTable">
                                                     <div className="table-wrp  max-h-[420px]">
                                                         <table className="border table-fixed w-full border-borderTable-borderTable">
-                                                            <thead className="bg-gray-300 border sticky top-0">
+                                                            <thead className="border sticky top-0">
                                                                 <tr>
-                                                                    <th  className="text-md w-1/4 text-center border border-borderTable-borderTable font-medium text-gray-900 px-6 py-2 text-left">
+                                                                    <th  className="bg-gray-300 text-md w-1/4 text-center border border-borderTable-borderTable font-medium text-gray-900 px-6 py-2 text-left">
                                                                         {t("lbDate")}
                                                                     </th>
-                                                                    <th  className="text-md text-center border border-borderTable-borderTable   font-medium text-gray-900 px-6 py-2 text-left">
+                                                                    <th  className="bg-gray-300 text-md text-center border border-borderTable-borderTable   font-medium text-gray-900 px-6 py-2 text-left">
                                                                         {t("lbFileName")}
                                                                     </th>
                                                                 </tr>
                                                             </thead>
-                                                            <tbody className="border w-1/5 h-96 ">
+                                                            <tbody className="border bg-white w-1/5 h-96 ">
                                                                 {files.map((file, key) => (
-                                                                    <tr className="bg-white border  border-borderTable-borderTable transition duration-300 ease-in-out hover:bg-gray-100" key={key}>
-                                                                        <td className="text-sm border font-extrabold border-borderTable-borderTable font-light px-6 py-2 whitespace-nowrap">{file.uploadedTime}</td>
-                                                                        <td className="text-sm text-blue-700 underline px-6 py-2 whitespace-nowrap underline-offset-4"><a target="_blank" href={file.fileURI}>{file.fileName}</a></td>
+                                                                    <tr className="bg-white border h-4  border-borderTable-borderTable transition duration-300 ease-in-out hover:bg-gray-100" key={key}>
+                                                                        <td className="text-sm bg-white  h-4   border font-extrabold border-borderTable-borderTable font-light px-6 py-2 whitespace-nowrap">{file.exportedDate}</td>
+                                                                        <td  className="text-sm bg-white h-4   text-blue-700 underline px-6 py-2 whitespace-nowrap underline-offset-4"><Link to={'http://localhost:8080/api/v1'+"/files/"+file.fileId}>{file.fileName}</Link></td>
                                                                     </tr>))}
+                                                                {renderTable()} 
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                {/* </div> */}
                                             </div>
                                         </div>
                                     </div>
+                                    
                                 </div>     
                             </div>
                         </div>

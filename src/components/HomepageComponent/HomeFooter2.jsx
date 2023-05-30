@@ -59,13 +59,14 @@ const handleExportExcel =()=>{
         withCredentials: true,
       })
         .then(response => {
-          localStorage.clear()
+          localStorage.removeItem("imageData")
           const anchor = document.createElement("a");
        anchor.href = url;
        anchor.download = `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`;
        anchor.download;
        anchor.click()
        dispatch(authenticate())
+       onFileChange([])
     
        window.URL.revokeObjectURL(url);
         })
