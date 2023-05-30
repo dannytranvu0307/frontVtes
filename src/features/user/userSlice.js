@@ -16,6 +16,7 @@ export const userUpdate = createAsyncThunk(
     }
 )
 
+
 const userSlice = createSlice({
     name:'user',
     initialState: { updateSuccess: false, updateMessage: null },

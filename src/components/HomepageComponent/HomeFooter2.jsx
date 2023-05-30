@@ -77,6 +77,7 @@ console.log(exportOptions)
        anchor.download;
        anchor.click()
        dispatch(authenticate())
+       onFileChange([])
     
        window.URL.revokeObjectURL(url);
         })

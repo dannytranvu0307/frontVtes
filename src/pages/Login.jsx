@@ -21,8 +21,7 @@ function Login(){
     const isActiveError = useSelector(selectActiveError)
     const isActive = useSelector(selectIsActive)
 
-    const inputs = [email, password]
-
+    const inputs = [{...email,type:'text'}, password]
     const dispatch = useDispatch()
 
     // init form obj
@@ -41,9 +40,11 @@ function Login(){
 
     const onSubmit = async e => {
         e.preventDefault();
-        const submitInput = document.querySelectorAll("input[type='text']")
-        const formSubmit = document.querySelector("#login")
-        if (ValidatorSubmit(formSubmit,submitInput)){
+        const $ = document.querySelector.bind(document)
+        const submitEmail = $("input#email")
+        const submitPassword = $("input#password")
+        const formSubmit = $("#login")
+        if (ValidatorSubmit(formSubmit,[submitEmail,submitPassword])){
             dispatch(login({...form, ["remember"]:remember}))
             .unwrap()
             .then(res=>{

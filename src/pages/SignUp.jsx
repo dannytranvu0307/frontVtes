@@ -17,7 +17,7 @@ const SignUp = () => {
     const isSuccess = useSelector(selectIsSuccess)
 
     const inputs =  [fullName,email,department,password,confirm_password]
-
+    console.log(inputs)
     // change language
     const [form, setForm] = useState({})
  console.log(form)
@@ -25,11 +25,10 @@ const SignUp = () => {
         e.preventDefault();
 
         const submitInput = document.querySelectorAll("input")
+        const select = document.querySelector('select#departmentId')
         const formSubmit = document.querySelector("#signup")
- 
-        if (ValidatorSubmit(formSubmit,submitInput)){
-            let {departmentId,password, fullName, email} = {...form}
-            // console.log({...form})
+        if (ValidatorSubmit(formSubmit,[...submitInput,select])){
+            let {departmentId, confirm_password,password, fullName, email} = {...form}
             dispatch(register({departmentId:departmentId,password,fullName,email}))
             .unwrap()
         }

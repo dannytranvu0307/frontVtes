@@ -1,15 +1,14 @@
-import { useState, useCallback, useMemo, memo, useEffect } from "react";
+import { useState, useMemo, memo, useEffect } from "react";
 import { fullName, email, department, password, start, goal } from '../instaces';
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser, selectIsLoading, authenticate } from "../features/auth/loginSlice";
-import { userUpdate, selectUpdateSuccess, selectUpdateMessage } from "../features/user/userSlice";
+import { selectUser, authenticate } from "../features/auth/loginSlice";
+import { userUpdate, selectUpdateSuccess } from "../features/user/userSlice";
 import { useTranslation } from 'react-i18next';
-import SearchCommuterPass from "../components/ProfileComponents/SearchCommuterPass";
 import ErrorNotification from "../components/ErrorNotification";
 import { baseURL } from "../features/auth/loginSlice";
 import axios from "axios";
-import ReasonTicket from '../pages/ReasonTicket';
 import FormInput from "../components/FormInput";
+import ValidatorSubmit from "../functional/ValidatorSubmit";
 
 
 const Profile = () => {
@@ -29,13 +28,13 @@ const Profile = () => {
         { ...fullName, disabled: disabledName },
         { ...department, disabled: disabledDepartment, type: "departmentId" },
         { ...email, disabled: true },
-        { ...password, disabled: disabledPassWord, placeholder: "●●●●●●●●●●●●", }
+        { ...password, text:'type',disabled: disabledPassWord, placeholder: "●●●●●●●●●●●●", }
     ]
     // commuter pass search instances
-    const inputTickets = useMemo(() => { return [start, goal] }, []);
+    const inputTickets = [start, goal]
+
     //  password update instances
-    const passwords = useMemo(() => {
-        return [{
+    const passwords = [{
             id: "current_password",
             label: "current_password",
             name: "current_password",
@@ -61,7 +60,6 @@ const Profile = () => {
             placeholder: "confirm_new_password",
             required: true,
         }]
-    }, [])
 
     // commuter pass state
     const [commuterPass, setCommuterPass] = useState({ start: "", goal: "", viaDetails: [] })
@@ -122,7 +120,6 @@ const Profile = () => {
     const ApiSearchStation = async (name, value) => {
         try {
             const res = await axios.get(`${baseURL}/stations?stationName=${value}`,{withCredentials: true})
-            console.log(res.data)
             if (name === "start") {
                 setStartSuggestion([...res.data.data])
             } else {
@@ -139,14 +136,12 @@ const Profile = () => {
     }, [commuterPass.start, commuterPass.goal])
 
     const handleStartPoint = (stationCode, stationName) => {
-        console.log(stationCode, stationName)
         setStartPoint({ stationCode: stationCode, stationName: stationName })
         setCommuterPass({ ...commuterPass, start: stationName })
         setStartSuggestion([])
     }
 
     const handleGoalPoint = (stationCode, stationName) => {
-        console.log(stationCode, stationName)
         setGoalPoint({ stationCode: stationCode, stationName: stationName })
         setCommuterPass({ ...commuterPass, goal: stationName })
         setGoalSuggestion([])
@@ -175,7 +170,6 @@ const Profile = () => {
     const onSubmitSearch = async () => {
         try {
             const res = await axios.get(`${baseURL}/cp-routes?start=${startPoint.stationCode}&goal=${goaltPoint.stationCode}`,{withCredentials: true})
-            console.log( res.data.data)
             setLstCp(res.data.data)
         } catch (err) {
             console.log(err)
@@ -203,18 +197,27 @@ const Profile = () => {
     // submit all record on form
     const onSubmit = e => {
         e.preventDefault();
-        const { departmentId, fullName, email, current_password, new_password, ...userData } = form
-        dispatch(userUpdate({
-            fullName: fullName,
-            email: email,
-            departmentId: +departmentId,
-            oldPassword: current_password,
-            newPassword: new_password,
-            commuterPass: {
-                departure:commuterPass.start, 
-                destination:commuterPass.goal, 
-                viaDetails: commuterPass.viaDetails}
-        }));
+        const $ = document.querySelector.bind(document)
+        const formSubmit = $('#profile')
+        const eName =  document.querySelector("#fullName")
+        const eDepartmentId =  document.querySelector("#departmentId")
+
+        const eOldPassword =  document.querySelector("#current_password")
+        const eNewPassword =  document.querySelector("#new_password")
+        const eConfirmNewPassword=  document.querySelector("#confirm_new_password")
+        const { departmentId, fullName, email, current_password, new_password, confirm_new_password,...userData } = form
+        if (ValidatorSubmit(formSubmit, [eName, eDepartmentId, eOldPassword, eNewPassword, eConfirmNewPassword]))
+            dispatch(userUpdate({
+                fullName: fullName,
+                email: email,
+                departmentId: +departmentId,
+                oldPassword: current_password,
+                newPassword: new_password,
+                commuterPass: {
+                    departure:commuterPass.start, 
+                    destination:commuterPass.goal, 
+                    viaDetails: commuterPass.viaDetails}
+            }));
     }
 
     return (
