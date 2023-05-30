@@ -23,7 +23,7 @@ function Home() {
     const [searching , setSearching] = useState([]);
     const [isOn, setIsOn] = useState(true);
     const dispatch = useDispatch()
-
+ console.log(data.vehicle)
     const  user= useSelector(state =>state.login.user)
 
      useEffect(()=>{
