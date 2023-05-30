@@ -13,21 +13,24 @@ const SignUp = () => {
     const { t } = useTranslation();
 
     const dispatch = useDispatch()
+    // error message
     const error = useSelector(selectRegisterError)
     const isSuccess = useSelector(selectIsSuccess)
 
+    // input elements
     const inputs =  [fullName,email,department,password,confirm_password]
-    console.log(inputs)
+
     // change language
     const [form, setForm] = useState({})
- console.log(form)
     const onSubmit = e => {
         e.preventDefault();
 
+        // get elements to validate
         const submitInput = document.querySelectorAll("input")
         const select = document.querySelector('select#departmentId')
         const formSubmit = document.querySelector("#signup")
- 
+        
+        // pass or not
         if (ValidatorSubmit(formSubmit,[...submitInput,select])){
             let {departmentId, confirm_password,password, fullName, email} = {...form}
             dispatch(register({departmentId:departmentId,password,fullName,email}))
@@ -35,6 +38,7 @@ const SignUp = () => {
         }
     }
 
+    // every times typing tha target will be changed value
     const onChange = e => {
         setForm({...form, [e.target.name]: e.target.value})
     }

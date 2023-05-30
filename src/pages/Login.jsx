@@ -16,12 +16,16 @@ function Login(){
     
     // change language
     const { t } = useTranslation();
+
+    // message store
     const error = useSelector(selectErrorLogin);
     const isActiveMessage= useSelector(selectIsActiveMessage)
     const isActiveError = useSelector(selectActiveError)
     const isActive = useSelector(selectIsActive)
 
+    // input elements
     const inputs = [{...email,type:'text'}, password]
+    // init function to dispatch action
     const dispatch = useDispatch()
 
     // init form obj
@@ -33,17 +37,22 @@ function Login(){
         setForm({...form, [e.target.name] : e.target.value})
     }
 
-    // checked?
+    // check remember me or not?
     const handleCheck = (e) =>{
         setRemember(!remember)
     }
 
+    // send form
     const onSubmit = async e => {
         e.preventDefault();
         const $ = document.querySelector.bind(document)
+
+        // get elements
         const submitEmail = $("input#email")
         const submitPassword = $("input#password")
         const formSubmit = $("#login")
+
+        // pass or not
         if (ValidatorSubmit(formSubmit,[submitEmail,submitPassword])){
             dispatch(login({...form, ["remember"]:remember}))
             .unwrap()
@@ -51,12 +60,8 @@ function Login(){
                 if (res.status !== 401){
                     dispatch(authenticate())
                     .unwrap()
-                }
-            })
-            
-        }
+                }})}
     }
-
 
     return (
         <section 

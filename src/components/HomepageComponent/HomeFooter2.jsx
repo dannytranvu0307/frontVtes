@@ -20,17 +20,31 @@ const handleExportExcel =()=>{
             department: userDetail.department.departmentName
         }
         const evidences =img.map((ob)=>ob.fileURL)
+        
         const exportOptions = tableData.map((item) => {
             const { useCommuterPass,payMethod,...rest } = item; // Lược bỏ thuộc tính useCommuterPass
             if (item.isRoundTrip) {
-              return { ...rest, isRoundTrip:t('2way') };
+                if(item.transportation ==='train'){
+                    return { ...rest, isRoundTrip:t('2way'),transportation:t('train')};
+                }else if(item.transportation==='bus'){
+                    return { ...rest, isRoundTrip:t('2way'),transportation:t('bus')};
+                }else if(item.transportation==='taxi'){
+                    return { ...rest, isRoundTrip:t('2way'),transportation:t('taxi')};
+                }
+              
             } else {
-              return  { ...rest, isRoundTrip:t('1way') };
+                if(item.transportation ==='train'){
+                    return { ...rest, isRoundTrip:t('1way'),transportation:t('train')};
+                }else if(item.transportation==='bus'){
+                    return { ...rest, isRoundTrip:t('1way'),transportation:t('bus')};
+                }else if(item.transportation==='taxi'){
+                    return { ...rest, isRoundTrip:t('1way'),transportation:t('taxi')};
+                }
             }
           });
 
 
-
+console.log(exportOptions)
 
 
 
@@ -48,9 +62,6 @@ const handleExportExcel =()=>{
             
     })
     const url = window.URL.createObjectURL(blob);
-
- 
-
     const file = new File([blob], `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`, {type: blob.type });
     const formData = new FormData();
     formData.append('file', file);
@@ -59,8 +70,8 @@ const handleExportExcel =()=>{
         withCredentials: true,
       })
         .then(response => {
-          localStorage.removeItem("imageData")
-          const anchor = document.createElement("a");
+       localStorage.clear()
+       const anchor = document.createElement("a");
        anchor.href = url;
        anchor.download = `交通費_${user.fullname}_${toDay.getMonth()+1}月.xlsx`;
        anchor.download;
@@ -108,7 +119,7 @@ const handleExportExcel =()=>{
          <button
          onClick={handleExportExcel}
           className={`flex items-center text-center justify-center w-32 h-8 rounded text-white text-xs ${tableData.length>0&&img.length>0?'bg-green-700 hover:bg-green-500':'bg-gray-500'}`}>
-         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 pointer-events-none">
          <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
          </svg>{t("export") }</button>
         </div>

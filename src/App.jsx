@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import Aos from "aos";
 import 'aos/dist/aos.css';
@@ -56,7 +56,7 @@ function App() {
                     <Route path='/profile' element={<Profile />} />
                       <Route path='' element={<Home />} />
                       <Route path='/history' element={<History />} />
-                      <Route path='*' to="/" element={<Home />} />
+                      <Route path='/*' element={<Navigate to="/"/>} />
                     </>):(<>
                         <Route path='/login' element={<Login />} />
                         <Route path='/confirmresetpassword/:authToken' element={<ConfirmResetPassword />}></Route>
@@ -64,7 +64,7 @@ function App() {
                         <Route path='/passwordreset' element={<PasswordReset />} />
                         {/* <Route path='/verify?verifyCode=:verifyCode' element={<Active />} /> */}
                         <Route path='/verify/:verifyCode' element={<Active />} />
-                        <Route path='/*' element={<Login />} />
+                        <Route path='/*' element={<Navigate to="/login"/>} />
 
                       </>
                       )}

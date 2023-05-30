@@ -5,7 +5,6 @@ export const fullName = {
     htmlFor: "fullName",
     type: "text",
     placeholder: "fullNamePla",
-    autoComplete:"off",
     exclude: ["login"]
 }
 export const department = {
@@ -23,7 +22,6 @@ export const department = {
     type: "email",
     htmlFor: "email",
     placeholder: "email_pla",
-    autoComplete:"off",
     exclude: ["login", "passwordreset"]
 }
 export const password = {
@@ -33,7 +31,6 @@ export const password = {
     type: "password",
     htmlFor: "password",
     placeholder: "password_pla",
-    autoComplete:"off",
     exclude: ["login"]
 }
 export const confirm_password = {
@@ -43,7 +40,6 @@ export const confirm_password = {
     type: "password",
     htmlFor: "confirm_password",
     placeholder: "confirm_password_pla",
-    autoComplete:"off"
 }
 
 export const start = {
@@ -53,7 +49,6 @@ export const start = {
     type: "text",
     htmlFor: "start",
     required: true,
-    autoComplete:"off"
 }
 
 export const goal = {
@@ -63,7 +58,6 @@ export const goal = {
     type: "text",
     htmlFor: "goal",
     required: true,
-    autoComplete:"off"
 }
 export const via = {
     id:"via",
@@ -72,7 +66,6 @@ export const via = {
     type: "text",
     htmlFor: "via",
     required: true,
-    autoComplete:"off"
 }
 
 export const new_password = {

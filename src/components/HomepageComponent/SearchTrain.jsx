@@ -94,7 +94,7 @@ if(Object.values(updatedError).every((value)=> value===false)){
 
 
 useEffect(()=>{
-  if( data.departure.length>1 && focus.departure){
+  if( data.departure.length>2 && focus.departure){
     
      console.log('call departure')
     axios.get(`${baseURL}/stations`,{
@@ -121,7 +121,7 @@ useEffect(()=>{
 //Arrival
 useEffect(()=>{
 
-  if( data.arrival.length>1 && focus.arrival){
+  if( data.arrival.length>2 && focus.arrival){
     console.log('call arrival')
     console.log(data.arrival.length)
     axios.get(`${baseURL}/stations`,{
@@ -144,7 +144,7 @@ useEffect(()=>{
 // transport 
 
 useEffect(()=>{
-  if( data.transport.length>1 && focus.transport){
+  if( data.transport.length>2 && focus.transport){
     console.log('call trans')
     axios.get(`${baseURL}/stations`,{
       params: {
@@ -188,9 +188,9 @@ useEffect(()=>{
                onKeyDown={handleKeyDown}
                />
               
-            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
+            <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll '>
              {suggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded pt-2'>
+              <li key={index} onClick={() => handleSuggestionClick(suggestion)} className='text-sm px-2 hover:bg-blue-200 rounded py-1'>
               {suggestion.stationName}
               </li> ))}
             </ul> 
@@ -210,9 +210,9 @@ useEffect(()=>{
                onBlur={(prev)=>setFocus({...prev,arrival:false})}
                onChange={e=>{onArrival(e.target.value),setError({...error,arrival:false})}}/>
 
-                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto max-h-64 overflow-y-scroll' >
+                  <ul className='absolute z-10 w-full bg-white rounded-md shadow-md overflow-auto max-h-64 overflow-y-scroll ' >
                     {suggestionsArrival.map((suggestion, index) => (
-                    <li key={index} onClick={() => handleSuggestionClickArrival(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
+                    <li key={index} onClick={() => handleSuggestionClickArrival(suggestion)} className='text-sm px-2 py-1 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}
                    </li>))}
                  </ul> 
@@ -248,9 +248,9 @@ useEffect(()=>{
       )}
 
 
-                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll'>
+                 <ul className='absolute z-10 w-full bg-white rounded-md shadow-md max-h-64 overflow-y-scroll '>
                     {suggestionsTransport.map((suggestion, index) => (
-                    <li key={index} onClick={() => handleSuggestionClickTransport(suggestion)} className='text-xs px-2 hover:bg-blue-200 rounded'>
+                    <li key={index} onClick={() => handleSuggestionClickTransport(suggestion)} className='text-sm py-1 px-2 hover:bg-blue-200 rounded'>
                     {suggestion.stationName}
                    </li>))}
                  </ul> 

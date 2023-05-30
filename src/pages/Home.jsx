@@ -16,14 +16,17 @@ import axios from 'axios';
 import { authenticate } from '../features/auth/loginSlice';
 function Home() {
    const { t } = useTranslation();
-    const [data,setData] =useState({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
+    const [data,setData] =useState({date:"",vehicle:'train', Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
     const [error,setError]=useState({date:false ,payment:false,Destination:false,departure:false,arrival:false , price:false})
     const [TableData,setTableData]= useState([])
     const [image, setImage] =useState([]);
     const [searching , setSearching] = useState([]);
     const [isOn, setIsOn] = useState(true);
     const dispatch = useDispatch()
- console.log(data.vehicle)
+    const [warning , setWarning ]= useState('');
+     console.log(warning)
+
+
     const  user= useSelector(state =>state.login.user)
 
      useEffect(()=>{
@@ -97,7 +100,6 @@ function Home() {
         const data = {
               imageList:[...image,...base64Images],
             };
-        
           try { const dataJSON = JSON.stringify(data);
             localStorage.setItem('imageData', dataJSON);
             console.log('Data saved to localStorage.');
@@ -126,7 +128,7 @@ function Home() {
 
        
        const  handleAddTable= () => {
-        if(data.vehicle===t('train')){
+        if(data.vehicle==='train'){
           const { date, Destination, departure, arrival, payment , price} = data;
           const updatedError = {
           date: date === "",
@@ -156,8 +158,9 @@ function Home() {
             .then(response => {
               dispatch(authenticate())
               // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
-              setData({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
+              setData({date:"",vehicle:data.vehicle, Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
               setSearching([])
+              setWarning('')
              
             })
             .catch(error => {
@@ -167,7 +170,8 @@ function Home() {
 
           
         }else{
-          console.log("dame")
+          setWarning(t('warning'))
+    
         }
       }
       else{
@@ -200,6 +204,7 @@ function Home() {
             // setTableData((prev)=>[...prev,{...data,payment:t('cash')}])
             setData({date:"",vehicle:data.vehicle, Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""})
             setSearching([])
+            setWarning('')
            
           })
           .catch(error => {
@@ -207,7 +212,7 @@ function Home() {
             console.error(error);
           })
         }else{
-          console.log("dame")
+          setWarning(t('warning'))
         }
       } }
        
@@ -240,15 +245,18 @@ useEffect(()=>{
                              setError={setError}
                  /> </div>
               <div className='flex'>
-                 {data.vehicle===t('train')&&<SearchTrain 
+                 {data.vehicle==='train'&&<SearchTrain 
                  isOn={isOn}
                  setIsOn ={setIsOn}
                  onSearching={setSearching} onDepart ={handleDeparture} onArrival={handleArrial} onTransport ={handleTransport} data={data} error ={error} setError={setError}/>}
-                 {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
-                 {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
+                 {data.vehicle==='bus'&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
+                 {data.vehicle==='taxi'&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
                </div>
                <SearchResult search={searching} data={data} onPrice={handlePrice} isOn ={isOn} />
-              <div className='flex mt-auto pb-[150px]'><HomeFooter onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/></div>
+              <div className='flex mt-auto pb-[150px]'>
+                <HomeFooter warning={warning} onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/>
+                </div>
+             
              </div>
 
 
@@ -256,8 +264,11 @@ useEffect(()=>{
              <div className='pl-5 w-full flex-1 h-full'>
               <div className='flex flex-col h-full'>
                 <div className='flex'><HomeUserData /></div>
-                <div className=''> <Table tableData={TableData}/></div>
-                <div className=' max-w-[750px] my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
+                <div className='max-w-[700px]'> <Table tableData={TableData}/>
+                
+                <div className='w-full my-2 h-[30%]'>{TableData.length>=1&&<PreviewImage image={image} onDelete ={handleDeleteImage}/>}</div>
+                </div>
+               
                 <div className='flex mt-auto pb-[150px] max-w-[750px]' ><HomeFooter2 img={image} deleteAllFile={setImage} onFileChange={handleFileChange} tableData={TableData}/></div>
               </div>
                

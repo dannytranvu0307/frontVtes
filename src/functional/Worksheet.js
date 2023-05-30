@@ -5,10 +5,11 @@ export default function(workbook,user,exportOptions){
         // Tính total tất cả record
         const handleTotalCost = () => {
             const total = exportOptions.reduce((i,next)=>{
-                return i + next.cost
+                return parseInt(i) + parseInt(next.fee)
             },0)
             return total
         }
+    
     
         // init style cho các cell
         const middle = { vertical: 'middle', horizontal: 'center' };
@@ -39,13 +40,13 @@ export default function(workbook,user,exportOptions){
     
         // define column for sheet
         worksheet.columns = [
-            { header: '日付', key: 'date' },
-            {  header: '訪問先', key: 'destination',width: 20  },
+            { header: '日付', key: 'visitDate' ,width: 20},
+            {  header: '訪問先', key: 'visitLocation',width: 30  },
             {  header: '交通機関', key: 'transportation' }, 
-            {  header: '出発地', key: 'start' },
-            {  header: '到着地', key: 'end' },
-            {  header: '片/往', key: 'one_round' }, 
-            {  header: '金額', key: 'cost' }
+            {  header: '出発地', key: 'departure' },
+            {  header: '到着地', key: 'destination' },
+            {  header: '片/往', key: 'isRoundTrip' }, 
+            {  header: '金額', key: 'fee' }
         ];
         
         // default merge column

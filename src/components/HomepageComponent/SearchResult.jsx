@@ -29,9 +29,7 @@ function SearchResult({search,data ,onPrice , isOn}){
         }
        
       };
-      const styleObject = {
-        backgroundColor: 'blue'
-      };
+     
 return(
     <div className=" text-xs my-5">
         {search.map((search,i)=>(
@@ -48,15 +46,15 @@ return(
           search.sections.length===3&&<div>{search.sections[0].stationName}ー{search.sections[2].stationName}</div>
           }
           {
-          search.sections.length>=7&&<div>{search.sections[0].stationName}ー{search.sections[2].stationName}...{search.sections[search.sections.length-3].StationName}ー{search.sections[search.sections.length-1].StationName}</div>
+          search.sections.length>=7&&<div>{search.sections[0].stationName}ー{search.sections[2].stationName}...{search.sections[search.sections.length-3].stationName}ー{search.sections[search.sections.length-1].stationName}</div>
           }
           {
-          search.sections.length===5&&<div>{search.sections[0].stationName}ー{search.sections[2].stationName}ー{search.sections[search.sections.length-1].StationName}</div>
+          search.sections.length===5&&<div>{search.sections[0].stationName}ー{search.sections[2].stationName}ー{search.sections[search.sections.length-1].stationName}</div>
           }
 
           <div className="mx-2">{t('transit')}:{search.summary.move.transitCount}回</div>
           
-          {isOn?<div>{search.summary.move.fare.unit114}</div>:<div>
+          {isOn?<div>Price:{search.summary.move.fare.unit114}</div>:<div>
           {data.payment===t('ic')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.IC}</span>:<span>{data.payment}:{search.summary.move.fare.IC*2}</span>}</div>}
           {data.payment===t('cash')&&<div>{data.round===t('1way')?<span>{data.payment}:{search.summary.move.fare.現金}</span>:<span>{data.payment}:{search.summary.move.fare.現金*2}</span>}</div>}
           </div>}

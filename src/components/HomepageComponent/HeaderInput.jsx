@@ -28,7 +28,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
                
                  />  
            
-               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 absolute right-1"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 absolute right-1 pointer-events-none"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" /></svg>
            </div>
         </div>
 
@@ -47,13 +47,13 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
               text-xs
               appearance-none
                ">
-               <option  value={t("train")}>{t("train")}</option>
-               <option  value={t("bus")}>{t("bus")}</option>
-               <option  value={t("taxi")}>{t("taxi")}</option>
+               <option  value="train">{t("train")}</option>
+               <option  value="bus">{t("bus")}</option>
+               <option  value="taxi">{t("taxi")}</option>
              
              </select>
               <svg  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
-                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0 ">
+                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0  pointer-events-none  ">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
            </div>
@@ -61,7 +61,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
           
        </div>
 
-      {data.vehicle==='電車'&& <div className='shrink w-16'>
+      {data.vehicle==='train'&&<> <div className='shrink w-16'>
           <span className='whitespace-nowrap text-xs '>{t("purchase")}</span>
           <div className=" flex   border border-black bg-white relative  ">
           
@@ -86,9 +86,9 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
               </svg>
            </div>
-       </div>}
+       </div>
 
-        {data.vehicle==t('train') &&  <div className='shrink w-16'>
+       <div className='shrink w-16'>
            <span className='whitespace-nowrap text-xs'>{t("Round")}</span>
            <div className=" flex border border-black bg-white  relative ">
           
@@ -97,7 +97,7 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
              onChange={(e)=>onRound(e.target.value)}
              className="
              text-base 
-             h-6 px-2
+             h-6 pl-2
              border-2 border-white
              text-gray-600 h-6 
              text-xs
@@ -110,11 +110,11 @@ function HeaderInput({ onDateChange,data,onVehiclechange, onPayment , onRound, o
               
              </select>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" 
-                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-2 flex-initial ">
+                className="w-4 h-4 bottom-1/2 translate-y-1/2 text-gray-600 absolute right-0 flex-initial  pointer-events-none ">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
             </svg>
           </div>
-       </div>}
+       </div></>}
 
 </div>
 <div className='py-5 '>
