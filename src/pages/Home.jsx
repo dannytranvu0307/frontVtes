@@ -16,7 +16,7 @@ import axios from 'axios';
 import { authenticate } from '../features/auth/loginSlice';
 function Home() {
    const { t } = useTranslation();
-    const [data,setData] =useState({date:"",vehicle:t('train'), Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
+    const [data,setData] =useState({date:"",vehicle:'train', Destination:"", price:"" , round:t('1way'),departure:"",arrival:"", payment:"" ,transport:""});
     const [error,setError]=useState({date:false ,payment:false,Destination:false,departure:false,arrival:false , price:false})
     const [TableData,setTableData]= useState([])
     const [image, setImage] =useState([]);
@@ -25,7 +25,7 @@ function Home() {
     const dispatch = useDispatch()
  
 
-    
+
     const  user= useSelector(state =>state.login.user)
 
      useEffect(()=>{
@@ -99,7 +99,6 @@ function Home() {
         const data = {
               imageList:[...image,...base64Images],
             };
-        
           try { const dataJSON = JSON.stringify(data);
             localStorage.setItem('imageData', dataJSON);
             console.log('Data saved to localStorage.');
@@ -242,12 +241,12 @@ useEffect(()=>{
                              setError={setError}
                  /> </div>
               <div className='flex'>
-                 {data.vehicle===t('train')&&<SearchTrain 
+                 {data.vehicle==='train'&&<SearchTrain 
                  isOn={isOn}
                  setIsOn ={setIsOn}
                  onSearching={setSearching} onDepart ={handleDeparture} onArrival={handleArrial} onTransport ={handleTransport} data={data} error ={error} setError={setError}/>}
-                 {data.vehicle===t('bus')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
-                 {data.vehicle===t('taxi')&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
+                 {data.vehicle==='bus'&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data} error ={error} setError={setError}/>}
+                 {data.vehicle==='taxi'&&<SearchBus onDepart ={handleDeparture} onArrival={handleArrial} data={data } error ={error} setError={setError}/>}
                </div>
                <SearchResult search={searching} data={data} onPrice={handlePrice} isOn ={isOn} />
               <div className='flex mt-auto pb-[150px]'><HomeFooter onPrice={handlePrice} data ={data} onAdd={handleAddTable} error ={error} setError={setError}/></div>

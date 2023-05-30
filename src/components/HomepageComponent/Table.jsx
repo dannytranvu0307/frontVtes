@@ -90,7 +90,7 @@ const Table = ({tableData})=>{
             <tr className="bg-white" key={i}>
                 <td className="px-2 py-1  border border-gray-400 text-xs">{data.visitDate}</td>
                 <td className="px-2  border border-gray-400 text-xs">{data.visitLocation}</td>
-                <td className="px-2  border border-gray-400 text-xs">{data.transportation}</td>
+                <td className="px-2  border border-gray-400 text-xs">{data.transportation==='train'&&t('train')}{data.transportation==='bus'&&t('bus')}{data.transportation==='taxi'&&t('taxi')}</td>
                 <td className="px-2  border border-gray-400 text-xs">{data.departure}</td>
                 <td className="px-2  border border-gray-400 text-xs">{data.destination}</td>
                 <td className="px-2  border border-gray-400 text-xs">{data.isRoundTrip?t('2way'):t('1way')}</td>
